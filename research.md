@@ -9,7 +9,7 @@
 - implemented as progressive web app
 - functionality over style
 
-## Dependencies
+## Runtime Dependencies
 
 - DOMPurify
 - XML parser
