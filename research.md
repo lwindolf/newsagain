@@ -20,7 +20,7 @@
 
 ## Deployment
 
-1. PWA hosted on lzone.de
+1. PWA hosted on lzone.de (cannot be hosted on Github due to CORS headers needed)
 2. Android APK packaged using Bubblewrap in f-droid
 
 Idea is to account for lzone.de to be gone and to have a fallback in the form of the APK in the app store
