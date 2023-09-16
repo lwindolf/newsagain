@@ -12,7 +12,6 @@
 ## Runtime Dependencies
 
 - DOMPurify
-- XML parser
 - handlebars
 - handlebars layout
 - remotestorage
