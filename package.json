@@ -1,0 +1,19 @@
+{
+  "type": "module",
+  "scripts": {
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest"
+  },
+  "jest": {
+    "verbose": true,
+    "transform": {
+      "^.+\\.js?$": "babel-jest"
+    },
+    "testEnvironment": "jest-environment-jsdom"
+  },
+  "devDependencies": {
+    "@babel/preset-env": "^7.22.20",
+    "babel-jest": "^29.7.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^28.1.3"
+  }
+}
