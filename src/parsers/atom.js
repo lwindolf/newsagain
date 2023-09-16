@@ -26,7 +26,6 @@ class AtomParser {
 
                 return feed;
         }
-        
-};
+}
 
 export { AtomParser };
