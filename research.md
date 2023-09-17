@@ -17,7 +17,9 @@
 - remotestorage
 - remotestorage-widget
 
-## CORS Proxy
+## ACAO CORS Solution
+
+### 1. CORS Proxy
 
 As almost noone supplies RSS feeds with `Access-Control-Allow-Origin: '*'` it is impossible to 
 build a PWA feed reader without a CORS proxy. Which is quite stupid, as RSS/Atom feeds are intented
@@ -32,6 +34,13 @@ Pricing with Cloudflare right now is:
 By for example limiting the maximum number of subscriptions supported to e.g. 200 and by allowing only 
 5 daily updates $5 can serve 10Mio / 200 / 5 / 30 = at least 350 conccurent users which would be a 
 reasonable price. The challenge of course lies with preventing abuse of the proxy.
+
+### 2. Maintaining CORS injection browser extension
+
+- probably could refer to existing Chrome/Firefox extensions
+- fork a simplified extension branded "newsagain"
+- using an ACAO extension in a isolated profile would be relatively safe
+- hard to/impossible do on mobile
 
 ## Deployment
 
