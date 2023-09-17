@@ -24,10 +24,22 @@ test("atom parse", () => {
 
         expect(feed.error).toBe(undefined);
         expect(feed.title).toBe("Example Feed");
-        expect(feed.link).toBe("http://example.org/");
+        expect(feed.source).toBe("http://example.org/");
         expect(feed.items.length).toBe(1);
         expect(feed.items[0].description).toBe("Some text.");
-        expect(feed.items[0].link).toBe("http://example.org/2003/12/13/atom03");
+        expect(feed.items[0].source).toBe("http://example.org/2003/12/13/atom03");
+});
+
+test("atom parse link", () => {
+  let feed = AtomParser.parse(`<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+<title>Example Feed</title>
+<link href="http://example.org/"/>
+<link borkedhref="http://example.org/borked"/>
+<link href="http://example.org/home" rel="alternate"/>
+</feed>`);
+
+  expect(feed.source).toBe("http://example.org/home");
 });
 
 test("atom parse error", () => {

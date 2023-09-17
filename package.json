@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "test": "eslint src && NODE_OPTIONS='--experimental-vm-modules' jest"
+    "test": "eslint src && NODE_OPTIONS='--experimental-vm-modules' jest --coverage"
   },
   "jest": {
     "verbose": true,

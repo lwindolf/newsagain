@@ -1,12 +1,11 @@
 // vim: set ts=4 sw=4:
-/* jshint esversion: 8 */
 
 // DAO for items
 
 class Item {
         // state
-        read;
-        starred;
+        read = false;
+        starred = false;
 
         // feed content
         title;

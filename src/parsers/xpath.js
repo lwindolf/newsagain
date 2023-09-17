@@ -1,5 +1,4 @@
 // vim: set ts=4 sw=4:
-/*jshint esversion: 8 */
 
 // XPath convenience helpers
 
@@ -17,7 +16,7 @@ class XPath {
                 return n?n.textContent:undefined;
         }
 
-        static foreach(node, expr, callback) {
+        static foreach(node, expr, callback, data = null) {
                 const iter = node.ownerDocument.evaluate(
                         expr,
                         node,
@@ -28,7 +27,7 @@ class XPath {
 
                 let n = iter.iterateNext();
                 while(n) {
-                        callback(n);
+                        callback(n, data);
                         n = iter.iterateNext();
                 }
         }
