@@ -21,6 +21,8 @@ test("atom parse", () => {
   </entry>
 
 </feed>`);
+
+        expect(feed.error).toBe(undefined);
         expect(feed.title).toBe("Example Feed");
         expect(feed.link).toBe("http://example.org/");
         expect(feed.items.length).toBe(1);
@@ -39,5 +41,5 @@ test("atom parse error", () => {
           BROKEN HERE
         `);
 
-        expect(feed.error != undefined).toBe(true);
+        expect(!feed.error).toBe(false);
 });
