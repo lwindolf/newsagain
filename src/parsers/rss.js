@@ -14,6 +14,7 @@ class RSSParser {
                         title       : XPath.lookup(node, 'title'),
                         description : XPath.lookup(node, 'description'),
                         source      : XPath.lookup(node, 'link'),
+                        sourceId    : XPath.lookup(node, 'guid')        // RSS 2.0 only
                 });
                 feed.items.push(item);
         }
@@ -31,7 +32,7 @@ class RSSParser {
                         feed = {...feed, ...{
                                 title       : XPath.lookup(root, '/rdf:RDF/channel/title'),
                                 description : XPath.lookup(root, '/rdf:RDF/channel/description'),
-                                source      : XPath.lookup(root, '/rdf:RDF/channel/link'),
+                                source      : XPath.lookup(root, '/rdf:RDF/channel/link')
                         }};
 
                         XPath.foreach(root, '/rdf:RDF/item', this.parseItem, feed);
@@ -42,7 +43,7 @@ class RSSParser {
                         feed = {...feed, ...{
                                 title       : XPath.lookup(root, '/Channel/title'),
                                 description : XPath.lookup(root, '/Channel/description'),
-                                source      : XPath.lookup(root, '/Channel/link'),
+                                source      : XPath.lookup(root, '/Channel/link')
                         }};
 
                         XPath.foreach(root, '/Channel/items/item', this.parseItem, feed);

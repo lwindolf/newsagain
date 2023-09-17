@@ -132,4 +132,5 @@ test("rss 2.0 parse", () => {
         expect(feed.items.length).toBe(2);
         expect(feed.items[0].description).toBe(`As part of the state's first Earth-to-space call...`);
         expect(feed.items[0].source).toBe("http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station");
+        expect(feed.items[0].sourceId).toBe("http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station");
 });

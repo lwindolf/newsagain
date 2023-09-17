@@ -11,7 +11,7 @@ class Item {
         title;
         description;
         source;
-        guid;
+        sourceId;
         metadata = {};
 
         constructor(defaults) {
