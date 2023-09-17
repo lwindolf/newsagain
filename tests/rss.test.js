@@ -1,65 +1,61 @@
-import { RSSParser } from "../src/parsers/rss";
+import { RSSParser } from '../src/parsers/rss';
 
-test("rss 1.0 parse", () => {
+test('rss 1.0 parse', () => {
         let feed = RSSParser.parse(`<?xml version="1.0"?>
 <rdf:RDF 
         xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+        xmlns:dc="http://purl.org/dc/elements/1.1/"
         xmlns="http://purl.org/rss/1.0/"
 >
 
         <channel rdf:about="http://www.xml.com/xml/news.rss">
-        <title>XML.com</title>
+                <title>XML.com</title>
+                <link>http://xml.com/pub</link>
+                <description>
+                        XML.com features a rich mix of information and services 
+                        for the XML community.
+                </description>
 
-        <link>http://xml.com/pub</link>
-        <description>
-        XML.com features a rich mix of information and services 
-        for the XML community.
-        </description>
-
-        <image rdf:resource="http://xml.com/universal/images/xml_tiny.gif" />
-
-        <items>
-        <rdf:Seq>
-        <rdf:li resource="http://xml.com/pub/2000/08/09/xslt/xslt.html" />
-        <rdf:li resource="http://xml.com/pub/2000/08/09/rdfdb/index.html" />
-        </rdf:Seq>
-        </items>
-
+                <image rdf:resource="http://xml.com/universal/images/xml_tiny.gif" />
+                <items>
+                        <rdf:Seq>
+                                <rdf:li resource="http://xml.com/pub/2000/08/09/xslt/xslt.html" />
+                                <rdf:li resource="http://xml.com/pub/2000/08/09/rdfdb/index.html" />
+                        </rdf:Seq>
+                </items>
         </channel>
+
         <image rdf:about="http://xml.com/universal/images/xml_tiny.gif">
-        <title>XML.com</title>
-        <link>http://www.xml.com</link>
-
-        <url>http://xml.com/universal/images/xml_tiny.gif</url>
+                <title>XML.com</title>
+                <link>http://www.xml.com</link>
+                <url>http://xml.com/universal/images/xml_tiny.gif</url>
         </image>
+
         <item rdf:about="http://xml.com/pub/2000/08/09/xslt/xslt.html">
-        <title>Processing Inclusions with XSLT</title>
-        <link>http://xml.com/pub/2000/08/09/xslt/xslt.html</link>
-
-        <description>Processing document inclusions with general XML tools can be ...</description>
+                <title>Processing Inclusions with XSLT</title>
+                <link>http://xml.com/pub/2000/08/09/xslt/xslt.html</link>
+                <dc:date>2023-09-17T11:34:00+00:00</dc:date>
+                <description>Processing document inclusions with general XML tools can be ...</description>
         </item>
+
         <item rdf:about="http://xml.com/pub/2000/08/09/rdfdb/index.html">
-        <title>Putting RDF to Work</title>
-
-        <link>http://xml.com/pub/2000/08/09/rdfdb/index.html</link>
-        <description>
-        Tool and API support for the Resource Description Framework 
-        is slowly coming of age. Edd Dumbill takes a look at RDFDB, 
-        one of the most exciting new RDF toolkits.
-        </description>
+                <title>Putting RDF to Work</title>
+                <link>http://xml.com/pub/2000/08/09/rdfdb/index.html</link>
+                <dc:date>2023-09-17T11:34:00+00:00</dc:date>
+                <description>Tool and API support for the Resource Description Framework ...</description>
         </item>
-
 </rdf:RDF>`);
 
         expect(feed.error).toBe(undefined);
-        expect(feed.title).toBe("XML.com");
-        expect(feed.source).toBe("http://xml.com/pub");
+        expect(feed.title).toBe('XML.com');
+        expect(feed.source).toBe('http://xml.com/pub');
         expect(feed.items.length).toBe(2);
         expect(feed.items[0].description).toBe(`Processing document inclusions with general XML tools can be ...`);
-        expect(feed.items[0].source).toBe("http://xml.com/pub/2000/08/09/xslt/xslt.html");
+        expect(feed.items[0].source).toBe('http://xml.com/pub/2000/08/09/xslt/xslt.html');
+        expect(feed.items[0].time).toBe(1694950440);
 });
 
-test("rss 1.1 parse", () => {
+test('rss 1.1 parse', () => {
         let feed = RSSParser.parse(`<Channel xmlns="http://purl.org/net/rss1.1#" 
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
    rdf:about="http://www.xml.com/xml/news.rss">
@@ -88,14 +84,13 @@ test("rss 1.1 parse", () => {
 </Channel>`);
 
         expect(feed.error).toBe(undefined);
-        expect(feed.title).toBe("XML.com");
-        expect(feed.source).toBe("http://xml.com/pub");
+        expect(feed.title).toBe('XML.com');
         expect(feed.items.length).toBe(2);
         expect(feed.items[1].description).toBe(`In this month's Transforming XML column...`);
-        expect(feed.items[1].source).toBe("http://www.xml.com/pub/a/2005/01/05/tr-xml.html");
+        expect(feed.items[1].source).toBe('http://www.xml.com/pub/a/2005/01/05/tr-xml.html');
 });
 
-test("rss 2.0 parse", () => {
+test('rss 2.0 parse', () => {
         let feed = RSSParser.parse(`<?xml version="1.0"?>
         <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
            <channel>
@@ -127,10 +122,74 @@ test("rss 2.0 parse", () => {
         </rss>`);
 
         expect(feed.error).toBe(undefined);
-        expect(feed.title).toBe("NASA Space Station News");
-        expect(feed.source).toBe("http://www.nasa.gov/");
+        expect(feed.title).toBe('NASA Space Station News');
+        expect(feed.source).toBe('http://www.nasa.gov/');
         expect(feed.items.length).toBe(2);
         expect(feed.items[0].description).toBe(`As part of the state's first Earth-to-space call...`);
-        expect(feed.items[0].source).toBe("http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station");
-        expect(feed.items[0].sourceId).toBe("http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station");
+        expect(feed.items[0].source).toBe('http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station');
+        expect(feed.items[0].sourceId).toBe('http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station');
+        expect(feed.items[0].time).toBe(1689944640)
+});
+
+test('rss Dublin Core', () => {
+        // XML example from spec https://web.resource.org/rss/1.0/modules/dc/
+        let feed = RSSParser.parse(`<?xml version="1.0" encoding="utf-8"?> 
+        
+        <rdf:RDF 
+          xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+          xmlns:dc="http://purl.org/dc/elements/1.1/"
+          xmlns="http://purl.org/rss/1.0/"
+        > 
+        
+          <channel rdf:about="http://meerkat.oreillynet.com/?_fl=rss1.0">
+            <title>Meerkat</title>
+            <link>http://meerkat.oreillynet.com</link>
+            <description>Meerkat: An Open Wire Service</description>
+            <dc:publisher>The O'Reilly Network</dc:publisher>
+            <dc:creator>Rael Dornfest (mailto:rael@oreilly.com)</dc:creator>
+            <dc:rights>Copyright © 2000 O'Reilly &amp; Associates, Inc.</dc:rights>
+            <dc:date>2000-01-01T12:00+00:00</dc:date>
+        
+            <image rdf:resource="http://meerkat.oreillynet.com/icons/meerkat-powered.jpg" />
+        
+            <items>
+              <rdf:Seq>
+                <rdf:li resource="http://c.moreover.com/click/here.pl?r123" />
+              </rdf:Seq>
+            </items>
+        
+            <textinput rdf:resource="http://meerkat.oreillynet.com" />
+        
+          </channel>
+        
+          <image rdf:about="http://meerkat.oreillynet.com/icons/meerkat-powered.jpg">
+            <title>Meerkat Powered!</title>
+            <url>http://meerkat.oreillynet.com/icons/meerkat-powered.jpg</url>
+            <link>http://meerkat.oreillynet.com</link>
+          </image>
+        
+          <item rdf:about="http://c.moreover.com/click/here.pl?r123">
+            <title>XML: A Disruptive Technology</title> 
+            <link>http://c.moreover.com/click/here.pl?r123</link>
+            <dc:description>XML is placing increasingly heavy...</dc:description>
+            <dc:publisher>The O'Reilly Network</dc:publisher>
+            <dc:creator>Simon St.Laurent (mailto:simonstl@simonstl.com)</dc:creator>
+            <dc:rights>Copyright © 2000 O'Reilly &amp; Associates, Inc.</dc:rights>
+            <dc:subject>XML</dc:subject>
+          </item> 
+        
+          <textinput rdf:about="http://meerkat.oreillynet.com">
+            <title>Search Meerkat</title>
+            <description>Search Meerkat's RSS Database...</description>
+            <name>s</name>
+            <link>http://meerkat.oreillynet.com/</link>
+          </textinput>
+        
+        </rdf:RDF>`);
+
+        expect(feed.error).toBe(undefined);
+        expect(feed.items.length).toBe(1);
+        expect(feed.items[0].description).toBe(`XML is placing increasingly heavy...`);   
+        // with no date given date should be similar to current date
+        expect(Math.floor(Date.now() / 10000) - Math.floor(feed.items[0].time / 10000)).toBe(0)
 });

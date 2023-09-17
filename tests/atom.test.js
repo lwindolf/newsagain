@@ -23,11 +23,12 @@ test("atom parse", () => {
 </feed>`);
 
         expect(feed.error).toBe(undefined);
-        expect(feed.title).toBe("Example Feed");
-        expect(feed.source).toBe("http://example.org/");
+        expect(feed.title).toBe('Example Feed');
+        expect(feed.source).toBe('http://example.org/');
         expect(feed.items.length).toBe(1);
-        expect(feed.items[0].description).toBe("Some text.");
-        expect(feed.items[0].source).toBe("http://example.org/2003/12/13/atom03");
+        expect(feed.items[0].description).toBe('Some text.');
+        expect(feed.items[0].source).toBe('http://example.org/2003/12/13/atom03');
+        expect(feed.items[0].time).toBe(1071340202);
 });
 
 test("atom parse link", () => {

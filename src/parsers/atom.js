@@ -1,5 +1,8 @@
 // vim: set ts=4 sw=4:
 
+// Atom 1.0 support, 0.3 is not supported
+
+import { DateParser } from './date.js';
 import { XPath } from './xpath.js';
 import { Feed } from '../feed.js';
 import { Item } from '../item.js';
@@ -9,9 +12,9 @@ class AtomParser {
 
         // can be used for both Item and Feed
         static parseAtomLink(node, ctxt) {
-                let href = XPath.lookup(node, './@href');
-                let type = XPath.lookup(node, './@type');
-		let rel  = XPath.lookup(node, './@rel');
+                let href = XPath.lookup(node, '@href');
+                let type = XPath.lookup(node, '@type');
+		let rel  = XPath.lookup(node, '@rel');
 
                 if(href) {
                         // Always prefer those types of links
@@ -30,7 +33,8 @@ class AtomParser {
         static parseEntry(node, feed) {
                 let item = new Item({
                         title       : XPath.lookup(node, 'title'),
-                        description : XPath.lookup(node, 'summary')
+                        description : XPath.lookup(node, 'summary'),
+                        time        : DateParser.parse(XPath.lookup(node, 'updated'))
                 });
                 XPath.foreach(node, './link', AtomParser.parseAtomLink, item);
                 feed.items.push(item);

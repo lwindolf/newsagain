@@ -7,9 +7,10 @@ class Item {
         read = false;
         starred = false;
 
-        // feed content
+        // item content
         title;
         description;
+        time;
         source;
         sourceId;
         metadata = {};

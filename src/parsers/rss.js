@@ -2,6 +2,7 @@
 
 // RSS 1.0 and 2.0 parser, 0.9x is not supported
 
+import { DateParser } from './date.js';
 import { XPath } from './xpath.js';
 import { Feed } from '../feed.js';
 import { Item } from '../item.js';
@@ -14,8 +15,22 @@ class RSSParser {
                         title       : XPath.lookup(node, 'title'),
                         description : XPath.lookup(node, 'description'),
                         source      : XPath.lookup(node, 'link'),
-                        sourceId    : XPath.lookup(node, 'guid')        // RSS 2.0 only
+                        // RSS 2.0 only
+                        sourceId    : XPath.lookup(node, 'guid'),        
+                        time        : DateParser.parse(XPath.lookup(node, 'pubDate'))
                 });
+
+                // Dublin Core support
+                if(!item.description)
+                        item.description = XPath.lookup(node, 'dc:description');
+                if(!item.time)
+                        item.time = DateParser.parse(XPath.lookup(node, 'dc:date'));
+
+                // Finally some guessing
+                if(!item.time)
+                        item.time = Date.now();
+                // FIXME: set an id
+
                 feed.items.push(item);
         }
 
