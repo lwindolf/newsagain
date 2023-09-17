@@ -29,7 +29,7 @@ Pricing with Cloudflare right now is:
 - free plan 1 worker: 100000 req/day
 - paid $5 per 10Mio requests/month
 
-By for example limiting the maximum number of subscriptions support to e.g. 200 and by allowing only 
+By for example limiting the maximum number of subscriptions supported to e.g. 200 and by allowing only 
 5 daily updates $5 can serve 10Mio / 200 / 5 / 30 = at least 350 conccurent users which would be a 
 reasonable price. The challenge of course lies with preventing abuse of the proxy.
 
