@@ -9,6 +9,9 @@ import { Item } from '../item.js';
 
 class AtomParser {
         static id = 'atom';
+        static autoDiscover = [
+                '/feed/item'
+        ];
 
         // can be used for both Item and Feed
         static parseAtomLink(node, ctxt) {

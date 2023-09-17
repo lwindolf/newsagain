@@ -9,6 +9,11 @@ import { Item } from '../item.js';
 
 class RSSParser {
         static id = 'rss';
+        static autoDiscover = [
+                '/rss/channel',
+                '/Channel/items',
+                '/rdf:RDF/channel'
+        ];
 
         static parseItem(node, feed) {
                 let item = new Item({

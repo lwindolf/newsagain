@@ -1,3 +1,6 @@
+// vim: set ts=4 sw=4:
+
+// Date to epoch conversion
 
 class DateParser {
         /**
