@@ -1,4 +1,6 @@
-import { XPath } from "../src/parsers/xpath";
+// vim: set ts=4 sw=4:
+
+import { XPath } from "../static/assets/js/parsers/xpath";
 
 const parser = new DOMParser();
 const doc = parser.parseFromString("<div><p><span>abc</span></p><p>def</p></div>", "application/xml");

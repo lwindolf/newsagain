@@ -1,4 +1,6 @@
-import { RSSParser } from '../src/parsers/rss';
+// vim: set ts=4 sw=4:
+
+import { RSSParser } from '../static/assets/js/parsers/rss';
 
 test('rss 1.0 parse', () => {
         let feed = RSSParser.parse(`<?xml version="1.0"?>

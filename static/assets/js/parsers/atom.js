@@ -10,14 +10,14 @@ import { Item } from '../item.js';
 class AtomParser {
         static id = 'atom';
         static autoDiscover = [
-                '/feed/item'
+                '/atom:feed/atom:entry'
         ];
 
         // can be used for both Item and Feed
         static parseAtomLink(node, ctxt) {
                 let href = XPath.lookup(node, '@href');
                 let type = XPath.lookup(node, '@type');
-		let rel  = XPath.lookup(node, '@rel');
+                let rel  = XPath.lookup(node, '@rel');
 
                 if(href) {
                         // Always prefer those types of links
@@ -35,11 +35,12 @@ class AtomParser {
 
         static parseEntry(node, feed) {
                 let item = new Item({
-                        title       : XPath.lookup(node, 'title'),
-                        description : XPath.lookup(node, 'summary'),
-                        time        : DateParser.parse(XPath.lookup(node, 'updated'))
+                        title       : XPath.lookup(node, 'atom:title'),
+                        description : XPath.lookup(node, 'atom:summary'),
+                        sourceId    : XPath.lookup(node, 'atom:id'),
+                        time        : DateParser.parse(XPath.lookup(node, 'atom:updated'))
                 });
-                XPath.foreach(node, './link', AtomParser.parseAtomLink, item);
+                XPath.foreach(node, 'atom:link', AtomParser.parseAtomLink, item);
                 feed.items.push(item);
         }
 
@@ -50,12 +51,12 @@ class AtomParser {
 
                 let feed = new Feed({
                         error       : XPath.lookup(root, '/parsererror'),
-                        title       : XPath.lookup(root, '/feed/title'),
-                        description : XPath.lookup(root, '/feed/summary')
+                        title       : XPath.lookup(root, '/atom:feed/atom:title'),
+                        description : XPath.lookup(root, '/atom:feed/atom:summary')
                 });
 
-                XPath.foreach(root, '/feed/link', this.parseAtomLink, feed);
-                XPath.foreach(root, '/feed/entry', this.parseEntry, feed);
+                XPath.foreach(root, '/atom:feed/atom:link', this.parseAtomLink, feed);
+                XPath.foreach(root, '/atom:feed/atom:entry', this.parseEntry, feed);
 
                 return feed;
         }

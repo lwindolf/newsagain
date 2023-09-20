@@ -1,14 +1,14 @@
-import { parserAutoDiscover  } from "../src/parsers/autodiscover";
-import { AtomParser } from "../src/parsers/atom";
-import { RSSParser } from "../src/parsers/rss";
+// vim: set ts=4 sw=4:
+
+import { parserAutoDiscover  } from "../static/assets/js/parsers/autodiscover";
 
 test("Atom 1.0 auto discover", () => {
-        let p = parserAutoDiscover(`<?xml version="1.0" encoding="utf-8"?>
-      <feed xmlns="http://www.w3.org/2005/Atom">
-        <item><title>A</title></item>
-      </feed>`);
-      
-        expect(p).toBe(AtomParser);
+  let p = parserAutoDiscover(`<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <entry><title>A</title></entry>
+</feed>`);
+
+  expect(p.id).toBe('atom');
 });
 
 test("RSS 1.0 auto discover", () => {
@@ -50,7 +50,7 @@ test("RSS 1.0 auto discover", () => {
           </item>
   </rdf:RDF>`);
 
-  expect(p).toBe(RSSParser);
+  expect(p.id).toBe('rss');
 });
 
 test("RSS 1.1 auto discover", () => {
@@ -76,7 +76,7 @@ test("RSS 1.1 auto discover", () => {
 </items>
 </Channel>`);
 
-  expect(p).toBe(RSSParser);
+    expect(p.id).toBe('rss');
 });
 
 test("RSS 2.0 auto discover", () => {
@@ -104,7 +104,7 @@ test("RSS 2.0 auto discover", () => {
      </channel>
   </rss>`);
 
-  expect(p).toBe(RSSParser);
+  expect(p.id).toBe('rss');
 });
 
 test("no feed auto discover", () => {

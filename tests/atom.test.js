@@ -1,4 +1,4 @@
-import { AtomParser } from "../src/parsers/atom";
+import { AtomParser } from "../static/assets/js/parsers/atom";
 
 test("atom parse", () => {
         let feed = AtomParser.parse(`<?xml version="1.0" encoding="utf-8"?>
@@ -28,6 +28,7 @@ test("atom parse", () => {
         expect(feed.items.length).toBe(1);
         expect(feed.items[0].description).toBe('Some text.');
         expect(feed.items[0].source).toBe('http://example.org/2003/12/13/atom03');
+        expect(feed.items[0].sourceId).toBe('urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a');
         expect(feed.items[0].time).toBe(1071340202);
 });
 

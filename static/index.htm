@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+	<meta charset="UTF-8">
+	<title>newsagain</title>
+	<link rel="stylesheet" type='text/css' href='assets/css/styles.css'/>
+
+	<link rel="manifest" href="manifest.json">
+	<meta name="theme-color" content="white"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+	<div class='main' id='info'>
+	</div>
+
+	<script type="module">
+		import { setupApp } from './assets/js/app.js';
+
+		(async function() {
+			'use strict';
+
+			setupApp();
+		})();
+	</script>
+</body>
+</html>

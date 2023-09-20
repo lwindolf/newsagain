@@ -21,7 +21,7 @@ class RSSParser {
                         description : XPath.lookup(node, 'description'),
                         source      : XPath.lookup(node, 'link'),
                         // RSS 2.0 only
-                        sourceId    : XPath.lookup(node, 'guid'),        
+                        sourceId    : XPath.lookup(node, 'guid'),
                         time        : DateParser.parse(XPath.lookup(node, 'pubDate'))
                 });
 
