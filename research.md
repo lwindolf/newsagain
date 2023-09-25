@@ -42,6 +42,22 @@ reasonable price. The challenge of course lies with preventing abuse of the prox
 - using an ACAO extension in a isolated profile would be relatively safe
 - hard to/impossible do on mobile
 
+### 3. Apache Cordova
+
+- Compile PWA into native app
+  - Cordova runs a webview on a non-browser DOM
+  - Cordova allows to configure CORS policy for fetched origins
+- Supports iOS, Electron (for Linux), Android
+  - example apps
+- PWA+proxy/extension could be supported along with the Cordova app
+
+Feed readers realized with Electron
+
+- commercial closed-source NorthReader feed reader (Win, MacOS)
+- OSS Fluent Reader (all platforms) https://github.com/yang991178/fluent-reader/
+- Raven Reader (Win, Mac, Linux) https://github.com/hello-efficiency-inc/raven-reader
+- commercial podcast app https://www.spreaker.com/podcast-recording-software
+
 ## Deployment
 
 1. PWA hosted on lzone.de (cannot be hosted on Github due to CORS headers needed)
