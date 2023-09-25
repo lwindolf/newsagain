@@ -15,8 +15,12 @@ class FeedUpdater {
                 return response.text()
             })
             .then((str) => {
-                let p = parserAutoDiscover(str);
-                return p.parse(str)
+                let parser = parserAutoDiscover(str);
+                let feed = parser.parse(str);
+                feed.source = url;
+                feed.time = Date.now() / 1000;
+
+                return feed;
             })
             .catch((e) => {
                 // FIXME: proper error handling

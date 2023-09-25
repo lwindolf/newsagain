@@ -13,8 +13,7 @@ class AtomParser {
                 '/atom:feed/atom:entry'
         ];
 
-        // can be used for both Item and Feed
-        static parseAtomLink(node, ctxt) {
+        static parseEntryLink(node, ctxt) {
                 let href = XPath.lookup(node, '@href');
                 let type = XPath.lookup(node, '@type');
                 let rel  = XPath.lookup(node, '@rel');
@@ -28,7 +27,7 @@ class AtomParser {
                         }
 
                         // But also allow for a plain link
-                        if(!ctxt.source)
+                        if(!ctxt.link)
                                 ctxt.source = href;
                 }
         }
@@ -40,7 +39,7 @@ class AtomParser {
                         sourceId    : XPath.lookup(node, 'atom:id'),
                         time        : DateParser.parse(XPath.lookup(node, 'atom:updated'))
                 });
-                XPath.foreach(node, 'atom:link', AtomParser.parseAtomLink, item);
+                XPath.foreach(node, 'atom:link', AtomParser.parseEntryLink, item);
                 feed.items.push(item);
         }
 
@@ -52,10 +51,11 @@ class AtomParser {
                 let feed = new Feed({
                         error       : XPath.lookup(root, '/parsererror'),
                         title       : XPath.lookup(root, '/atom:feed/atom:title'),
-                        description : XPath.lookup(root, '/atom:feed/atom:summary')
+                        description : XPath.lookup(root, '/atom:feed/atom:summary'),
+                        homepage    : XPath.lookup(root, "/atom:feed/atom:link[@rel='alternate']/@href") ||
+                                      XPath.lookup(root, "/atom:feed/atom:link/@href")
                 });
 
-                XPath.foreach(root, '/atom:feed/atom:link', this.parseAtomLink, feed);
                 XPath.foreach(root, '/atom:feed/atom:entry', this.parseEntry, feed);
 
                 return feed;
