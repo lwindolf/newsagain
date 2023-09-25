@@ -76,6 +76,6 @@ test('FeedUpdater.fetch', async () => {
     expect(f !== undefined).toBe(true);
     expect(f.title).toBe('Slashdot');
     expect(f.source).toBe('http://rss.slashdot.org/Slashdot/slashdotMain');
-    expect(f.time - Date.now() / 1000 < 10000).toBe(true);
+    expect(f.last_updated - Date.now() / 1000 < 10000).toBe(true);
     expect(f.items[0].title).toBe('WordPress Blogs Can Now Be Followed in the Fediverse, Including Mastodon');
 });

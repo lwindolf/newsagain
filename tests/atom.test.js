@@ -14,22 +14,35 @@ test("atom parse", () => {
 
   <entry>
     <title>Atom-Powered Robots Run Amok</title>
+    <link href="http://example.org/2003/12/13/atom03/html/" rel="alternate"/>
     <link href="http://example.org/2003/12/13/atom03"/>
     <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a</id>
     <updated>2003-12-13T18:30:02Z</updated>
     <summary>Some text.</summary>
   </entry>
 
+  <entry>
+  <title>Entry 2</title>
+  <link data="abc"/>
+  <link href="http://example.org/2003/12/13/atom02"/>
+  <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6b</id>
+  <updated>2003-12-13T18:40:02Z</updated>
+  <summary>Some text.</summary>
+</entry>
+
 </feed>`);
 
         expect(feed.error).toBe(undefined);
         expect(feed.title).toBe('Example Feed');
         expect(feed.homepage).toBe('http://example.org/');
-        expect(feed.items.length).toBe(1);
+        expect(feed.items.length).toBe(2);
         expect(feed.items[0].description).toBe('Some text.');
-        expect(feed.items[0].source).toBe('http://example.org/2003/12/13/atom03');
+        expect(feed.items[0].source).toBe('http://example.org/2003/12/13/atom03/html/');
         expect(feed.items[0].sourceId).toBe('urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6a');
         expect(feed.items[0].time).toBe(1071340202);
+
+        expect(feed.items[1].source).toBe('http://example.org/2003/12/13/atom02');
+        expect(feed.items[1].sourceId).toBe('urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6b');
 });
 
 test("atom parse link", () => {

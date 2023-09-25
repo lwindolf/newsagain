@@ -1,6 +1,8 @@
 // vim: set ts=4 sw=4:
 
 // Atom 1.0 support, 0.3 is not supported
+//
+// Specification https://www.ietf.org/rfc/rfc4287.txt
 
 import { DateParser } from './date.js';
 import { XPath } from './xpath.js';
@@ -20,14 +22,16 @@ class AtomParser {
 
                 if(href) {
                         // Always prefer those types of links
-                        if((rel && rel === 'alternate') ||
-                           (self && type === 'text/html')) {
+                        if((ctxt.sourceType !== 'alternate_or_text/html') &&
+                            ((rel && rel === 'alternate') ||
+                             (self && type === 'text/html'))) {
+                                ctxt.sourceType = 'alternate_or_text/html';
                                 ctxt.source = href;
                                 return
                         }
 
                         // But also allow for a plain link
-                        if(!ctxt.link)
+                        if(!ctxt.source)
                                 ctxt.source = href;
                 }
         }

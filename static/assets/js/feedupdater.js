@@ -18,7 +18,7 @@ class FeedUpdater {
                 let parser = parserAutoDiscover(str);
                 let feed = parser.parse(str);
                 feed.source = url;
-                feed.time = Date.now() / 1000;
+                feed.last_updated = Date.now() / 1000;
 
                 return feed;
             })
