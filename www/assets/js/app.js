@@ -6,9 +6,18 @@ function setupApp() {
     FeedUpdater.fetch('https://lzone.de/feed/devops.xml').then((f) => {
         console.log(f);
         document.body.innerHTML += `
-            <div>Feed: ${f.title}</div>
+            <h1>${f.title}</h1>
             ${
-                f.items.map(i => `<div>Item: ${i.title}</div>`).join(' ')
+                f.items.map(i => `<div>${
+                        new Intl.DateTimeFormat(
+                            'en-GB',
+                            {
+                                dateStyle: 'short',
+                                timeStyle: 'short',
+                                timeZone: 'GMT'
+                            }
+                        ).format(i.time*1000)
+                } <a href="${i.source}">${i.title}</a></div>`).join(' ')
             }
         `;
     })

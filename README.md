@@ -26,6 +26,7 @@ to be able to compile the Android app you also need
 
 ## How to compile
 
+    npm test
     npm run build
     npm run build --release
 
