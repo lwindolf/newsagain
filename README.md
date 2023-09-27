@@ -12,23 +12,18 @@ a normal browser as most websites do deliver feeds without permissive CORS
 headers causing a PWA to be unable to download them due to security errors.
 Electron/Android apps do not have this limitation.
 
-## Dependencies
-
-For compilation you need Cordova installed:
+## Compile
 
     npm install
-
-to be able to compile the Android app you also need
-
-- Android SDK with runtime v33.0.2 installed
-- env var for Android SDK e.g. `export ANDROID_HOME=~/Android/Sdk`
-- gradle 4.4.x
-
-## How to compile
-
     npm test
     npm run build
     npm run build --release
+
+Note that aside from all the NPM dependencies if you want to compile for Android you need:
+
+- Android SDK with runtime v33.0.2 installed
+- env variable set for Android SDK e.g. `export ANDROID_HOME=~/Android/Sdk`
+- gradle 4.4.x
 
 ## How to run
 
