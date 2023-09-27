@@ -42,7 +42,7 @@ reasonable price. The challenge of course lies with preventing abuse of the prox
 - using an ACAO extension in a isolated profile would be relatively safe
 - hard to/impossible do on mobile
 
-### 3. Apache Cordova
+### 3. Apache Cordova (currently preferred option)
 
 - Compile PWA into native app
   - Cordova runs a webview on a non-browser DOM
@@ -60,7 +60,6 @@ Feed readers realized with Electron
 
 ## Deployment
 
-1. PWA hosted on lzone.de (cannot be hosted on Github due to CORS headers needed)
-2. Android APK packaged using Bubblewrap in f-droid
-
-Idea is to account for lzone.de to be gone and to have a fallback in the form of the APK in the app store
+1. Electron app for desktops
+2. Android app in fdroid for mobile
+3. (maybe) PWA hosted on lzone.de with proxy support
