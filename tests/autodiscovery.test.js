@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { parserAutoDiscover  } from "../static/assets/js/parsers/autodiscover";
+import { parserAutoDiscover  } from "../www/assets/js/parsers/autodiscover";
 
 test("Atom 1.0 auto discover", () => {
   let p = parserAutoDiscover(`<?xml version="1.0" encoding="utf-8"?>

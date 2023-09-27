@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { FeedUpdater } from '../static/assets/js/feedupdater';
+import { FeedUpdater } from '../www/assets/js/feedupdater';
 
 global['fetch'] = jest.fn().mockImplementation(() =>
     Promise.resolve({
