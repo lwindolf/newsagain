@@ -17,7 +17,7 @@ function setupApp() {
                                 timeZone: 'GMT'
                             }
                         ).format(i.time*1000)
-                } <a href="${i.source}">${i.title}</a></div>`).join(' ')
+                } <a target="_system" href="${i.source}">${i.title}</a></div>`).join(' ')
             }
         `;
     })
