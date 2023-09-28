@@ -6,6 +6,8 @@
         Lars Windolf
     </author>
     <content src="index.html" />
+    <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
+    <preference name="stay-in-webview" value="false" />
 </widget>
