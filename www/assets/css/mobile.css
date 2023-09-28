@@ -1,0 +1,31 @@
+body { 
+        
+}
+
+#item {
+        display: none;
+}
+#itemlist {
+        display: none;
+}
+#feedlist {
+        display: block;
+        width: 100%;
+}
+#feedlist .title {
+        font-size: 120%;
+        border-bottom: 1px solid #ddd;
+        padding: 12px;
+}
+
+.feed {
+        font-size: 150%;
+        border-bottom: 1px solid #ddd;
+        padding: 12px;
+}
+.feed .icon {
+        height: 24px;
+        width: 24px;
+        vertical-align: text-bottom;
+        margin-right: 8px;
+}

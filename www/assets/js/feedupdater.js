@@ -6,10 +6,7 @@ import { parserAutoDiscover } from './parsers/autodiscover.js';
 
 class FeedUpdater {
     static async fetch(url) {
-        // FIXME: hard coded proxy details are evil
-        var proxyurl = 'https://corsproxy-1516.lars-windolf.workers.dev/corsproxy/?apiurl='+url;
-
-        var feed = await fetch(proxyurl)
+        var feed = await fetch(url)
             .then((response) => {
                 // FIXME: proper network state handling
                 return response.text()

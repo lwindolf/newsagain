@@ -1,9 +1,5 @@
 {
         "electron": {
-                "browserWindow": {
-                "width": 1024,
-                "height": 76
-                },
                 "appImage": {
                         "systemIntegration": "doNotAsk"
                 },

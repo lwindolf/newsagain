@@ -1,0 +1,52 @@
+button.switchView {
+        display: none;
+}
+
+#wrap {
+        height: 100vh;
+        display: flex;
+}
+
+#main {
+        flex: 1;
+        display: flex;
+}
+
+#item, #itemlist, #feedlist {
+        overflow: auto;
+}
+#item {
+        width: auto;
+        flex: 3;
+}
+#itemlist {
+        outline: 1px solid #ddd;
+        width: 20%;
+        flex: 2;
+}
+#feedlist {
+        width: 50%;
+        background: #fafafa;
+        flex: 1;
+}
+
+#feedlist .title {
+        padding:12px;
+        border-bottom: 1px solid #ddd;
+}
+
+.feed {
+        padding: 12px;
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        
+}
+.feed .icon {
+        height: 16px;
+        width: 16px;
+        vertical-align: text-bottom;
+        margin-right: 6px;
+}
+

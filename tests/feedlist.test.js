@@ -53,11 +53,7 @@ global['fetch'] = jest.fn().mockImplementation(() =>
         
         Since the acquisition, the company has improved on the original software in a number of ways, including by now allowing the ability to add blog-wide catchall accounts instead of only per-author. It also introduced the ability to add a "follow me" block to help visitors follow your profile and a "followers" block to show off your followers, noted Automattic design engineer Matt Wiebe, in a post on X... For the time being, the software supports self-hosted WordPress blogs, but Wiebe teased that support for WordPress.com blogs was "coming soon."
         
-         
-        Last year Automattic's CEO Matt Mullenweg announced Tumblr would add support for ActivityPub, the article adds. "But more recently, Mullenweg told us he's been investigating not only ActivityPub, but also other protocols like Nostr and Bluesky's AT Protocol."&lt;p&gt;&lt;div class="share_submission" style="position:relative;"&gt;
-        &lt;a class="slashpop" href="http://twitter.com/home?status=WordPress+Blogs+Can+Now+Be+Followed+in+the+Fediverse%2C+Including+Mastodon%3A+https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F09%2F16%2F2226218%2F%3Futm_source%3Dtwitter%26utm_medium%3Dtwitter"&gt;&lt;img src="https://a.fsdn.com/sd/twitter_icon_large.png"&gt;&lt;/a&gt;
-        &lt;a class="slashpop" href="http://www.facebook.com/sharer.php?u=https%3A%2F%2Ftech.slashdot.org%2Fstory%2F23%2F09%2F16%2F2226218%2Fwordpress-blogs-can-now-be-followed-in-the-fediverse-including-mastodon%3Futm_source%3Dslashdot%26utm_medium%3Dfacebook"&gt;&lt;img src="https://a.fsdn.com/sd/facebook_icon_large.png"&gt;&lt;/a&gt;
-        
+        load
         
         
         &lt;/div&gt;&lt;/p&gt;&lt;p&gt;&lt;a href="https://tech.slashdot.org/story/23/09/16/2226218/wordpress-blogs-can-now-be-followed-in-the-fediverse-including-mastodon?utm_source=rss1.0moreanon&amp;amp;utm_medium=feed"&gt;Read more of this story&lt;/a&gt; at Slashdot.&lt;/p&gt;&lt;iframe src="https://slashdot.org/slashdot-it.pl?op=discuss&amp;amp;id=23062688&amp;amp;smallembed=1" style="height: 300px; width: 100%; border: none;"&gt;&lt;/iframe&gt;</description>
@@ -79,9 +75,10 @@ test('FeedList.load', () => {
     expect(fl.root.children !== undefined).toBe(true);
 });
 
-test('FeedList.load', () => {
+test('FeedList.update', () => {
     let fl = FeedList.load();
     
+    // Simulate load from DB
     FeedList.root = {
         children: [
             new Feed({ title: "Heise", source: "https://www.telepolis.de/news-atom.xml" }),

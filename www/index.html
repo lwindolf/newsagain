@@ -11,6 +11,8 @@
                 * Enable inline JS: add 'unsafe-inline' to default-src
         -->
         <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+        <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
+        <link id="theme" rel="stylesheet" type="text/css" href="assets/css/mobile.css" />
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
@@ -18,6 +20,20 @@
         <title>NewsAgain</title>
     </head>
     <body>
+        <div id='wrap'>
+            <div id='main'>
+                <div id='feedlist'>
+                    <div class='title'>Feeds</div>
+                </div>
+                <div id='itemlist'>
+                    <button class='switchView' data-view='feedlist'>Back to Feed List</button>
+                </div>
+                <div id='item'>
+                    <button class='switchView' data-view='itemlist'>Back to Headlines</button>
+                </div>
+            </div>
+        </div>
+
         <script src="cordova.js"></script>
         <script type="module" src="js/index.js"></script>
     </body>

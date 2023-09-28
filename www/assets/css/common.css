@@ -1,0 +1,42 @@
+html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;     
+}
+
+#feedlist {
+        font-family: Arial;
+}
+
+#item {
+        margin: 12px;
+}
+
+.feed, .item {
+        cursor: pointer;
+}
+
+.feed:hover, .item:hover {
+        background: #eee;
+}
+
+.item {
+        padding:12px;
+        border-bottom: 1px solid #ddd;
+}
+
+.item .title {
+        font-weight: bold;
+}
+
+::-webkit-scrollbar {
+        width: 6px;
+}
+::-webkit-scrollbar-track {
+        background: transparent;
+}
+::-webkit-scrollbar-thumb {
+        background-color: rgba(155, 155, 155, 0.5);
+        border-radius: 10px;
+        border: transparent;
+}
