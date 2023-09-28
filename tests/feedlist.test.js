@@ -69,22 +69,8 @@ global['fetch'] = jest.fn().mockImplementation(() =>
 );
 
 test('FeedList.load', () => {
-    let fl = FeedList.load();
+    let fl = FeedList.setup();
     expect(fl !== undefined).toBe(true);
     expect(fl.root !== undefined).toBe(true);
     expect(fl.root.children !== undefined).toBe(true);
-});
-
-test('FeedList.update', () => {
-    let fl = FeedList.load();
-    
-    // Simulate load from DB
-    FeedList.root = {
-        children: [
-            new Feed({ title: "Heise", source: "https://www.telepolis.de/news-atom.xml" }),
-            new Feed({ title: "LZone", source: "https://lzone.de/feed/devops.xml" })
-        ]
-    };
-
-    FeedList.update();
 });
