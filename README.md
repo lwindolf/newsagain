@@ -1,3 +1,5 @@
+[![CI](https://github.com/lwindolf/newsagain/actions/workflows/test.yml/badge.svg)](https://github.com/lwindolf/newsagain/actions/workflows/test.yml)
+
 # NewsAgain
 
 WIP prototype for a backend-less PWA feed reader replacing [Liferea](https://lzone.de/liferea)
