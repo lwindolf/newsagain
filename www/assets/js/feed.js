@@ -28,6 +28,7 @@ class Feed {
             FeedUpdater.fetch(this.source).then((f) => {
                 this.title       = f.title;
                 this.source      = f.source;
+                this.homepage    = f.homepage;
                 this.description = f.description;
                 // FIXME: this.icon        = f.icon;
                 this.items       = f.items;

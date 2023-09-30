@@ -1,19 +1,41 @@
 html, body {
         margin: 0;
         padding: 0;
-        height: 100%;     
-}
-
-#feedlist {
+        overflow: hidden;
+        height: 100vh;
         font-family: Arial;
+        color: #222;
 }
 
-#item {
-        margin: 12px;
+a {
+        color: #222;
+        text-decoration: none;
+}
+a:hover {
+        text-decoration: underline;
+}
+
+#item, #itemlist, #feedlist {
+        height: 100vh;
+        overflow-y: auto;
+}
+
+#itemViewContent {
+        padding: 0 12px;
+}
+
+.selected {
+        background: #eee;
 }
 
 .feed, .item {
         cursor: pointer;
+        overflow: hidden;
+}
+
+.feed {
+        text-overflow: ellipsis;
+        white-space: nowrap;
 }
 
 .feed:hover, .item:hover {

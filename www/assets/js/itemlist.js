@@ -5,27 +5,16 @@
 import { FeedList } from './feedlist.js';
 
 class ItemList {
-    static setup() {
-        document.addEventListener('click', function(e) {
-            e = e.target;
-            while(undefined !== e) {
-                if(e.classList.contains('feed')) {
-                    ItemList.loadFeed(e.dataset.id);
-                    return;
-                }
-                e = e.parentNode;
+    // pretty print date from epoch
+    static #getShortDateStr(time) {
+        return new Intl.DateTimeFormat(
+            'en-GB',
+            {
+                dateStyle: 'short',
+                timeStyle: 'short',
+                timeZone: 'GMT'
             }
-        })
-        document.addEventListener('click', function(e) {
-            e = e.target;
-            while(undefined !== e) {
-                if(e.classList.contains('item')) {
-                    ItemList.loadItem(e.dataset.feed, e.dataset.id);
-                    return;
-                }
-                e = e.parentNode;
-            }
-        });
+        ).format(time*1000)
     }
 
     // load all items from the given node id
@@ -37,19 +26,18 @@ class ItemList {
         if(!document.getElementById('itemlist'))
             return;
 
-        document.getElementById('item').innerHTML = '';
-        document.getElementById('itemlist').innerHTML = `
+        document.getElementById('itemlistViewTitle').innerHTML = `
+            <img class='icon' src='${node.icon}'/>
+            <a target='_system' href='${node.homepage}'>${node.title}</a>
+        `;
+        document.getElementById('itemViewContent').innerHTML = '';
+        document.getElementById('itemlistViewContent').innerHTML = `
             ${
-                node.items.map(i => `<div class='item' data-id='${i.id}' data-feed='${id}'>${                           
-                        new Intl.DateTimeFormat(
-                            'en-GB',
-                            {
-                                dateStyle: 'short',
-                                timeStyle: 'short',
-                                timeZone: 'GMT'
-                            }
-                        ).format(i.time*1000)
-                } <span class='title'>${i.title}</span></div>`).join(' ')
+                node.items.map(i => `
+                    <div class='item' data-id='${i.id}' data-feed='${id}'>
+                        <span class='date'>${ItemList.#getShortDateStr(i.time)}</span>
+                        <span class='title'>${i.title}</span>
+                    </div>`).join(' ')
             }
         `;
     }
@@ -61,8 +49,14 @@ class ItemList {
 
         // FIXME: handle folders
 
-        document.getElementById('item').innerHTML = `
-            <h1><a href='${item.source}'>${item.title}</a></h1>
+        document.getElementById('itemViewTitle').innerHTML = `
+            <img class='icon' src='${node.icon}'/>
+            <a target='_system' href='${node.homepage}'>${node.title}</a>
+        `;
+        document.getElementById('itemViewContent').innerHTML = `
+            <h1><a target='_system' href='${item.source}'>${item.title}</a></h1>
+            <span class='date'>${ItemList.#getShortDateStr(item.time)}</span>
+            <div class='date'></div>
             
             <p>${item.description}</p>
         `;

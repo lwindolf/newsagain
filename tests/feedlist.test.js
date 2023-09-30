@@ -1,6 +1,5 @@
 // vim: set ts=4 sw=4:
 
-import { Feed } from '../www/assets/js/feed';
 import { FeedList } from '../www/assets/js/feedlist';
 
 global['fetch'] = jest.fn().mockImplementation(() =>

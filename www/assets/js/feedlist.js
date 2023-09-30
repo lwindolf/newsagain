@@ -26,7 +26,7 @@ class FeedList {
         folder.children.forEach((f) => {
             // FIXME: support recursion
             FeedList.nodeById[f.id] = f;
-            document.getElementById('feedlist').innerHTML += `
+            document.getElementById('feedlistViewContent').innerHTML += `
                 <div class='feed' data-id='${f.id}'>
                     <img class='icon' src='${f.icon}'/>
                     ${f.title}

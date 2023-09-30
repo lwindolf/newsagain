@@ -7,7 +7,6 @@ import { debounce } from './helpers/debounce.js';
 
 function setupApp() {
     FeedList.setup();
-    ItemList.setup();
     Layout.update();
 
     window.onresize = debounce(function() {
@@ -21,7 +20,32 @@ function setupApp() {
         }
     });
 
-    // switchView all buttons
+    document.addEventListener('click', function(e) {
+        e = e.target;
+        while(e) {
+            if(e.classList?.contains('feed')) {
+                [...document.querySelectorAll('.feed.selected')]
+                    .forEach((e) => e.classList.remove('selected'));
+                e.classList.add('selected');
+                ItemList.loadFeed(e.dataset.id);
+                Layout.view('itemlist');
+                return;
+            }
+            if(e.classList?.contains('item')) {
+                [...document.querySelectorAll('.item.selected')]
+                    .forEach((e) => e.classList.remove('selected'));
+                e.classList.add('selected');
+                ItemList.loadItem(e.dataset.feed, e.dataset.id);
+                Layout.view('item');
+                return;
+            }
+            if(e.classList?.contains('switchView')) {
+                Layout.view(e.dataset.view);
+                return;
+            }
+            e = e.parentNode;
+        }
+    })
 }
 
 export { setupApp };

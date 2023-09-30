@@ -6,24 +6,45 @@
 // layout #2: 1 vertical pane (mobile)
 //
 // For now simple naive implementation switching between
-// both layouts at a threshold width
+// both layouts at a threshold width as well as user agents
+// triggering it
 
 class Layout {
-        static update() {
-            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-            let theme = document.getElementById('theme');
+    static isSmall;
 
-            if (isMobile || window.innerWidth < 800)
-                    theme.setAttribute('href', 'assets/css/mobile.css');
-            else
-                    theme.setAttribute('href', 'assets/css/desktop.css');
-        }
+    static update() {
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        let theme = document.getElementById('theme');
+        let before = Layout.isSmall;
 
-        // switch view (needed only on mobile)
-        static view(name) {
-            //let e = document.getElementsById(name);
-            console.log("FIXME visible "+name);
+        Layout.isSmall = (isMobile || window.innerWidth < 800);
+        if(before === Layout.isSmall)
+            return;
+
+        if(Layout.isSmall) {
+            theme.setAttribute('href', 'assets/css/mobile.css');
+            Layout.isSmall = true
+            Layout.view('feedlist');
+        } else {
+            theme.setAttribute('href', 'assets/css/desktop.css');
+            Layout.isSmall = false;
+
+            // show all views (desktop)
+            [...document.querySelectorAll('.view')]
+                .forEach(e => (e.style.display = 'block'));
         }
+    }
+
+    // switch view (needed only on mobile)
+    static view(name) {
+        if(!Layout.isSmall)
+            return;
+
+        [...document.querySelectorAll('.view')]
+            .forEach(e => (e.style.display = 'none'));
+
+        document.getElementById(name).style.display = 'block';
+    }
 }
 
 export { Layout };

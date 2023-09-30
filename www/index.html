@@ -22,14 +22,25 @@
     <body>
         <div id='wrap'>
             <div id='main'>
-                <div id='feedlist'>
-                    <div class='title'>Feeds</div>
+                <div class='view' id='feedlist'>
+                    <header>
+                        <div id='feedlistViewTitle'>Feeds</div>
+                    </header>
+                    <div id='feedlistViewContent'></div>
                 </div>
-                <div id='itemlist'>
-                    <button class='switchView' data-view='feedlist'>Back to Feed List</button>
+                <div class='view' id='itemlist'>
+                    <header>
+                        <button class='switchView' data-view='feedlist'>&lt;</button>
+                        <div id='itemlistViewTitle'></div>
+                    </header>
+                    <div id='itemlistViewContent'></div>
                 </div>
-                <div id='item'>
-                    <button class='switchView' data-view='itemlist'>Back to Headlines</button>
+                <div class='view' id='item'>
+                    <header>
+                        <button class='switchView' data-view='itemlist'>&lt;</button>
+                        <div id='itemViewTitle'></div>
+                    </header>
+                    <div id='itemViewContent'></div>
                 </div>
             </div>
         </div>
