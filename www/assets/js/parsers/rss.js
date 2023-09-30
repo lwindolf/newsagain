@@ -1,6 +1,7 @@
 // vim: set ts=4 sw=4:
 
-// RSS 1.0 and 2.0 parser, 0.9x is not supported
+// RSS 1.1 and 2.0 parser, 0.9x is not supported
+// RSS 1.0 is parsed in rdf.js
 
 import { DateParser } from './date.js';
 import { XPath } from './xpath.js';
@@ -11,8 +12,7 @@ class RSSParser {
         static id = 'rss';
         static autoDiscover = [
                 '/rss/channel',
-                '/Channel/items',
-                '/rdf:RDF/channel'
+                '/Channel/items'
         ];
 
         static parseItem(node, feed) {
@@ -46,17 +46,6 @@ class RSSParser {
                 let feed = new Feed({
                         error       : XPath.lookup(root, '/parsererror'),
                 });
-
-                // RSS 1.0
-                if(doc.firstChild.nodeName === 'rdf:RDF') {
-                        feed = {...feed, ...{
-                                title       : XPath.lookup(root, '/rdf:RDF/channel/title'),
-                                description : XPath.lookup(root, '/rdf:RDF/channel/description'),
-                                homepage    : XPath.lookup(root, '/rdf:RDF/channel/link')
-                        }};
-
-                        XPath.foreach(root, '/rdf:RDF/item', this.parseItem, feed);
-                }
 
                 // RSS 1.1
                 if(doc.firstChild.nodeName === 'Channel') {

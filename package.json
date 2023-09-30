@@ -5,7 +5,7 @@
   "description": "Multi-platform news aggregator.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint www/assets && jest --coverage",
+    "test": "eslint --ignore-pattern www/assets/js/lib/* www/assets/js && jest --coverage",
     "start": "cordova run",
     "build": "./build.sh"
   },
@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "cordova-android": "12.0.1",
-    "cordova-browser": "7.0.0"
+    "cordova-browser": "7.0.0",
+    "handlebars": "^4.7.8"
   },
   "cordova": {
     "platforms": [

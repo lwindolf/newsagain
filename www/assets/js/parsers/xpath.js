@@ -6,17 +6,18 @@ class XPath {
         static evaluate(node, expr) {
             // Workaround https://github.com/jsdom/jsdom/issues/2997
             if(!Object.getOwnPropertyDescriptor(globalThis, 'window')?.get?.toString().includes('[native code]') ?? false)
-                expr = expr.replaceAll('atom:', '')
+                expr = expr.replaceAll('ns:', '')
 
-            // Register a default resolver, otherwise we could not read Atom feeds
-            var resolver = null;
-            var ns = (new window.DOMParser).parseFromString(node.outerHTML, "text/xml").children[0].getAttribute("xmlns");
-            if(ns) {
-                resolver = function() {
-                    return ns;
-                }
-            }
+            // Register a default resolver, otherwise we could not read Atom/RDF feeds
+            let resolver = (function (element) {
+                let resolver = element.ownerDocument.createNSResolver(element);
+                let defaultNS = (new window.DOMParser).parseFromString(node.outerHTML, "text/xml").children[0].getAttribute("xmlns");
 
+                return function (prefix) {
+                   return resolver.lookupNamespaceURI(prefix) || defaultNS;
+                };
+            } (node));
+       
             return node.ownerDocument.evaluate(
                     expr,
                     node,
@@ -30,7 +31,7 @@ class XPath {
         static lookup(node, expr) {
                 const iter = XPath.evaluate(node, expr);
                 const n = iter.iterateNext();
-
+        
                 return n?n.textContent:undefined;
         }
 

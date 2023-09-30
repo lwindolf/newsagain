@@ -23,7 +23,6 @@ class FeedUpdater {
                 // FIXME: proper error handling
                 console.error(e)
             });
-        
         return feed;
     }
 }

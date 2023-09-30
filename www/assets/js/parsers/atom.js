@@ -12,7 +12,7 @@ import { Item } from '../item.js';
 class AtomParser {
         static id = 'atom';
         static autoDiscover = [
-                '/atom:feed/atom:entry'
+                '/ns:feed/ns:entry'
         ];
 
         static parseEntryLink(node, ctxt) {
@@ -38,12 +38,12 @@ class AtomParser {
 
         static parseEntry(node, feed) {
                 let item = new Item({
-                        title       : XPath.lookup(node, 'atom:title'),
-                        description : XPath.lookup(node, 'atom:summary'),
-                        sourceId    : XPath.lookup(node, 'atom:id'),
-                        time        : DateParser.parse(XPath.lookup(node, 'atom:updated'))
+                        title       : XPath.lookup(node, 'ns:title'),
+                        description : XPath.lookup(node, 'ns:summary'),
+                        sourceId    : XPath.lookup(node, 'ns:id'),
+                        time        : DateParser.parse(XPath.lookup(node, 'ns:updated'))
                 });
-                XPath.foreach(node, 'atom:link', AtomParser.parseEntryLink, item);
+                XPath.foreach(node, 'ns:link', AtomParser.parseEntryLink, item);
                 feed.items.push(item);
         }
 
@@ -54,13 +54,13 @@ class AtomParser {
 
                 let feed = new Feed({
                         error       : XPath.lookup(root, '/parsererror'),
-                        title       : XPath.lookup(root, '/atom:feed/atom:title'),
-                        description : XPath.lookup(root, '/atom:feed/atom:summary'),
-                        homepage    : XPath.lookup(root, "/atom:feed/atom:link[@rel='alternate']/@href") ||
-                                      XPath.lookup(root, "/atom:feed/atom:link/@href")
+                        title       : XPath.lookup(root, '/ns:feed/ns:title'),
+                        description : XPath.lookup(root, '/ns:feed/ns:summary'),
+                        homepage    : XPath.lookup(root, "/ns:feed/ns:link[@rel='alternate']/@href") ||
+                                      XPath.lookup(root, "/ns:feed/ns:link/@href")
                 });
 
-                XPath.foreach(root, '/atom:feed/atom:entry', this.parseEntry, feed);
+                XPath.foreach(root, '/ns:feed/ns:entry', this.parseEntry, feed);
 
                 return feed;
         }

@@ -29,13 +29,13 @@ header {
         flex: 1;
 }
 
-#feedlist .title {
+#feedlist > .title {
         padding:12px;
         border-bottom: 1px solid #ddd;
 }
 
 .feed {
-        padding: 12px;
+        padding: 6px 12px;
         font-weight: bold;      
 }
 .feed .icon {

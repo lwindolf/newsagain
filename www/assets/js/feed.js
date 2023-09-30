@@ -33,6 +33,8 @@ class Feed {
                 // FIXME: this.icon        = f.icon;
                 this.items       = f.items;
                 this.metadata    = f.metadata;
+
+                document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
             });
         }
 

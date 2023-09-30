@@ -17,6 +17,20 @@ class FeedList {
         return FeedList.nodeById[id];
     }
 
+    static #nodeUpdated(f) {
+        // FIXME: folder recursion
+
+        let unreadCount = f.items.filter((i) => {
+            return (i.read === false);
+        }).length;
+
+        document.querySelector(`.feed[data-id="${f.id}"]`).innerHTML = `
+            <img class='icon' src='${f.icon}'/>
+            <span class='title'>${f.title}</span>
+            <span class='count' data-count='${unreadCount}'>${unreadCount}</span>
+        `;
+    }
+
     // Recursively create folder layout
     static #createFolder(folder) {
         // Needed for tests
@@ -25,27 +39,29 @@ class FeedList {
 
         folder.children.forEach((f) => {
             // FIXME: support recursion
+            document.getElementById('feedlistViewContent').innerHTML += `<div class='feed' data-id='${f.id}'></div>`;
             FeedList.nodeById[f.id] = f;
-            document.getElementById('feedlistViewContent').innerHTML += `
-                <div class='feed' data-id='${f.id}'>
-                    <img class='icon' src='${f.icon}'/>
-                    ${f.title}
-                </div>`;
+            FeedList.#nodeUpdated(f);
         });
     }
 
     // Load folders/feeds from DB
     static setup() {
         // FIXME: load from DB
-
         this.root = {
             children: [
                 new Feed({ id: 1, title: "ArsTechnica", icon: "https://arstechnica.com/favicon.ico", source: "https://feeds.arstechnica.com/arstechnica/features" }),
                 new Feed({ id: 2, title: "LZone", icon: "https://lzone.de/favicon.ico",     source: "https://lzone.de/feed/devops.xml" }),
-                new Feed({ id: 3, title: "Slashdot", icon: "https://slashdot.org/favicon.ico", source: "https://rss.slashdot.org/Slashdot/slashdotMain" })
+                new Feed({ id: 3, title: "Slashdot", icon: "https://slashdot.org/favicon.ico", source: "https://rss.slashdot.org/Slashdot/slashdotMain" }),
+                new Feed({ id: 4, title: "Heise", icon: "", source: "https://www.heise.de/rss/heise.rdf" })
             ]
         };
         this.#createFolder(this.root);
+
+        document.addEventListener('nodeUpdated', (e) => {
+            console.log(e);
+            FeedList.#nodeUpdated(e.detail);
+        });
 
         // Run initial fetch
         this.update();

@@ -5,6 +5,7 @@ html, body {
         height: 100vh;
         font-family: Arial;
         color: #222;
+        background: white;
 }
 
 a {
@@ -34,12 +35,29 @@ a:hover {
 }
 
 .feed {
-        text-overflow: ellipsis;
-        white-space: nowrap;
+        display: flex;
 }
 
 .feed:hover, .item:hover {
         background: #eee;
+}
+
+.feed .icon {
+}
+.feed .title {
+        flex: 10 10;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+}
+.feed .count {
+        background: #aaa;
+        padding: 2px 6px;
+        color: white;
+}
+.feed .count[data-count="0"] {
+        display: none;
 }
 
 .item {
@@ -47,7 +65,7 @@ a:hover {
         border-bottom: 1px solid #ddd;
 }
 
-.item .title {
+.item .title[data-read="false"] {
         font-weight: bold;
 }
 

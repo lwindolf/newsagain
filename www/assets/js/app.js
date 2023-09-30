@@ -7,6 +7,7 @@ import { debounce } from './helpers/debounce.js';
 
 function setupApp() {
     FeedList.setup();
+    ItemList.setup();
     Layout.update();
 
     window.onresize = debounce(function() {
