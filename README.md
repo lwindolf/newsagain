@@ -91,6 +91,8 @@ a 🛑 means the feature won't be ported.
 ### UI Navigation
 
 - [x] Feed list
+- [ ] Hierarchic feed list folders
+- [ ] Search folders
 - [x] Item list
 - [x] Item view
 - [x] Desktop mouse selection
