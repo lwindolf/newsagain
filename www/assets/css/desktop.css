@@ -20,7 +20,7 @@ header {
 #itemlist {
         outline: 1px solid #ddd;
         width: 20%;
-        flex: 2;
+        flex: 1;
 }
 
 #feedlist {

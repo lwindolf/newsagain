@@ -24,11 +24,13 @@ class FeedList {
             return (i.read === false);
         }).length;
 
-        document.querySelector(`.feed[data-id="${f.id}"]`).innerHTML = `
-            <img class='icon' src='${f.icon}'/>
-            <span class='title'>${f.title}</span>
-            <span class='count' data-count='${unreadCount}'>${unreadCount}</span>
-        `;
+        let e = document.querySelector(`.feed[data-id="${f.id}"]`);
+        if(e)
+            e.innerHTML = `
+                <img class='icon' src='${f.icon}'/>
+                <span class='title'>${f.title}</span>
+                <span class='count' data-count='${unreadCount}'>${unreadCount}</span>
+            `;
     }
 
     // Recursively create folder layout
@@ -50,16 +52,15 @@ class FeedList {
         // FIXME: load from DB
         this.root = {
             children: [
-                new Feed({ id: 1, title: "ArsTechnica", icon: "https://arstechnica.com/favicon.ico", source: "https://feeds.arstechnica.com/arstechnica/features" }),
-                new Feed({ id: 2, title: "LZone", icon: "https://lzone.de/favicon.ico",     source: "https://lzone.de/feed/devops.xml" }),
-                new Feed({ id: 3, title: "Slashdot", icon: "https://slashdot.org/favicon.ico", source: "https://rss.slashdot.org/Slashdot/slashdotMain" }),
-                new Feed({ id: 4, title: "Heise", icon: "", source: "https://www.heise.de/rss/heise.rdf" })
+                new Feed({ id: 1, title: "ArsTechnica", source: "https://feeds.arstechnica.com/arstechnica/features" }),
+                new Feed({ id: 2, title: "LZone",       source: "https://lzone.de/feed/devops.xml" }),
+                new Feed({ id: 3, title: "Slashdot",    source: "https://rss.slashdot.org/Slashdot/slashdotMain" }),
+                new Feed({ id: 4, title: "Heise",       source: "https://www.heise.de/rss/heise.rdf" })
             ]
         };
         this.#createFolder(this.root);
 
         document.addEventListener('nodeUpdated', (e) => {
-            console.log(e);
             FeedList.#nodeUpdated(e.detail);
         });
 

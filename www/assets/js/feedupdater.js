@@ -3,6 +3,7 @@
 // Download, parse and merge feeds
 
 import { parserAutoDiscover } from './parsers/autodiscover.js';
+import { Favicon } from './parsers/favicon.js';
 
 class FeedUpdater {
     static async fetch(url) {
@@ -11,11 +12,14 @@ class FeedUpdater {
                 // FIXME: proper network state handling
                 return response.text()
             })
-            .then((str) => {
+            .then(async (str) => {
                 let parser = parserAutoDiscover(str);
                 let feed = parser.parse(str);
                 feed.source = url;
                 feed.last_updated = Date.now() / 1000;
+
+                if(!feed.icon)
+                    await Favicon.discover(feed);
 
                 return feed;
             })

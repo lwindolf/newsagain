@@ -30,9 +30,12 @@ class Feed {
                 this.source      = f.source;
                 this.homepage    = f.homepage;
                 this.description = f.description;
-                // FIXME: this.icon        = f.icon;
                 this.items       = f.items;
                 this.metadata    = f.metadata;
+
+                // feed provided favicon should always win
+                if(f.icon)
+                    this.icon = f.icon;
 
                 document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
             });
