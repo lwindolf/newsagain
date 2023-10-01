@@ -117,3 +117,9 @@ a 🛑 means the feature won't be ported.
 - [ ] Advanced Subscription Dialog
 - [ ] Update Monitor
 - [ ] Plugins Support (JS instead of Python)
+
+## Icon
+
+Simple icon done by icon.kitchen:
+
+https://icon.kitchen/i/H4sIAAAAAAAAAz1QwU7DMAz9FWSuQ2o3qdp6Q4hxQ0jshji4jZNGpPVI045p2r9jp9p88nt%2Btp99gRnDRCPUFzAYfw4d9QR1ihOtwLrD%2BSgIEv0lyFiTGt7pNApubnUX0XgaVNO4txuQkS0HjqUoHmlXUrURQabWSlVUlOtKKBxckDGb4qr9nx3moePv5GMrBV38ol3aZHNk7tVaapNYBwo0Y1qUH2iMH5xuT3yE%2BqlcQfSuEz%2BaNpwS90seyGZW1lq358Wyxd6Hsx7JMz7sA%2BarOJjlK2oRjVODzw79oEXFd4NFsau2WxBdz2YK%2BtovudBE9kbEnvVzJ2rg%2B%2FoPV1m%2FVH0BAAA%3D
