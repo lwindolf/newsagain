@@ -108,6 +108,7 @@ a 🛑 means the feature won't be ported.
 - [ ] 3 pane view (email-like)
 - [x] Automatic switching
 - [ ] Reader Mode
+- [ ] Dark Mode
 - [ ] Custom Theme overrides
 
 ### UI Tools
