@@ -5,9 +5,17 @@
 import { parserAutoDiscover } from './parsers/autodiscover.js';
 import { Favicon } from './parsers/favicon.js';
 
+// FIXME: drop this hard-coded proxy
+const proxy = 'https://corsproxy-1516.lars-windolf.workers.dev/corsproxy/?apiurl=';
+
 class FeedUpdater {
     static async fetch(url) {
-        var feed = await fetch(url)
+        // Inject proxy on non-Phonegap environment
+        let fetchURL = url;
+        if(document.location.protocol !== 'file:')
+            fetchURL = proxy + url;
+
+        var feed = await fetch(fetchURL)
             .then((response) => {
                 // FIXME: proper network state handling
                 return response.text()
@@ -18,8 +26,12 @@ class FeedUpdater {
                 feed.source = url;
                 feed.last_updated = Date.now() / 1000;
 
-                if(!feed.icon)
-                    await Favicon.discover(feed);
+                if(!feed.icon && feed.homepage)
+                    try {
+                        feed.icon = await Favicon.discover(feed.homepage);
+                    } catch(e) { 
+                        // ignore
+                    }
 
                 return feed;
             })

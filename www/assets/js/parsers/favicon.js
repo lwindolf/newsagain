@@ -32,13 +32,9 @@ class Favicon {
         { type: "Apple small",      order: 7, xpath: "/html/head/link[@rel='apple-touch-icon' or @rel='apple-touch-icon-precomposed'][@sizes]/@href" }
     ].sort((a, b) => (a.order - b.order));
 
-    static async discover(feed) {
-        // Do nothing if the feed parser already produced an icon
-        if(feed.icon || !feed.homepage)
-            return;
-
+    static async discover(url) {
         // Parse HTML
-        let doc = await fetch(feed.homepage)
+        let doc = await fetch(url)
             .then((response) => response.text())
             .then((str) => {
                 return new DOMParser().parseFromString(str, 'text/html');
@@ -67,15 +63,15 @@ class Favicon {
 
         // If nothing found see if there is a 'favicon.ico' on the homepage
         if(undefined === result)
-            result = await fetch(feed.homepage + '/favicon.ico')
+            result = await fetch(url + '/favicon.ico')
                 .then((response) => response.text())
-                .then(() => feed.homepage + '/favicon.ico');
+                .then(() => url + '/favicon.ico');
 
         if(result) {
             if(result.includes('://'))
-                feed.icon = result;
+                return result;
             else
-                feed.icon = feed.homepage + '/' + result;
+                return url + '/' + result;
         }
     }
 }

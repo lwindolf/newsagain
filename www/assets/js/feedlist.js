@@ -25,12 +25,16 @@ class FeedList {
         }).length;
 
         let e = document.querySelector(`.feed[data-id="${f.id}"]`);
-        if(e)
-            e.innerHTML = `
-                <img class='icon' src='${f.icon}'/>
+        if(e) {
+            e.innerHTML = '';
+            if(f.icon)
+                e.innerHTML = `<img class='icon' src='${f.icon}'/>`;
+
+            e.innerHTML += `
                 <span class='title'>${f.title}</span>
                 <span class='count' data-count='${unreadCount}'>${unreadCount}</span>
             `;
+        }
     }
 
     // Recursively create folder layout
