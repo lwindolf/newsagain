@@ -66,6 +66,17 @@ a 🛑 means the feature won't be ported.
 - [ ] AMP extraction
 - 🛑 Local script support
 
+### Network
+
+- [ ] TTL Support
+- [ ] Etags/last-modified
+- [ ] RSS Syn Namespace
+- [ ] User defined update intervals
+- [ ] HTTP 429
+- [ ] HTTP 410
+- [ ] Basic Auth
+- 🛑 Proxy Support
+
 ### Online Source Support
 
 - [ ] Google Reader API (Miniflux, FreshRSS, ...) 
@@ -73,6 +84,7 @@ a 🛑 means the feature won't be ported.
 - [ ] InoReader
 - [ ] TheOldReader
 - [ ] Reedah
+- [ ] OPM Import
 - 🛑 local OPML sources
 
 ### UI Navigation
@@ -85,15 +97,19 @@ a 🛑 means the feature won't be ported.
 - [ ] Launching external browser
 - [ ] Launching internal browser
 - [ ] Drag&Drop
+- [ ] XDG Integration (URI schema, desktop icon)
 
 ### UI Layouts
 
 - [x] 3 pane view (wide)
 - [ ] 3 pane view (email-like)
 - [x] Automatic switching
+- [ ] Reader Mode
+- [ ] Custom Theme overrides
 
 ### UI Tools
 
 - [ ] Simple Subscription Dialog
 - [ ] Advanced Subscription Dialog
 - [ ] Update Monitor
+- [ ] Plugins Support (JS instead of Python)
