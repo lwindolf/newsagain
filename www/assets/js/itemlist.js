@@ -3,9 +3,10 @@
 // Managing a list of currently visible items
 
 import { FeedList } from './feedlist.js';
+import { template, render } from './helpers/render.js';
 
 class ItemList {
-    static headerTemplate = Handlebars.compile(`
+    static headerTemplate = template(`
         <span class='switchView' data-view='{{view}}'>&lt;</span>
         <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
         {{#if node.icon}}
@@ -41,8 +42,7 @@ class ItemList {
         if(!document.getElementById('itemlist'))
             return;
 
-        document.getElementById('itemlistViewTitle').innerHTML =
-            ItemList.headerTemplate({ node: node, view: 'feedlist' });
+        render('#itemlistViewTitle', ItemList.headerTemplate, { node: node, view: 'feedlist' });
         document.getElementById('itemViewContent').innerHTML = '';
         document.getElementById('itemlistViewContent').innerHTML = node.items.map(i => `<div class='item' data-id='${i.id}' data-feed='${id}'></div>`).join(' ');
         node.items.forEach((i) => ItemList.#itemUpdated(i));
@@ -59,8 +59,7 @@ class ItemList {
 
         // FIXME: handle folders
 
-        document.getElementById('itemViewTitle').innerHTML =
-            ItemList.headerTemplate({ node: node, view: 'itemlist' });
+        render('#itemViewTitle', ItemList.headerTemplate, { node: node, view: 'itemlist' });
         document.getElementById('itemViewContent').innerHTML = `
             <h1><a target='_system' href='${item.source}'>${item.title}</a></h1>
             <span class='date'>${ItemList.#getShortDateStr(item.time)}</span>

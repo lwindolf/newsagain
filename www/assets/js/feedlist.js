@@ -4,6 +4,7 @@
 // subscriptions (e.g. local, Google Reader API, ...)
 
 import { Feed } from './feed.js';
+import { template, render } from './helpers/render.js';
 
 class FeedList {
     // hierarchical list of children
@@ -12,12 +13,18 @@ class FeedList {
     // id to node lookup map
     static nodeById = {};
 
-    static feedTemplate = Handlebars.compile(`
+    static feedTemplate = template(`
         {{#if feed.icon}}
             <img class='icon' src='{{feed.icon}}'/>
         {{/if}}
         <span class='title'>{{{feed.title}}}</span>
         <span class='count' data-count='{{feed.unreadCount}}'>{{feed.unreadCount}}</span>
+    `);
+
+    static childFeedsTemplate = template(`
+        {{#each children}}
+            <div class='feed' data-id='{{id}}'></div>
+        {{/each}}
     `);
 
     // Return node by id
@@ -32,9 +39,7 @@ class FeedList {
             return (i.read === false);
         }).length;
 
-        let e = document.querySelector(`.feed[data-id="${feed.id}"]`);
-        if(e)
-            e.innerHTML = FeedList.feedTemplate({ feed: feed });
+        render(`.feed[data-id="${feed.id}"]`, FeedList.feedTemplate, { feed: feed });
     }
 
     // Recursively create folder layout
@@ -43,9 +48,9 @@ class FeedList {
         if(!document.getElementById('feedlist'))
             return;
 
+        render('#feedlistViewContent', this.childFeedsTemplate, { children: folder.children });
         folder.children.forEach((f) => {
             // FIXME: support recursion
-            document.getElementById('feedlistViewContent').innerHTML += `<div class='feed' data-id='${f.id}'></div>`;
             FeedList.nodeById[f.id] = f;
             FeedList.#nodeUpdated(f);
         });
