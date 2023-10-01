@@ -45,3 +45,55 @@ Run Android app in virtual device in Android Studio
 Simple Cordova browser debug environment
 
     npm start browser
+
+## Feature-Completeness
+
+As NewsAgain will be a successor to Liferea it needs to roughly match the most important
+features and provide a desktop migration path. Here is the status of the features. Note that
+a 🛑 means the feature won't be ported.
+
+### Parsing 
+
+- [x] Atom 1.0 / RSS 1.0, 1.1 and 2.0
+- [ ] RSS Namespace support
+- [x] Favicon discovery
+- 🛑 RSS 0.9x support
+- 🛑 Atom 0.3 support
+
+### Web Scraping
+
+- [ ] HTML5 extraction
+- [ ] AMP extraction
+- 🛑 Local script support
+
+### Online Source Support
+
+- [ ] Google Reader API (Miniflux, FreshRSS, ...) 
+- [ ] TinyTinyRSS
+- [ ] InoReader
+- [ ] TheOldReader
+- [ ] Reedah
+- 🛑 local OPML sources
+
+### UI Navigation
+
+- [x] Feed list
+- [x] Item list
+- [x] Item view
+- [x] Desktop mouse selection
+- [ ] Middle click behaviour
+- [ ] Launching external browser
+- [ ] Launching internal browser
+- [ ] Drag&Drop
+
+### UI Layouts
+
+- [x] 3 pane view (wide)
+- [ ] 3 pane view (email-like)
+- [x] Automatic switching
+
+### UI Tools
+
+- [ ] Simple Subscription Dialog
+- [ ] Advanced Subscription Dialog
+- [ ] Update Monitor
