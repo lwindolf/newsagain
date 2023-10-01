@@ -11,31 +11,30 @@
 header {
         background: #eee;
         border-bottom: 1px solid #ddd;
-        padding: 0.4rem 0;
+        padding: 0.5rem 0;
         position: sticky;
         top: 0;
-        height: 2rem;
-        width: 100%;
-        font-size: 1.2rem;
-        z-index: 999;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-}
-
-header button {
-        float: left;
+        height: 2.1rem;
         font-size: 1.1rem;
-        font-weight: bold;
-        margin: 0 0.8rem;
-        background: #ddd;
-        color: black;
-        height: 2rem;
-        width: 2rem;
-        border: 0;
-        vertical-align: text-bottom;
+        z-index: 999;
+        
+        display: flex;
 }
 
-header button:hover {
+header .title {        
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+        flex: 10 10;
+}
+
+header .switchView {
+        margin-right: 0.4rem;
+        padding: 0 0.4rem
+}
+
+header .switchView:hover {
         background: #ccc;
 }
 
@@ -43,8 +42,6 @@ header .icon {
         height: 2rem;
         width: 2rem;
         vertical-align: text-bottom;
-        margin-right: 0.5rem;
-        float: right;
 }
 
 .feed {

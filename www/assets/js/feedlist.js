@@ -12,29 +12,29 @@ class FeedList {
     // id to node lookup map
     static nodeById = {};
 
+    static feedTemplate = Handlebars.compile(`
+        {{#if feed.icon}}
+            <img class='icon' src='{{feed.icon}}'/>
+        {{/if}}
+        <span class='title'>{{{feed.title}}}</span>
+        <span class='count' data-count='{{feed.unreadCount}}'>{{feed.unreadCount}}</span>
+    `);
+
     // Return node by id
     static getNodeById(id) {
         return FeedList.nodeById[id];
     }
 
-    static #nodeUpdated(f) {
+    static #nodeUpdated(feed) {
         // FIXME: folder recursion
 
-        let unreadCount = f.items.filter((i) => {
+        feed.unreadCount = feed.items.filter((i) => {
             return (i.read === false);
         }).length;
 
-        let e = document.querySelector(`.feed[data-id="${f.id}"]`);
-        if(e) {
-            e.innerHTML = '';
-            if(f.icon)
-                e.innerHTML = `<img class='icon' src='${f.icon}'/>`;
-
-            e.innerHTML += `
-                <span class='title'>${f.title}</span>
-                <span class='count' data-count='${unreadCount}'>${unreadCount}</span>
-            `;
-        }
+        let e = document.querySelector(`.feed[data-id="${feed.id}"]`);
+        if(e)
+            e.innerHTML = FeedList.feedTemplate({ feed: feed });
     }
 
     // Recursively create folder layout

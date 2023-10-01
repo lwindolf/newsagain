@@ -5,6 +5,14 @@
 import { FeedList } from './feedlist.js';
 
 class ItemList {
+    static headerTemplate = Handlebars.compile(`
+        <span class='switchView' data-view='{{view}}'>&lt;</span>
+        <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
+        {{#if node.icon}}
+            <img class='icon' src='{{node.icon}}'/>
+        {{/if}}
+    `);
+
     // pretty print date from epoch
     static #getShortDateStr(time) {
         return new Intl.DateTimeFormat(
@@ -33,10 +41,8 @@ class ItemList {
         if(!document.getElementById('itemlist'))
             return;
 
-        document.getElementById('itemlistViewTitle').innerHTML = `
-            <img class='icon' src='${node.icon}'/>
-            <a target='_system' href='${node.homepage}'>${node.title}</a>
-        `;
+        document.getElementById('itemlistViewTitle').innerHTML =
+            ItemList.headerTemplate({ node: node, view: 'feedlist' });
         document.getElementById('itemViewContent').innerHTML = '';
         document.getElementById('itemlistViewContent').innerHTML = node.items.map(i => `<div class='item' data-id='${i.id}' data-feed='${id}'></div>`).join(' ');
         node.items.forEach((i) => ItemList.#itemUpdated(i));
@@ -53,10 +59,8 @@ class ItemList {
 
         // FIXME: handle folders
 
-        document.getElementById('itemViewTitle').innerHTML = `
-            <img class='icon' src='${node.icon}'/>
-            <a target='_system' href='${node.homepage}'>${node.title}</a>
-        `;
+        document.getElementById('itemViewTitle').innerHTML =
+            ItemList.headerTemplate({ node: node, view: 'itemlist' });
         document.getElementById('itemViewContent').innerHTML = `
             <h1><a target='_system' href='${item.source}'>${item.title}</a></h1>
             <span class='date'>${ItemList.#getShortDateStr(item.time)}</span>
