@@ -75,6 +75,7 @@ a 🛑 means the feature won't be ported.
 - [ ] HTTP 429
 - [ ] HTTP 410
 - [ ] Basic Auth
+- [ ] Secret Management
 - 🛑 Proxy Support
 
 ### Online Source Support
