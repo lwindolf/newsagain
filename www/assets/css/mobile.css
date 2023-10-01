@@ -2,26 +2,21 @@
         display: none;
 }
 
-#feedlistViewTitle {
-        padding-left: 12px;
-        padding-right: 12px;
-}
-
-#feedlist > .title {
-        font-size: 120%;
-        border-bottom: 1px solid #ddd;
-        padding: 12px;
+#feedlistViewTitle, #itemlistViewTitle, #itemViewTitle {
+        font-size: 2rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
 }
 
 header {
         background: #eee;
         border-bottom: 1px solid #ddd;
-        padding: 6px 0;
+        padding: 0.4rem 0;
         position: sticky;
         top: 0;
-        height: 32px;
+        height: 2rem;
         width: 100%;
-        font-size: 18pt;
+        font-size: 1.2rem;
         z-index: 999;
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -29,12 +24,13 @@ header {
 
 header button {
         float: left;
-        font-size: 14pt;
+        font-size: 1.1rem;
         font-weight: bold;
-        margin: 0 12px;
+        margin: 0 0.8rem;
         background: #ddd;
-        height: 32px;
-        width: 32px;
+        color: black;
+        height: 2rem;
+        width: 2rem;
         border: 0;
         vertical-align: text-bottom;
 }
@@ -44,22 +40,22 @@ header button:hover {
 }
 
 header .icon {
-        height: 32px;
-        width: 32px;
+        height: 2rem;
+        width: 2rem;
         vertical-align: text-bottom;
-        margin-right: 8px;
+        margin-right: 0.5rem;
         float: right;
 }
 
 .feed {
         font-size: 150%;
         border-bottom: 1px solid #ddd;
-        padding: 12px;
+        padding: 0.8rem;
 }
 
 .feed .icon {
-        height: 24px;
-        width: 24px;
+        height: 1.5rem;
+        width: 1.5rem;
         vertical-align: text-bottom;
-        margin-right: 8px;
+        margin-right: 0.5rem;
 }

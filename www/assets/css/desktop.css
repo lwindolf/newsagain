@@ -12,36 +12,27 @@ header {
         display: none;
 }
 
-#item {
-        width: auto;
-        flex: 3;
-}
-
 #itemlist {
         outline: 1px solid #ddd;
-        width: 20%;
-        flex: 1;
 }
 
 #feedlist {
-        width: 50%;
         background: #fafafa;
-        flex: 1;
 }
 
 #feedlist > .title {
-        padding:12px;
+        padding: 0.8rem;
         border-bottom: 1px solid #ddd;
 }
 
 .feed {
-        padding: 6px 12px;
+        padding: 0.4rem 0.8rem;
         font-weight: bold;      
 }
 .feed .icon {
-        height: 16px;
-        width: 16px;
+        height: 1rem;
+        width: 1rem;
         vertical-align: text-bottom;
-        margin-right: 6px;
+        margin-right: 0.4rem;
 }
 
