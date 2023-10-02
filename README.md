@@ -57,6 +57,7 @@ a 🛑 means the feature won't be ported.
 - [x] Atom 1.0 / RSS 1.0, 1.1 and 2.0
 - [ ] RSS Namespace support
 - [x] Favicon discovery
+- [x] Feed auto discovery 
 - 🛑 RSS 0.9x support
 - 🛑 Atom 0.3 support
 
@@ -100,6 +101,7 @@ a 🛑 means the feature won't be ported.
 - [ ] Launching external browser
 - [ ] Launching internal browser
 - [ ] Drag&Drop
+- [ ] Keyboard navigation
 - [ ] XDG Integration (URI schema, desktop icon)
 
 ### UI Layouts
@@ -113,7 +115,7 @@ a 🛑 means the feature won't be ported.
 
 ### UI Tools
 
-- [ ] Simple Subscription Dialog
+- [x] Simple Subscription Dialog
 - [ ] Advanced Subscription Dialog
 - [ ] Update Monitor
 - [ ] Plugins Support (JS instead of Python)
