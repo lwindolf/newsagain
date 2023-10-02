@@ -43,6 +43,10 @@ class AtomParser {
                         sourceId    : XPath.lookup(node, 'ns:id'),
                         time        : DateParser.parse(XPath.lookup(node, 'ns:updated'))
                 });
+
+                if(!item.time)
+                        item.time = DateParser.parse(XPath.lookup(node, 'dc:date'));
+
                 XPath.foreach(node, 'ns:link', AtomParser.parseEntryLink, item);
                 feed.items.push(item);
         }

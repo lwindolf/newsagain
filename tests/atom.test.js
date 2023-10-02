@@ -2,7 +2,7 @@ import { AtomParser } from "../www/assets/js/parsers/atom";
 
 test("atom parse", () => {
         let feed = AtomParser.parse(`<?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:dc="http://purl.org/dc/elements/1.1/">
 
   <title>Example Feed</title>
   <link href="http://example.org/"/>
@@ -26,7 +26,7 @@ test("atom parse", () => {
   <link data="abc"/>
   <link href="http://example.org/2003/12/13/atom02"/>
   <id>urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6b</id>
-  <updated>2003-12-13T18:40:02Z</updated>
+  <dc:date>2003-12-13T18:40:10Z</dc:date>
   <summary>Some text.</summary>
 </entry>
 
@@ -43,6 +43,7 @@ test("atom parse", () => {
 
         expect(feed.items[1].source).toBe('http://example.org/2003/12/13/atom02');
         expect(feed.items[1].sourceId).toBe('urn:uuid:1225c695-cfb8-4ebb-aaaa-80da344efa6b');
+        expect(feed.items[1].time).toBe(1071340810);
 });
 
 test("atom parse link", () => {
