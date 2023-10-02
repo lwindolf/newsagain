@@ -54,12 +54,17 @@ function setupApp() {
     document.addEventListener('auxclick', function(e) {
         let n = e.target;
         while(n) {
-            if(n.classList?.contains('item')) {
-                if (e.button === 1) {                   
-                    e.preventDefault();
-                    ItemList.toggleItemRead(n.dataset.feed, n.dataset.id);
+            if (e.button == 1) {
+                if(n.classList?.contains('item')) {              
+                        e.preventDefault();
+                        ItemList.toggleItemRead(n.dataset.feed, n.dataset.id);
+                    return;
                 }
-                return;
+                if(n.classList?.contains('feed')) {
+                        e.preventDefault();
+                        FeedList.markAllRead(n.dataset.feed);
+                    return;
+                }
             }
             n = n.parentNode;
         }
