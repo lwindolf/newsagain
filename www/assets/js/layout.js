@@ -66,21 +66,20 @@ class Layout {
             Layout.update();
         }, 100);
 
-        // disable Electron menubar
+        // disable Electron menubar hotkeys
         window.addEventListener('keydown', function(e) {
             if ((e.code === 'AltRight') || (e.code === 'AltLeft')) {
                 e.preventDefault();
             }
         });
 
-        document.addEventListener('itemSelected', (e) => Layout.view('item'));
-        document.addEventListener('feedSelected', (e) => Layout.view('itemlist'));
+        document.addEventListener('itemSelected', () => Layout.view('item'));
+        document.addEventListener('feedSelected', () => Layout.view('itemlist'));
         document.addEventListener('click', (e) => {
             let n = e.target.closest('.switchView');
             if(n) {
                 Layout.view(n.dataset.view);
                 e.preventDefault();
-                return;
             }
         });
 
