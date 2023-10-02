@@ -96,7 +96,7 @@ a 🛑 means the feature won't be ported.
 - [x] Item list
 - [x] Item view
 - [x] Desktop mouse selection
-- [ ] Middle click behaviour
+- [x] Middle click behaviour
 - [ ] Launching external browser
 - [ ] Launching internal browser
 - [ ] Drag&Drop

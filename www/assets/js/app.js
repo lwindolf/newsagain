@@ -3,69 +3,34 @@
 import { FeedList } from './feedlist.js';
 import { ItemList } from './itemlist.js';
 import { Layout } from './layout.js';
-import { debounce } from './helpers/debounce.js';
+
+// generic event forwarding with dataset as detail
+// allows for optional check condition function to verify the event (e.g. button check)
+function connect(eventName, selector, customEventName, condition = undefined) {
+    document.addEventListener(eventName, function(e) {
+        let n = e.target.closest(selector);
+
+        if(condition && !condition(e))
+            return;
+
+        if (n) {
+            document.dispatchEvent(new CustomEvent(customEventName, {
+                detail: n.dataset
+            }));        
+            e.preventDefault();
+        }
+    });
+}
 
 function setupApp() {
     FeedList.setup();
     ItemList.setup();
-    Layout.update();
+    Layout.setup();
 
-    window.onresize = debounce(function() {
-        Layout.update();
-    }, 100);
-
-    // disable Electron menubar
-    window.addEventListener('keydown', function(e) {
-        if ((e.code === 'AltRight') || (e.code === 'AltLeft')) {
-            e.preventDefault();
-        }
-    });
-
-    document.addEventListener('click', function(e) {
-        let n = e.target;
-        while(n) {
-            if(n.classList?.contains('feed')) {
-                FeedList.select(n.dataset.id);
-                Layout.view('itemlist');
-                e.preventDefault();
-                return;
-            }
-            if(n.classList?.contains('item')) {
-                [...document.querySelectorAll('.item.selected')]
-                    .forEach((n) => n.classList.remove('selected'));
-                n.classList.add('selected');
-                ItemList.loadItem(n.dataset.feed, n.dataset.id);
-                Layout.view('item');
-                e.preventDefault();
-                return;
-            }
-            if(n.classList?.contains('switchView')) {
-                Layout.view(n.dataset.view);
-                e.preventDefault();
-                return;
-            }
-            n = n.parentNode;
-        }
-    })
-
-    document.addEventListener('auxclick', function(e) {
-        let n = e.target;
-        while(n) {
-            if (e.button == 1) {
-                if(n.classList?.contains('item')) {              
-                        e.preventDefault();
-                        ItemList.toggleItemRead(n.dataset.feed, n.dataset.id);
-                    return;
-                }
-                if(n.classList?.contains('feed')) {
-                        e.preventDefault();
-                        FeedList.markAllRead(n.dataset.id);
-                    return;
-                }
-            }
-            n = n.parentNode;
-        }
-    });
+    connect('click', '.feed', 'feedSelected');
+    connect('click', '.item', 'itemSelected');
+    connect('auxclick', '.item', 'itemReadToggle',  (e) => e.button == 1);
+    connect('auxclick', '.feed', 'feedMarkAllRead', (e) => e.button == 1);
 }
 
 export { setupApp };

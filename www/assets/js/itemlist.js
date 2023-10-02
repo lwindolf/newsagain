@@ -80,9 +80,23 @@ class ItemList {
         `;
     }
 
+    // select an item
+    static #select(feedId, id) {
+        [...document.querySelectorAll('.item.selected')]
+            .forEach((n) => n.classList.remove('selected'));
+        document.querySelector(`.item[data-id="${id}"]`).classList.add('selected');
+        ItemList.loadItem(feedId, id);
+    }
+
     static setup() {
         document.addEventListener('itemUpdated', (e) => {
             ItemList.#itemUpdated(e.detail);
+        });
+        document.addEventListener('itemSelected', (e) => {
+            ItemList.#select(e.detail.feed, e.detail.id)
+        });
+        document.addEventListener('itemReadToggle', (e) => {
+            ItemList.toggleItemRead(e.detail.feed, e.detail.id);
         });
     }
 }

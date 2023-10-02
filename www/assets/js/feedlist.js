@@ -12,7 +12,7 @@ class FeedList {
     static root = { children: [] };
 
     // id to node lookup map
-    static nodeById = {};
+    static #nodeById = {};
 
     // currently selected node
     static selected;
@@ -33,7 +33,7 @@ class FeedList {
 
     // Return node by id
     static getNodeById(id) {
-        return FeedList.nodeById[id];
+        return FeedList.#nodeById[id];
     }
 
     static #nodeUpdated(feed) {
@@ -55,13 +55,13 @@ class FeedList {
         render('#feedlistViewContent', this.childFeedsTemplate, { children: folder.children });
         folder.children.forEach((f) => {
             // FIXME: support recursion
-            FeedList.nodeById[f.id] = f;
+            FeedList.#nodeById[f.id] = f;
             FeedList.#nodeUpdated(f);
         });
     }
 
     // recursively mark all read on node and its children
-    static markAllRead(id) {
+    static #markAllRead(id) {
         let node = FeedList.getNodeById(id);
 
         // FIXME: support recursion
@@ -78,7 +78,7 @@ class FeedList {
     }
 
     // select the given node id
-    static select(id) {
+    static #select(id) {
         FeedList.selected = FeedList.getNodeById(id);
 
         [...document.querySelectorAll('.feed.selected')]
@@ -102,6 +102,12 @@ class FeedList {
 
         document.addEventListener('nodeUpdated', (e) => {
             FeedList.#nodeUpdated(e.detail);
+        });
+        document.addEventListener('feedSelected', (e) => {
+            FeedList.#select(e.detail.id);
+        });
+        document.addEventListener('feedMarkAllRead', (e) => {
+            FeedList.#markAllRead(e.detail.id);
         });
 
         // Run initial fetch
