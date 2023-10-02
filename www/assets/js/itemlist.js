@@ -48,6 +48,17 @@ class ItemList {
         node.items.forEach((i) => ItemList.#itemUpdated(i));
     }
 
+    // toggle read status
+    static toggleItemRead(feedId, id) {
+        let node = FeedList.getNodeById(feedId);
+        let item = node.getItemById(id);
+
+        item.read = !item.read;
+
+        document.dispatchEvent(new CustomEvent('itemUpdated', { detail: item }));
+        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
+    }
+
     // load content of a single item
     static loadItem(feedId, id) {
         let node = FeedList.getNodeById(feedId);

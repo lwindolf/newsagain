@@ -22,31 +22,48 @@ function setupApp() {
     });
 
     document.addEventListener('click', function(e) {
-        e = e.target;
-        while(e) {
-            if(e.classList?.contains('feed')) {
+        let n = e.target;
+        while(n) {
+            if(n.classList?.contains('feed')) {
                 [...document.querySelectorAll('.feed.selected')]
-                    .forEach((e) => e.classList.remove('selected'));
-                e.classList.add('selected');
-                ItemList.loadFeed(e.dataset.id);
+                    .forEach((n) => n.classList.remove('selected'));
+                n.classList.add('selected');
+                ItemList.loadFeed(n.dataset.id);
                 Layout.view('itemlist');
+                e.preventDefault();
                 return;
             }
-            if(e.classList?.contains('item')) {
+            if(n.classList?.contains('item')) {
                 [...document.querySelectorAll('.item.selected')]
-                    .forEach((e) => e.classList.remove('selected'));
-                e.classList.add('selected');
-                ItemList.loadItem(e.dataset.feed, e.dataset.id);
+                    .forEach((n) => n.classList.remove('selected'));
+                n.classList.add('selected');
+                ItemList.loadItem(n.dataset.feed, n.dataset.id);
                 Layout.view('item');
+                e.preventDefault();
                 return;
             }
-            if(e.classList?.contains('switchView')) {
-                Layout.view(e.dataset.view);
+            if(n.classList?.contains('switchView')) {
+                Layout.view(n.dataset.view);
+                e.preventDefault();
                 return;
             }
-            e = e.parentNode;
+            n = n.parentNode;
         }
     })
+
+    document.addEventListener('auxclick', function(e) {
+        let n = e.target;
+        while(n) {
+            if(n.classList?.contains('item')) {
+                if (e.button === 1) {                   
+                    e.preventDefault();
+                    ItemList.toggleItemRead(n.dataset.feed, n.dataset.id);
+                }
+                return;
+            }
+            n = n.parentNode;
+        }
+    });
 }
 
 export { setupApp };

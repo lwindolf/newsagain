@@ -20,7 +20,7 @@ function render(selector, template, params, append = false) {
     } catch(e) {
         result = `Rendering exception: ${e}`;
     }
-    
+
     if(append)
         e.innerHTML += result;
     else
