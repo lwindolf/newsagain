@@ -9,22 +9,28 @@
 //   true
 // - Allows updating the dialog with new values
 
+import { template } from '../helpers/render.js';
+
 class Dialog {
     #callback;
     #template;
 
     // listener function
     #onclickFunc;
+    #onsubmitFunc;
 
     // Build a modal dialog from a Handlebars template
-    constructor(template, data, callback) {
-        this.#template = template;
+    constructor(templateStr, data, callback) {
+        this.#template = template(templateStr);
         this.#callback = callback;
 
         document.getElementById('modal').style.display = 'block';
-        document.getElementById('modalContent').innerHTML = template(data);
+        document.getElementById('modalContent').innerHTML = '<form>'+this.#template(data)+'</form>';
         document.addEventListener('click', this.#onclickFunc = (e) => {
             this.#onclick(e);
+        });
+        document.addEventListener('submit', this.#onsubmitFunc = (e) => {
+            this.#onsubmit(e);
         });
     }
 
@@ -35,19 +41,23 @@ class Dialog {
             e.preventDefault();
             return;
         }
+    }
 
-        if(e.target.closest('input[type="submit"]')) {
-            var inputData = {};
+    #onsubmit(e) {
+        var inputData = {};
 
-            [...document.querySelectorAll('#modalContent input, #modalContent select, #modalContent textarea')]
-                .forEach((e) => (inputData[e.name] = e.value));
+        [...document.querySelectorAll('#modalContent input, #modalContent select, #modalContent textarea')]
+            .forEach((e) => (inputData[e.name] = e.value));
 
-            if(this.#callback(inputData))
-                this.update(inputData);
+        this.#callback(inputData).then((done) => {
+            if(done)
+                this.destroy();
+            else
+                console.log("no destroy");
+        });
 
-            e.preventDefault();
-            return;
-        }
+        e.preventDefault();
+        return;
     }
 
     // Update the dialog with new data, along with a conditional 
@@ -62,6 +72,7 @@ class Dialog {
         document.getElementById('modal').style.display = 'none';
         document.getElementById('modalContent').innerHTML = '';
         document.removeEventListener('click', this.#onclickFunc);
+        document.removeEventListener('submit', this.#onsubmitFunc);
     }
 }
 

@@ -3,34 +3,22 @@
 import { FeedList } from './feedlist.js';
 import { ItemList } from './itemlist.js';
 import { Layout } from './layout.js';
-
-// generic event forwarding with dataset as detail
-// allows for optional check condition function to verify the event (e.g. button check)
-function connect(eventName, selector, customEventName, condition = undefined) {
-    document.addEventListener(eventName, function(e) {
-        let n = e.target.closest(selector);
-
-        if(condition && !condition(e))
-            return;
-
-        if (n) {
-            document.dispatchEvent(new CustomEvent(customEventName, {
-                detail: n.dataset
-            }));        
-            e.preventDefault();
-        }
-    });
-}
+import { HelpDialog } from './dialogs/help.js';
+import { forward, keydown } from './helpers/events.js';
 
 function setupApp() {
     FeedList.setup();
     ItemList.setup();
     Layout.setup();
 
-    connect('click', '.feed', 'feedSelected');
-    connect('click', '.item', 'itemSelected');
-    connect('auxclick', '.item', 'itemReadToggle',  (e) => e.button == 1);
-    connect('auxclick', '.feed', 'feedMarkAllRead', (e) => e.button == 1);
+    forward('click', '.feed', 'feedSelected');
+    forward('click', '.item', 'itemSelected');
+    forward('auxclick', '.item', 'itemReadToggle',  (e) => e.button == 1);
+    forward('auxclick', '.feed', 'feedMarkAllRead', (e) => e.button == 1);
+
+    keydown('body', /* F1 */        (e) => (e.keyCode === 112),             () => new HelpDialog());
+    keydown('body', /* Ctrl-S */    (e) => (e.keyCode === 83 && e.ctrlKey), () => document.dispatchEvent(new CustomEvent("feedMarkAllRead", { detail: { id: FeedList.getSelectedId()}})));
+    keydown('body', /* Ctrl-U */    (e) => (e.keyCode === 85 && e.ctrlKey), () => FeedList.update());
 }
 
 export { setupApp };

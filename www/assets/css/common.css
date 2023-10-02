@@ -21,6 +21,33 @@ a:hover {
         overflow-y: auto;
 }
 
+header {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+
+        display: flex;
+}
+
+header .title {
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        min-width: 0;
+        flex: 10 10;
+}
+
+#feedlistViewTitle .addBtn {
+        padding: 0 0.4rem;
+}
+
+#feedlistViewTitle .addBtn:hover {
+        background: #ccc;
+        cursor: pointer;
+}
+
 #itemViewContent {
         padding: 0 0.8rem;
 }
@@ -144,4 +171,12 @@ a:hover {
         color: #000;
         text-decoration: none;
         cursor: pointer;
+}
+
+#modal table {
+        border-collapse: collapse;
+}
+#modal table td {
+        border: 1px solid #ccc;
+        padding: 1rem;
 }

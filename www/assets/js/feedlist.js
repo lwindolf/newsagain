@@ -5,6 +5,7 @@
 
 import { Feed } from './feed.js';
 import { ItemList } from './itemlist.js';
+import { SimpleSubscriptionDialog } from './dialogs/simpleSubscription.js';
 import { template, render } from './helpers/render.js';
 
 class FeedList {
@@ -15,7 +16,10 @@ class FeedList {
     static #nodeById = {};
 
     // currently selected node
-    static selected;
+    static #selected;
+
+    // currently known max feed id
+    static #maxId = 0;
 
     static feedTemplate = template(`
         {{#if feed.icon}}
@@ -30,6 +34,11 @@ class FeedList {
             <div class='feed' data-id='{{id}}'></div>
         {{/each}}
     `);
+
+    // Return selected node id
+    static getSelectedId() {
+        return FeedList.#selected.id;
+    }
 
     // Return node by id
     static getNodeById(id) {
@@ -55,9 +64,19 @@ class FeedList {
         render('#feedlistViewContent', this.childFeedsTemplate, { children: folder.children });
         folder.children.forEach((f) => {
             // FIXME: support recursion
+            if(f.id > FeedList.maxId)
+                FeedList.maxId = f.id;
             FeedList.#nodeById[f.id] = f;
             FeedList.#nodeUpdated(f);
         });
+    }
+
+    // Add a new node (e.g. on subscribing)
+    static add(f) {
+        this.root.children.push(f);
+        this.#createFolder(this.root);
+        f.update();
+        console.log(this.root);
     }
 
     // recursively mark all read on node and its children
@@ -71,7 +90,7 @@ class FeedList {
                 return;
 
             i.read = true;
-            if(node === FeedList.selected)
+            if(node === FeedList.#selected)
                 document.dispatchEvent(new CustomEvent('itemUpdated', { detail: i }));
         })
         document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
@@ -79,7 +98,7 @@ class FeedList {
 
     // select the given node id
     static #select(id) {
-        FeedList.selected = FeedList.getNodeById(id);
+        FeedList.#selected = FeedList.getNodeById(id);
 
         [...document.querySelectorAll('.feed.selected')]
             .forEach((n) => n.classList.remove('selected'));
@@ -108,6 +127,11 @@ class FeedList {
         });
         document.addEventListener('feedMarkAllRead', (e) => {
             FeedList.#markAllRead(e.detail.id);
+        });
+        document.addEventListener('click', (e) => {
+            if(e.target.closest('.addBtn')) {
+                new SimpleSubscriptionDialog();
+            }
         });
 
         // Run initial fetch

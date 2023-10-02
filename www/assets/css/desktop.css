@@ -8,8 +8,17 @@
         display: flex;
 }
 
-header {
+#itemlist header, #item header {
         display: none;
+}
+
+#feedlistViewTitle {
+        font-size: 1.4rem;
+}
+
+#feedlist header {
+        height: 1.6rem;
+        padding: 0.5rem 0.8rem;
 }
 
 #itemlist {
