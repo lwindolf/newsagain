@@ -189,8 +189,8 @@ test("Link auto discover: multiple links", async () => {
     })
 );
 
-    let links = await linkAutoDiscover('https://lzone.de');
+    let links = await linkAutoDiscover('https://lzone.de/blog');
     expect(links.length).toBe(2);
-    expect(links[0]).toBe("https://lzone.de/feed/devops.rss")
+    expect(links[0]).toBe("https://lzone.de/blog/feed/devops.rss")
     expect(links[1]).toBe("https://lzone.de/feed/devops.atom")
 })

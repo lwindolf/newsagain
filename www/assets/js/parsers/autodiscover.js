@@ -31,12 +31,21 @@ function parserAutoDiscover(str) {
 
 // for a given HTML document link return all feed links found
 async function linkAutoDiscover(url) {
-    // Parse HTML
-    const doc = await fetch(url)
-        .then((response) => response.text())
-        .then((str) => {
-            return new DOMParser().parseFromString(str, 'text/html');
-        });
+    let doc;
+
+    if(!url.includes("://"))
+        url = "https://" + url;
+    
+    try {
+        // Parse HTML
+        doc = await fetch(url)
+            .then((response) => response.text())
+            .then((str) => {
+                return new DOMParser().parseFromString(str, 'text/html');
+            });
+    } catch(e) {
+        // ignore
+    }
 
     if(!doc)
         return [];
@@ -53,12 +62,16 @@ async function linkAutoDiscover(url) {
                   "/html/head/link[@rel='alternate'][@type='application/atom+xml' or @type='application/rss+xml' or @type='application/rdf+xml' or @type='text/xml']",
                   (node) => {
                         let href = XPath.lookup(node, '@href');
-                        if(!href.includes("://"))
-                            if(!href.startsWith('/') || url[url.length - 1] === '/')
-                                href = url + '/' + href;
+                        if(!href.includes("://")) {
+                            var u = new URL(url);
+                            if(href.startsWith('/'))
+                                u.pathname = href;
                             else
-                                href = url + href;
-                        results.push(href);
+                                u.pathname += "/" + href;
+                            results.push(u.href);
+                        } else {
+                            results.push(href);
+                        }
                   });
 
     return results;
