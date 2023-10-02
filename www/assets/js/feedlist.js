@@ -4,6 +4,7 @@
 // subscriptions (e.g. local, Google Reader API, ...)
 
 import { Feed } from './feed.js';
+import { ItemList } from './itemlist.js';
 import { template, render } from './helpers/render.js';
 
 class FeedList {
@@ -12,6 +13,9 @@ class FeedList {
 
     // id to node lookup map
     static nodeById = {};
+
+    // currently selected node
+    static selected;
 
     static feedTemplate = template(`
         {{#if feed.icon}}
@@ -54,6 +58,33 @@ class FeedList {
             FeedList.nodeById[f.id] = f;
             FeedList.#nodeUpdated(f);
         });
+    }
+
+    // recursively mark all read on node and its children
+    static markAllRead(id) {
+        let node = FeedList.getNodeById(id);
+
+        // FIXME: support recursion
+
+        node.items.forEach((i) => {
+            if(i.read)
+                return;
+
+            i.read = true;
+            if(node === FeedList.selected)
+                document.dispatchEvent(new CustomEvent('itemUpdated', { detail: i }));
+        })
+        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
+    }
+
+    // select the given node id
+    static select(id) {
+        FeedList.selected = FeedList.getNodeById(id);
+
+        [...document.querySelectorAll('.feed.selected')]
+            .forEach((n) => n.classList.remove('selected'));
+        document.querySelector(`.feed[data-id="${id}"]`).classList.add('selected');
+        ItemList.loadFeed(id);
     }
 
     // Load folders/feeds from DB

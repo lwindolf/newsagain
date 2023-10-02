@@ -25,10 +25,7 @@ function setupApp() {
         let n = e.target;
         while(n) {
             if(n.classList?.contains('feed')) {
-                [...document.querySelectorAll('.feed.selected')]
-                    .forEach((n) => n.classList.remove('selected'));
-                n.classList.add('selected');
-                ItemList.loadFeed(n.dataset.id);
+                FeedList.select(n.dataset.id);
                 Layout.view('itemlist');
                 e.preventDefault();
                 return;
@@ -62,7 +59,7 @@ function setupApp() {
                 }
                 if(n.classList?.contains('feed')) {
                         e.preventDefault();
-                        FeedList.markAllRead(n.dataset.feed);
+                        FeedList.markAllRead(n.dataset.id);
                     return;
                 }
             }
