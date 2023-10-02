@@ -8,6 +8,11 @@
         padding-right: 0.8rem;
 }
 
+#feedlistViewTitle .addBtn:hover {
+        background: #ccc;
+        cursor: pointer;
+}
+
 header {
         background: #eee;
         border-bottom: 1px solid #ddd;
