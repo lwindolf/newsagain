@@ -149,7 +149,7 @@ header .title {
         padding: 20px;
         border: 1px solid #888;
         width: 80%;
-        max-width: 800rem;
+        max-width: 800px;
 }
 
 #modalContent input[type="text"] {
