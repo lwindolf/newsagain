@@ -8,11 +8,11 @@ html, body {
         background: white;
 }
 
-a {
+h1 a, a.title {
         color: #222;
         text-decoration: none;
 }
-a:hover {
+h1 a:hover, a.title:hover {
         text-decoration: underline;
 }
 
@@ -175,4 +175,17 @@ header .title {
 #modal table td {
         border: 1px solid #ccc;
         padding: 1rem;
+}
+
+/* link hover indication */
+
+#linkHover {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: auto;
+        display: none;
+        background: #f0f0f0;
+        text-overflow: clip;
+        padding: 0.2rem;
 }

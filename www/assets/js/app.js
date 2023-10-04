@@ -11,11 +11,6 @@ function setupApp() {
     ItemList.setup();
     Layout.setup();
 
-    forward('click', '.feed', 'feedSelected');
-    forward('click', '.item', 'itemSelected');
-    forward('auxclick', '.item', 'itemReadToggle',  (e) => e.button == 1);
-    forward('auxclick', '.feed', 'feedMarkAllRead', (e) => e.button == 1);
-
     keydown('body', /* F1 */        (e) => (e.keyCode === 112),             () => new HelpDialog());
     keydown('body', /* Ctrl-S */    (e) => (e.keyCode === 83 && e.ctrlKey), () => document.dispatchEvent(new CustomEvent("feedMarkAllRead", { detail: { id: FeedList.getSelectedId()}})));
     keydown('body', /* Ctrl-U */    (e) => (e.keyCode === 85 && e.ctrlKey), () => FeedList.update());

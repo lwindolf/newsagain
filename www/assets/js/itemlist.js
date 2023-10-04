@@ -4,6 +4,8 @@
 
 import { FeedList } from './feedlist.js';
 import { template, render } from './helpers/render.js';
+import { connect, forward } from './helpers/events.js';
+
 
 class ItemList {
     static headerTemplate = template(`
@@ -88,6 +90,18 @@ class ItemList {
         ItemList.loadItem(feedId, id);
     }
 
+    static #openItemLink(feedId, id) {
+        let node = FeedList.getNodeById(feedId);
+        let item = node.getItemById(id);
+
+        window.open(item.source, '_system', 'location=yes');
+    }
+
+    static #showLink(link, visible) {
+        document.getElementById('linkHover').innerText = link;
+        document.getElementById('linkHover').style.display = visible?'block':'none';
+    }
+
     static setup() {
         document.addEventListener('itemUpdated', (e) => {
             ItemList.#itemUpdated(e.detail);
@@ -98,6 +112,19 @@ class ItemList {
         document.addEventListener('itemReadToggle', (e) => {
             ItemList.toggleItemRead(e.detail.feed, e.detail.id);
         });
+        connect('mouseover', 'a', (el) => {
+            ItemList.#showLink(el.getAttribute('href'), true);
+        });
+        connect('mouseout', 'a', (el) => {
+            ItemList.#showLink(el.getAttribute('href'), false)
+        });
+        connect('dblclick', '.item', (el) => {
+            ItemList.#openItemLink(el.dataset.feed, el.dataset.id);
+        });
+
+        // emit signals
+        forward('click', '.item', 'itemSelected');
+        forward('auxclick', '.item', 'itemReadToggle', (e) => e.button == 1);
     }
 }
 

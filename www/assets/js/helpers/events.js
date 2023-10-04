@@ -4,10 +4,10 @@
 // allows for optional check condition function to verify the event (e.g. button check)
 function forward(eventName, selector, customEventName, condition = undefined) {
     document.addEventListener(eventName, function(e) {
-        let n = e.target.closest(selector);
-
         if(condition && !condition(e))
             return;
+
+        let n = e.target.closest(selector);
 
         if (n) {
             document.dispatchEvent(new CustomEvent(customEventName, {
@@ -22,13 +22,13 @@ function forward(eventName, selector, customEventName, condition = undefined) {
 // allows for optional check condition function to verify the event (e.g. button check)
 function connect(eventName, selector, callback, condition = undefined) {
     document.addEventListener(eventName, function(e) {
-        let n = e.target.closest(selector);
-
         if(condition && !condition(e))
             return;
 
+        let n = e.target.closest(selector);
+
         if (n) {
-            callback(n.dataset);
+            callback(n);
             e.preventDefault();
         }
     });

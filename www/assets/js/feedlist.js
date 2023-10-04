@@ -7,6 +7,7 @@ import { Feed } from './feed.js';
 import { ItemList } from './itemlist.js';
 import { SimpleSubscriptionDialog } from './dialogs/simpleSubscription.js';
 import { template, render } from './helpers/render.js';
+import { forward } from './helpers/events.js';
 
 class FeedList {
     // hierarchical list of children
@@ -133,6 +134,10 @@ class FeedList {
                 new SimpleSubscriptionDialog();
             }
         });
+
+        // emit signals
+        forward('click', '.feed', 'feedSelected');
+        forward('auxclick', '.feed', 'feedMarkAllRead', (e) => e.button == 1);
 
         // Run initial fetch
         this.update();
