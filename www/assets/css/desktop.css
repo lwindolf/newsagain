@@ -34,6 +34,10 @@
         border-bottom: 1px solid #ddd;
 }
 
+.selected {
+        background: #eee;
+}
+
 .feed {
         padding: 0.4rem 0.8rem;
         font-weight: bold;      

@@ -52,10 +52,6 @@ header .title {
         padding: 0 0.8rem;
 }
 
-.selected {
-        background: #eee;
-}
-
 .feed, .item {
         cursor: pointer;
         overflow: hidden;
