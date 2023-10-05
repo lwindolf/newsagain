@@ -44,7 +44,7 @@ console.log(`loadItem(${feedId}, ${id})`);
             ItemView.#loadItem(e.detail.feed, e.detail.id);
         });
 
-        if(cordova.platformId !== 'browser') {
+        if(cordova.platformId === 'electron') {
             connect('mouseover', 'a', (el) => {
                 ItemView.#showLink(el.getAttribute('href'), true);
             });
