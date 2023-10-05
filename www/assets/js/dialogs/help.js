@@ -29,6 +29,19 @@ class HelpDialog extends Dialog {
                     <td>Update All</td>
                 </tr>
             </table>
+
+            <h3>Touch</h3>
+
+            <table>
+                <tr>
+                    <td>Swipe Left</td>
+                    <td>Back to Item / Feed List</td>
+                </tr>
+                <tr>
+                    <td>Swipe Right</td>
+                    <td>Next Unread</td>
+                </tr>
+            </table>
         `,
         { /* no data */ },
         async () => {
