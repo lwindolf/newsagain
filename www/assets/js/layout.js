@@ -10,38 +10,40 @@
 // triggering it
 
 import Split from './lib/split.es.js';
+import { ItemList } from './itemlist.js';
 import { debounce } from './helpers/debounce.js';
 
 class Layout {
-    static isSmall;
-    static split;
+    static #isSmall;
+    static #split;
+    static #view;
 
     static update() {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let theme = document.getElementById('theme');
-        let before = Layout.isSmall;
+        let before = Layout.#isSmall;
 
-        Layout.isSmall = (isMobile || window.innerWidth < 800);
-        if(before === Layout.isSmall)
+        Layout.#isSmall = (isMobile || window.innerWidth < 800);
+        if(before === Layout.#isSmall)
             return;
 
-        if(Layout.isSmall) {
+        if(Layout.#isSmall) {
             theme.setAttribute('href', 'assets/css/mobile.css');
-            Layout.isSmall = true
+            Layout.#isSmall = true
             Layout.view('feedlist');
 
-            if(Layout.split)
-                Layout.split.destroy();
+            if(Layout.#split)
+                Layout.#split.destroy();
         } else {
             theme.setAttribute('href', 'assets/css/desktop.css');
-            Layout.isSmall = false;
+            Layout.#isSmall = false;
 
             // show all views (desktop)
             [...document.querySelectorAll('.view')]
                 .forEach(e => (e.style.display = 'block'));
 
             // setup split panes
-            Layout.split = Split(['#feedlist', '#itemlist', '#item'], {
+            Layout.#split = Split(['#feedlist', '#itemlist', '#item'], {
                 sizes: [20, 30, 50],
                 minSize: [10, 10, 10],
                 gutterSize: 6,
@@ -50,15 +52,42 @@ class Layout {
         }
     }
 
-    // switch view (needed only on mobile)
+    // switch view (mobile only)
     static view(name) {
-        if(!Layout.isSmall)
+        if(!Layout.#isSmall)
             return;
+
+        Layout.#view = name;
 
         [...document.querySelectorAll('.view')]
             .forEach(e => (e.style.display = 'none'));
 
         document.getElementById(name).style.display = 'block';
+    }
+
+    // switch to previous view (mobile only)
+    static back() {
+        if(!Layout.#isSmall)
+            return;
+
+        if(Layout.#view === 'itemlist') {
+            Layout.view('feedlist');
+            return;
+        }
+        if(Layout.#view === 'item') {
+            Layout.view('itemlist');
+            return;
+        }
+    }
+
+    static forward() {
+        if(!Layout.#isSmall)
+            return;
+
+        if(Layout.#view === 'item') {
+            ItemList.nextUnread();
+            return;
+        }
     }
 
     static setup() {

@@ -33,12 +33,33 @@ class Feed {
                 this.items       = f.items;
                 this.metadata    = f.metadata;
 
+                this.items.forEach((i) => {
+                    i.node = this;
+                })
+
                 // feed provided favicon should always win
                 if(f.icon)
                     this.icon = f.icon;
 
                 document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
             });
+        }
+
+        // Return the next unread item after the given id
+        getNextUnread(id) {
+            console.log(`getNextUnread(${id})`);
+
+            // search forward in feed items starting from id
+            let idx = 0;
+            let item = this.items.find((i) => { idx++; return (i.id === id); });
+            console.log(item);
+            console.log(idx);
+            console.log(this.items.length);
+            console.log(`result=${this.items[idx]}`);
+            if(idx < this.items.length + 1)
+                return this.items[idx];
+
+            return undefined;
         }
 
         getItemById(id) {

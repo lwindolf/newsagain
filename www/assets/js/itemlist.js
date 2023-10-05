@@ -5,10 +5,10 @@
 import { FeedList } from './feedlist.js';
 import { template, render } from './helpers/render.js';
 import { connect, forward } from './helpers/events.js';
-
+import { DateParser } from './parsers/date.js';
 
 class ItemList {
-    static headerTemplate = template(`
+    static #headerTemplate = template(`
         <span class='switchView' data-view='{{view}}'>&lt;</span>
         <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
         {{#if node.icon}}
@@ -16,21 +16,9 @@ class ItemList {
         {{/if}}
     `);
 
-    // pretty print date from epoch
-    static #getShortDateStr(time) {
-        return new Intl.DateTimeFormat(
-            'en-GB',
-            {
-                dateStyle: 'short',
-                timeStyle: 'short',
-                timeZone: 'GMT'
-            }
-        ).format(time*1000)
-    }
-
     static #itemUpdated(item) {
         document.querySelector(`.item[data-id="${item.id}"]`).innerHTML = `
-            <span class='date'>${ItemList.#getShortDateStr(item.time)}</span>
+            <span class='date'>${DateParser.getShortDateStr(item.time)}</span>
             <span class='title' data-read='${item.read}'>${item.title}</span>
         `;
     }
@@ -44,7 +32,7 @@ class ItemList {
         if(!document.getElementById('itemlist'))
             return;
 
-        render('#itemlistViewTitle', ItemList.headerTemplate, { node: node, view: 'feedlist' });
+        render('#itemlistViewTitle', ItemList.#headerTemplate, { node: node, view: 'feedlist' });
         document.getElementById('itemViewContent').innerHTML = '';
         document.getElementById('itemlistViewContent').innerHTML = node.items.map(i => `<div class='item' data-id='${i.id}' data-feed='${id}'></div>`).join(' ');
         node.items.forEach((i) => ItemList.#itemUpdated(i));
@@ -61,33 +49,26 @@ class ItemList {
         document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
     }
 
-    // load content of a single item
-    static loadItem(feedId, id) {
+    // select an item
+    static #select(feedId, id) {
         let node = FeedList.getNodeById(feedId);
         let item = node.getItemById(id);
 
-        item.read = true
-        document.dispatchEvent(new CustomEvent('itemUpdated', { detail: item }));
-        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
-
-        // FIXME: handle folders
-
-        render('#itemViewTitle', ItemList.headerTemplate, { node: node, view: 'itemlist' });
-        document.getElementById('itemViewContent').innerHTML = `
-            <h1><a target='_system' href='${item.source}'>${item.title}</a></h1>
-            <span class='date'>${ItemList.#getShortDateStr(item.time)}</span>
-            <div class='date'></div>
-            
-            <p>${item.description}</p>
-        `;
-    }
-
-    // select an item
-    static #select(feedId, id) {
         [...document.querySelectorAll('.item.selected')]
             .forEach((n) => n.classList.remove('selected'));
         document.querySelector(`.item[data-id="${id}"]`).classList.add('selected');
-        ItemList.loadItem(feedId, id);
+
+        ItemList.selected = item;
+        item.read = true
+        document.dispatchEvent(new CustomEvent('itemUpdated', { detail: item }));
+        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
+    }
+
+    // select next unread
+    static nextUnread() {
+        let item = ItemList.selected.node.getNextUnread(ItemList.selected.id);
+        if (item)
+            document.dispatchEvent(new CustomEvent('itemSelected', { detail: { feed: ItemList.selected.node.id, id: item.id }}));
     }
 
     static #openItemLink(feedId, id) {
@@ -95,11 +76,6 @@ class ItemList {
         let item = node.getItemById(id);
 
         window.open(item.source, '_system', 'location=yes');
-    }
-
-    static #showLink(link, visible) {
-        document.getElementById('linkHover').innerText = link;
-        document.getElementById('linkHover').style.display = visible?'block':'none';
     }
 
     static setup() {
@@ -112,12 +88,7 @@ class ItemList {
         document.addEventListener('itemReadToggle', (e) => {
             ItemList.toggleItemRead(e.detail.feed, e.detail.id);
         });
-        connect('mouseover', 'a', (el) => {
-            ItemList.#showLink(el.getAttribute('href'), true);
-        });
-        connect('mouseout', 'a', (el) => {
-            ItemList.#showLink(el.getAttribute('href'), false)
-        });
+
         connect('dblclick', '.item', (el) => {
             ItemList.#openItemLink(el.dataset.feed, el.dataset.id);
         });

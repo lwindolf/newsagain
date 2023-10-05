@@ -17,6 +17,10 @@ class HelpDialog extends Dialog {
                     <td>Help</td>
                 </tr>
                 <tr>
+                    <td>Ctrl - right arrow</td>
+                    <td>Next Unread</td>
+                </tr>
+                <tr>
                     <td>Ctrl - S</td>
                     <td>Mark All Read</td>
                 </tr>
