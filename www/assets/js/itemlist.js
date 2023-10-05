@@ -67,6 +67,9 @@ class ItemList {
     // select next unread
     static nextUnread() {
         let item = ItemList.selected.node.getNextUnread(ItemList.selected.id);
+
+        // FIXME: folder recursion
+        
         if (item)
             document.dispatchEvent(new CustomEvent('itemSelected', { detail: { feed: ItemList.selected.node.id, id: item.id }}));
     }
