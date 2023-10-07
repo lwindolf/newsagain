@@ -47,13 +47,17 @@ class Feed {
 
         // Return the next unread item after the given id
         getNextUnread(id) {
-            // search forward in feed items starting from id
-            let idx = 0;
-            let item = this.items.find((i) => { idx++; return (i.id === id); });
-            if(idx < this.items.length + 1)
-                return this.items[idx];
+            let item, idx;
 
-            return undefined;
+            // search forward in feed items starting from id
+            idx = 0;
+            this.items.find((i) => { idx++; return (i.id === id); });       // find current item index
+            item = this.items.slice(idx).find((i) => { return !i.read; });  // find next unread item
+            if(item)
+                return item;
+
+            // if nothing found search from start of feed
+            return this.items.find((i) => { return !i.read; });
         }
 
         getItemById(id) {
