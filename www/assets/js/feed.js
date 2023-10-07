@@ -47,15 +47,9 @@ class Feed {
 
         // Return the next unread item after the given id
         getNextUnread(id) {
-            console.log(`getNextUnread(${id})`);
-
             // search forward in feed items starting from id
             let idx = 0;
             let item = this.items.find((i) => { idx++; return (i.id === id); });
-            console.log(item);
-            console.log(idx);
-            console.log(this.items.length);
-            console.log(`result=${this.items[idx]}`);
             if(idx < this.items.length + 1)
                 return this.items[idx];
 

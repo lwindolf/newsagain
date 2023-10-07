@@ -5,7 +5,7 @@
 import { DateParser } from './parsers/date.js';
 import { FeedList } from './feedlist.js';
 import { template, render } from './helpers/render.js';
-import { connect, forward } from './helpers/events.js';
+import { connect } from './helpers/events.js';
 
 class ItemView {
     static #headerTemplate = template(`
@@ -29,7 +29,7 @@ class ItemView {
     static #loadItem(feedId, id) {
         let node = FeedList.getNodeById(feedId);
         let item = node.getItemById(id);
-console.log(`loadItem(${feedId}, ${id})`);
+
         render('#itemViewTitle', ItemView.#headerTemplate, { node: node, view: 'itemlist' });
         render('#itemViewContent', ItemView.#contentTemplate, { item: item, time: DateParser.getShortDateStr(item.time) });
     }
