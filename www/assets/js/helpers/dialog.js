@@ -18,6 +18,7 @@ class Dialog {
     // listener function
     #onclickFunc;
     #onsubmitFunc;
+    #onkeydownFunc;
 
     // Build a modal dialog from a Handlebars template
     constructor(templateStr, data, callback) {
@@ -31,6 +32,10 @@ class Dialog {
         });
         document.addEventListener('submit', this.#onsubmitFunc = (e) => {
             this.#onsubmit(e);
+        });
+        document.addEventListener('keydown', this.#onkeydownFunc = (e) => {
+            if(e.code === "Escape")
+                this.destroy();
         });
     }
 
@@ -73,6 +78,7 @@ class Dialog {
         document.getElementById('modalContent').innerHTML = '';
         document.removeEventListener('click', this.#onclickFunc);
         document.removeEventListener('submit', this.#onsubmitFunc);
+        document.removeEventListener('keydown', this.#onkeydownFunc);
     }
 }
 
