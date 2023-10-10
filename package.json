@@ -19,6 +19,8 @@
   "dependencies": {
     "cordova-android": "12.0.1",
     "cordova-browser": "7.0.0",
+    "cordova-electron": "^3.1.0",
+    "cordova-sqlite-storage": "^6.1.0",
     "handlebars": "^4.7.8",
     "split.js": "^1.6.5"
   },
@@ -27,12 +29,14 @@
       "browser",
       "electron",
       "android"
-    ]
+    ],
+    "plugins": {
+      "cordova-sqlite-storage": {}
+    }
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
     "babel-jest": "^29.7.0",
-    "cordova-electron": "^3.1.0",
     "eslint": "^8.49.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^28.1.3",
