@@ -56,7 +56,9 @@ class ItemList {
 
         [...document.querySelectorAll('.item.selected')]
             .forEach((n) => n.classList.remove('selected'));
-        document.querySelector(`.item[data-id="${id}"]`).classList.add('selected');
+        let itemNode = document.querySelector(`.item[data-id="${id}"]`);
+        itemNode.classList.add('selected');
+        itemNode.scrollIntoView({ block: "nearest" });
 
         ItemList.selected = item;
         item.read = true
