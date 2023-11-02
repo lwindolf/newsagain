@@ -8,7 +8,8 @@ import { HelpDialog } from './dialogs/help.js';
 import { keydown } from './helpers/events.js';
 
 class App {
-    static #touchStart;
+    // state
+    #touchStart;
 
     // for easier debugging
     feedlist = FeedList;
@@ -29,15 +30,15 @@ class App {
 
         // Touch swiping 
         document.addEventListener('touchstart', (e) => {
-            App.#touchStart = e.touches[0];
+            this.#touchStart = e.touches[0];
         }, {
             passive: true
         })
         document.addEventListener('touchmove', (e) => {
-            if(!App.#touchStart)
+            if(!this.#touchStart)
                 return;
 
-            let diff = App.#touchStart.clientX - e.touches[0].clientX;
+            let diff = this.#touchStart.clientX - e.touches[0].clientX;
             if (Math.abs(diff) > 10) { // FIXME: make 10 a window width percentage
                 if (diff < 0)
                     Layout.back();
@@ -45,7 +46,7 @@ class App {
                     Layout.forward();
             }
 
-            App.#touchStart = null;
+            this.#touchStart = null;
         }, {
             capture: true,
             passive: false,
