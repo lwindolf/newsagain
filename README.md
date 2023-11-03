@@ -55,7 +55,8 @@ a 🛑 means the feature won't be ported.
 ### Parsing 
 
 - [x] Atom 1.0 / RSS 1.0, 1.1 and 2.0
-- [ ] RSS Namespace support
+- [x] Dublin Core RSS namespace support
+- [ ] itunes namespace support
 - [x] Favicon discovery
 - [x] Feed auto discovery 
 - 🛑 RSS 0.9x support
@@ -98,7 +99,7 @@ a 🛑 means the feature won't be ported.
 - [x] Item view
 - [x] Desktop mouse selection
 - [x] Middle click behaviour
-- [ ] Launching external browser
+- [x] Launching external browser
 - [ ] Launching internal browser
 - [ ] Drag&Drop
 - [ ] Keyboard navigation
@@ -119,6 +120,7 @@ a 🛑 means the feature won't be ported.
 - [ ] Advanced Subscription Dialog
 - [ ] Update Monitor
 - [ ] Plugins Support (JS instead of Python)
+- 🛑 Tray Icon
 
 ## Icon
 
