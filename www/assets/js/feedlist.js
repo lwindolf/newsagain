@@ -9,7 +9,7 @@ import { SimpleSubscriptionDialog } from './dialogs/simpleSubscription.js';
 import { template, render } from './helpers/render.js';
 import { forward } from './helpers/events.js';
 
-class FeedList {
+export class FeedList {
     // hierarchical list of children
     static root = { children: [] };
 
@@ -163,5 +163,3 @@ class FeedList {
         this.#updateFolder(this.root);
     }
 }
-
-export { FeedList };

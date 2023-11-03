@@ -7,7 +7,7 @@ import { template, render } from './helpers/render.js';
 import { connect, forward } from './helpers/events.js';
 import { DateParser } from './parsers/date.js';
 
-class ItemList {
+export class ItemList {
     static #headerTemplate = template(`
         <span class='switchView' data-view='{{view}}'>&lt;</span>
         <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
@@ -58,7 +58,7 @@ class ItemList {
             .forEach((n) => n.classList.remove('selected'));
         let itemNode = document.querySelector(`.item[data-id="${id}"]`);
         itemNode.classList.add('selected');
-        itemNode.scrollIntoView({ block: "nearest" });
+        itemNode.scrollIntoView({ block: 'nearest' });
 
         ItemList.selected = item;
         item.read = true
@@ -103,5 +103,3 @@ class ItemList {
         forward('auxclick', '.item', 'itemReadToggle', (e) => e.button == 1);
     }
 }
-
-export { ItemList };

@@ -2,7 +2,7 @@
 
 // DAO for items
 
-class Item {
+export class Item {
         // maximum id currently used
         static maxId = 0;
 
@@ -31,5 +31,3 @@ class Item {
                 }
         }
 }
-
-export { Item };

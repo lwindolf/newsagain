@@ -7,7 +7,7 @@ import { FeedList } from './feedlist.js';
 import { template, render } from './helpers/render.js';
 import { connect } from './helpers/events.js';
 
-class ItemView {
+export class ItemView {
     static #headerTemplate = template(`
         <span class='switchView' data-view='{{view}}'>&lt;</span>
         <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
@@ -54,5 +54,3 @@ class ItemView {
         }
     }
 }
-
-export { ItemView };

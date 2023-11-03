@@ -13,10 +13,12 @@ import Split from './lib/split.es.js';
 import { ItemList } from './itemlist.js';
 import { debounce } from './helpers/debounce.js';
 
-class Layout {
+export class Layout {
+    // state
     static #isSmall;
     static #split;
     static #view;
+    static #touchStart;
 
     static update() {
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
@@ -112,9 +114,30 @@ class Layout {
             }
         });
 
-        Layout.update();
+        // Touch swiping 
+        document.addEventListener('touchstart', (e) => {
+            Layout.#touchStart = e.touches[0];
+        }, {
+            passive: true
+        })
+        document.addEventListener('touchmove', (e) => {
+            if(!Layout.#touchStart)
+                return;
 
+            let diff = Layout.#touchStart.clientX - e.touches[0].clientX;
+            if (Math.abs(diff) > 10) { // FIXME: make 10 a window width percentage
+                if (diff < 0)
+                    Layout.back();
+                else
+                    Layout.forward();
+            }
+
+            Layout.#touchStart = null;
+        }, {
+            capture: true,
+            passive: false,
+        })
+
+        Layout.update();
     }
 }
-
-export { Layout };

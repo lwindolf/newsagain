@@ -4,7 +4,7 @@
 
 import { FeedUpdater } from './feedupdater.js';
 
-class Feed {
+export class Feed {
         // state
         id;
         error;
@@ -66,5 +66,3 @@ class Feed {
             return itemsById[id];
         }
 }
-
-export { Feed };
