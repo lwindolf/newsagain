@@ -44,6 +44,7 @@ export class ItemView {
             ItemView.#loadItem(e.detail.feed, e.detail.id);
         });
 
+        // eslint-disable-next-line no-undef
         if(cordova.platformId === 'electron') {
             connect('mouseover', 'a', (el) => {
                 ItemView.#showLink(el.getAttribute('href'), true);
