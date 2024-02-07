@@ -50,7 +50,7 @@ export class ItemList {
     }
 
     // select an item
-    static #select(feedId, id) {
+    static #selected(feedId, id) {
         let node = FeedList.getNodeById(feedId);
         let item = node.getItemById(id);
 
@@ -88,7 +88,7 @@ export class ItemList {
             ItemList.#itemUpdated(e.detail);
         });
         document.addEventListener('itemSelected', (e) => {
-            ItemList.#select(e.detail.feed, e.detail.id)
+            ItemList.#selected(e.detail.feed, e.detail.id)
         });
         document.addEventListener('itemReadToggle', (e) => {
             ItemList.toggleItemRead(e.detail.feed, e.detail.id);

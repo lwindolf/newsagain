@@ -12,7 +12,7 @@ import { RDFParser } from './rdf.js';
 
 // Return a parser class matching the given document string or undefined
 function parserAutoDiscover(str) {
-    var parsers = [ AtomParser, RSSParser, RDFParser ];
+    let parsers = [ AtomParser, RSSParser, RDFParser ];
     const parser = new DOMParser();
     const doc = parser.parseFromString(str, 'application/xml');
 

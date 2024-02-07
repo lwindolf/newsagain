@@ -8,7 +8,7 @@ import { Favicon } from './parsers/favicon.js';
 // FIXME: drop this hard-coded proxy
 const proxy = 'https://corsproxy-1516.lars-windolf.workers.dev/corsproxy/?apiurl=';
 
-class FeedUpdater {
+export class FeedUpdater {
     static async fetch(url) {
         // Inject proxy on non-Phonegap environment
         let fetchURL = url;
@@ -42,5 +42,3 @@ class FeedUpdater {
         return feed;
     }
 }
-
-export { FeedUpdater };

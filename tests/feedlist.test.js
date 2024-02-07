@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { FeedList } from '../www/assets/js/feedlist';
+window.Handlebars = require('handlebars');
 
 global['fetch'] = jest.fn().mockImplementation(() =>
     Promise.resolve({
@@ -67,8 +67,10 @@ global['fetch'] = jest.fn().mockImplementation(() =>
     })
 );
 
-test('FeedList.load', () => {
-    let fl = FeedList.setup();
+test('FeedList.load', async () => {
+    let i = await import('../www/assets/js/feedlist');
+
+    let fl = i.FeedList.setup();
     expect(fl !== undefined).toBe(true);
     expect(fl.root !== undefined).toBe(true);
     expect(fl.root.children !== undefined).toBe(true);

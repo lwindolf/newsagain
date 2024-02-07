@@ -16,7 +16,7 @@ export class ItemView {
         {{/if}}
     `);
     static #contentTemplate = template(`
-        <h1>
+        <h1 id='itemViewContentTitle'>
             <a target='_system' href='{{item.source}}'>{{item.title}}</a>
         </h1>
         <span class='date'>{{time}}</span>
@@ -32,6 +32,8 @@ export class ItemView {
 
         render('#itemViewTitle', ItemView.#headerTemplate, { node: node, view: 'itemlist' });
         render('#itemViewContent', ItemView.#contentTemplate, { item: item, time: DateParser.getShortDateStr(item.time) });
+
+        document.getElementById('itemViewContentTitle').scrollIntoView({ block: 'start' });
     }
 
     static #showLink(link, visible) {
