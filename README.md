@@ -87,7 +87,7 @@ a 🛑 means the feature won't be ported.
 - [ ] InoReader
 - [ ] TheOldReader
 - [ ] Reedah
-- [ ] OPM Import
+- [ ] OPML Import
 - 🛑 local OPML sources
 
 ### UI Navigation
