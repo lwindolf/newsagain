@@ -16,11 +16,17 @@ export class ItemList {
         {{/if}}
     `);
 
+    static #itemTemplate = template(`
+        <span class='date'>{{time}}</span>
+        <span class='title' data-read='{{read}}'>{{title}}</span>
+    `);
+
     static #itemUpdated(item) {
-        document.querySelector(`.item[data-id="${item.id}"]`).innerHTML = `
-            <span class='date'>${DateParser.getShortDateStr(item.time)}</span>
-            <span class='title' data-read='${item.read}'>${item.title}</span>
-        `;
+        render(`.item[data-id="${item.id}"]`, ItemList.#itemTemplate, {
+            time: DateParser.getShortDateStr(item.time),
+            read: item.read,
+            title: item.title
+        });
     }
 
     // load all items from the given node id

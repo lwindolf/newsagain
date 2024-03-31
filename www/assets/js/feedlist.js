@@ -107,10 +107,8 @@ export class FeedList {
         ItemList.loadFeed(id);
     }
 
-    // Load folders/feeds from DB
-    static setup() {
-        // FIXME: load from DB
-        this.root = {
+    static #getDefaultFeeds() {
+        return {
             children: [
                 new Feed({ id: 1, title: "ArsTechnica", source: "https://feeds.arstechnica.com/arstechnica/features" }),
                 new Feed({ id: 2, title: "LZone",       source: "https://lzone.de/feed/devops.xml" }),
@@ -118,6 +116,12 @@ export class FeedList {
                 new Feed({ id: 4, title: "Heise",       source: "https://www.heise.de/rss/heise.rdf" })
             ]
         };
+    }
+
+    // Load folders/feeds from DB
+    static setup() {
+        // FIXME: load from DB
+        this.root = this.#getDefaultFeeds();
         this.#createFolder(this.root);
 
         document.addEventListener('nodeUpdated', (e) => {

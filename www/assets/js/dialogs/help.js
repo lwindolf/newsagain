@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-// Simple hotkey + mouse usage help
+// Simple hotkey, touch + mouse usage help
 
 import { Dialog } from '../helpers/dialog.js';
 
