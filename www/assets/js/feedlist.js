@@ -3,6 +3,7 @@
 // Managing a tree of folders and feeds that are served by different
 // subscriptions (e.g. local, Google Reader API, ...)
 
+import { DB } from './db.js'
 import { Feed } from './feed.js';
 import { ItemList } from './itemlist.js';
 import { SimpleSubscriptionDialog } from './dialogs/simpleSubscription.js';
@@ -77,7 +78,7 @@ export class FeedList {
         this.root.children.push(f);
         this.#createFolder(this.root);
         f.update();
-        console.log(this.root);
+        DB.set('settings', 'feedlist', this.root);
     }
 
     // recursively mark all read on node and its children
@@ -110,18 +111,19 @@ export class FeedList {
     static #getDefaultFeeds() {
         return {
             children: [
-                new Feed({ id: 1, title: "ArsTechnica", source: "https://feeds.arstechnica.com/arstechnica/features" }),
-                new Feed({ id: 2, title: "LZone",       source: "https://lzone.de/feed/devops.xml" }),
-                new Feed({ id: 3, title: "Slashdot",    source: "https://rss.slashdot.org/Slashdot/slashdotMain" }),
-                new Feed({ id: 4, title: "Heise",       source: "https://www.heise.de/rss/heise.rdf" })
+                { title: "ArsTechnica", source: "https://feeds.arstechnica.com/arstechnica/features" },
+                { title: "LZone",       source: "https://lzone.de/feed/devops.xml" },
+                { title: "Slashdot",    source: "https://rss.slashdot.org/Slashdot/slashdotMain" },
+                { title: "Heise",       source: "https://www.heise.de/rss/heise.rdf" }
             ]
         };
     }
 
     // Load folders/feeds from DB
-    static setup() {
-        // FIXME: load from DB
-        this.root = this.#getDefaultFeeds();
+    static async setup() {
+        for(const f of (await DB.get('settings', 'feedlist', this.#getDefaultFeeds())).children) {
+            this.root.children.push(new Feed(f));
+        }
         this.#createFolder(this.root);
 
         document.addEventListener('nodeUpdated', (e) => {

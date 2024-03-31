@@ -20,7 +20,6 @@
     "cordova-android": "12.0.1",
     "cordova-browser": "7.0.0",
     "cordova-electron": "^3.1.0",
-    "cordova-sqlite-storage": "^6.1.0",
     "handlebars": "^4.7.8",
     "idb": "^7.1.1",
     "split.js": "^1.6.5"
@@ -31,9 +30,7 @@
       "electron",
       "android"
     ],
-    "plugins": {
-      "cordova-sqlite-storage": {}
-    }
+    "plugins": {}
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",
