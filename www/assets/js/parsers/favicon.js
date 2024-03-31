@@ -46,7 +46,7 @@ class Favicon {
         // DOCTYPE node is first child when parsing HTML5, we need to 
         // find the <html> root node in this case
         let root = doc.firstChild;
-        while(root && root.nodeName !== 'HTML') {
+        while(root && root.nodeName.toUpperCase() !== 'HTML') {
             root = root.nextSibling;
         }
 
