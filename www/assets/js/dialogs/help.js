@@ -42,6 +42,23 @@ class HelpDialog extends Dialog {
                     <td>Next Unread</td>
                 </tr>
             </table>
+
+            <h3>Mouse</h3>
+
+            <table>
+                <tr>
+                    <td>Left Click</td>
+                    <td>Select feed or item / Open a link</td>
+                </tr>
+                <tr>
+                    <td>Middle Click</td>
+                    <td>Toggle Unread</td>
+                </tr>
+                <tr>
+                    <td>Double Click</td>
+                    <td>Open item in browser</td>
+                </tr>
+            </table>
         `,
         { /* no data */ },
         async () => {
