@@ -52,7 +52,7 @@ class HelpDialog extends Dialog {
                 </tr>
                 <tr>
                     <td>Middle Click</td>
-                    <td>Toggle Unread</td>
+                    <td>Toggle Unread / Mark All Read</td>
                 </tr>
                 <tr>
                     <td>Double Click</td>

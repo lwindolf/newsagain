@@ -45,7 +45,7 @@ export class ItemList {
     }
 
     // toggle read status
-    static toggleItemRead(feedId, id) {
+    static #toggleItemRead(feedId, id) {
         let node = FeedList.getNodeById(feedId);
         let item = node.getItemById(id);
 
@@ -97,15 +97,22 @@ export class ItemList {
             ItemList.#selected(e.detail.feed, e.detail.id)
         });
         document.addEventListener('itemReadToggle', (e) => {
-            ItemList.toggleItemRead(e.detail.feed, e.detail.id);
+            ItemList.#toggleItemRead(e.detail.feed, e.detail.id);
         });
 
-        connect('dblclick', '.item', (el) => {
-            ItemList.#openItemLink(el.dataset.feed, el.dataset.id);
-        });
-
-        // emit signals
-        forward('click', '.item', 'itemSelected');
+        // handle mouse events
         forward('auxclick', '.item', 'itemReadToggle', (e) => e.button == 1);
+        connect('click', '.item', (el) => {
+            if (el.clickTimer) {
+                // double click
+                clearTimeout(el.clickTimer);
+                ItemList.#openItemLink(el.dataset.feed, el.dataset.id);
+            }
+            el.clickTimer = setTimeout(() => {
+                // single click
+                document.dispatchEvent(new CustomEvent('itemSelected', { detail: el.dataset }))
+            });
+        });
+
     }
 }
