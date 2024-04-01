@@ -15,7 +15,8 @@ header {
 
 header .switchView {
         margin-right: 0.4rem;
-        padding: 0 0.4rem
+        padding: 0 0.4rem;
+        cursor: pointer;
 }
 
 header .switchView:hover {

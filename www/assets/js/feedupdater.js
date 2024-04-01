@@ -34,10 +34,6 @@ export class FeedUpdater {
                     }
 
                 return feed;
-            })
-            .catch((e) => {
-                // FIXME: proper error handling
-                console.error(e)
             });
         return feed;
     }

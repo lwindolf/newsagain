@@ -1,8 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { DBSchema } from './dbschema.js';
 import { FeedList } from './feedlist.js';
-import { IndexedDB } from './indexeddb.js';
 import { ItemList } from './itemlist.js';
 import { ItemView } from './itemview.js';
 import { Layout } from './layout.js';
@@ -15,7 +13,6 @@ export class App {
     itemlist = ItemList;
     itemview = ItemView;
     layout = Layout;
-    db;
 
     constructor() {
         FeedList.setup();
@@ -23,8 +20,6 @@ export class App {
         ItemView.setup();
         Layout.setup();
     
-        this.db = new IndexedDB(1, DBSchema.upgrade);
-
         // bind hotkeys to different GUI elements
         keydown('body', /* F1 */               (e) => (e.keyCode === 112),             () => new HelpDialog());
         keydown('body', /* Ctrl-right arrow */ (e) => (e.keyCode === 39 && e.ctrlKey), () => ItemList.nextUnread());

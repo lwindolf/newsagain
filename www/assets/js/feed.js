@@ -32,6 +32,7 @@ export class Feed {
                 this.description = f.description;
                 this.items       = f.items;
                 this.metadata    = f.metadata;
+                this.error       = undefined;
 
                 this.items.forEach((i) => {
                     i.node = this;
@@ -41,6 +42,9 @@ export class Feed {
                 if(f.icon)
                     this.icon = f.icon;
 
+                document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
+            }).catch((e) => {
+                this.error = `Feed fetch failed (${e})`;
                 document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
             });
         }

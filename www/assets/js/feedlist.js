@@ -49,12 +49,12 @@ export class FeedList {
 
     static #nodeUpdated(feed) {
         // FIXME: folder recursion
-
         feed.unreadCount = feed.items.filter((i) => {
             return (i.read === false);
         }).length;
 
         render(`.feed[data-id="${feed.id}"]`, FeedList.feedTemplate, { feed: feed });
+        DB.set('settings', 'feedlist', this.root);
     }
 
     // Recursively create folder layout
@@ -76,9 +76,8 @@ export class FeedList {
     // Add a new node (e.g. on subscribing)
     static add(f) {
         this.root.children.push(f);
-        this.#createFolder(this.root);
+        this.#createFolder(f);
         f.update();
-        DB.set('settings', 'feedlist', this.root);
     }
 
     // recursively mark all read on node and its children
@@ -111,10 +110,10 @@ export class FeedList {
     static #getDefaultFeeds() {
         return {
             children: [
-                { title: "ArsTechnica", source: "https://feeds.arstechnica.com/arstechnica/features" },
-                { title: "LZone",       source: "https://lzone.de/feed/devops.xml" },
-                { title: "Slashdot",    source: "https://rss.slashdot.org/Slashdot/slashdotMain" },
-                { title: "Heise",       source: "https://www.heise.de/rss/heise.rdf" }
+                { id: 0, title: "ArsTechnica", source: "https://feeds.arstechnica.com/arstechnica/features" },
+                { id: 1, title: "LZone",       source: "https://lzone.de/feed/devops.xml" },
+                { id: 2, title: "Slashdot",    source: "https://rss.slashdot.org/Slashdot/slashdotMain" },
+                { id: 3, title: "Heise",       source: "https://www.heise.de/rss/heise.rdf" }
             ]
         };
     }
