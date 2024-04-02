@@ -31,7 +31,8 @@ export class FeedInfo {
             let feed = FeedList.getNodeById(e.detail.id);
 
             render('#itemViewContent', FeedInfo.#contentTemplate, { feed });
-            render('.feedInfoError',   FeedInfo.#errorTemplate,   { feed });
+            render('#itemViewContent .feedInfoError', FeedInfo.#errorTemplate, { feed });
+            render('#itemlist        .feedInfoError', FeedInfo.#errorTemplate, { feed });
         });
     }
 }

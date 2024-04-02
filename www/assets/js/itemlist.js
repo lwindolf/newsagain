@@ -20,7 +20,6 @@ export class ItemList {
     `);
 
     static #listTemplate = template(`
-        <div class='feedInfoError'></div>
         {{#each node.items}}
             <div class='item' data-id='{{id}}' data-feed='{{node.id}}'></div>
         {{/each}}

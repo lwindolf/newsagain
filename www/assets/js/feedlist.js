@@ -20,16 +20,16 @@ export class FeedList {
     static #selected;
 
     // currently known max feed id
-    static #maxId = 0;
+    static maxId = 0;
 
     static feedTemplate = template(`
         {{#if feed.icon}}
             <img class='icon' src='{{feed.icon}}'/>
         {{/if}}
+        {{#if feed.error}}
+        ⛔
+        {{/if}}
         <span class='title'>
-            {{#if feed.error}}
-                [!]
-            {{/if}}
             {{{feed.title}}}
         </span>
         <span class='count' data-count='{{feed.unreadCount}}'>{{feed.unreadCount}}</span>

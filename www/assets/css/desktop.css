@@ -48,3 +48,7 @@
         vertical-align: text-bottom;
         margin-right: 0.4rem;
 }
+
+#itemlist .feedInfoError {
+        display: none;
+}

@@ -213,3 +213,14 @@ header .title {
 	   to the right with the controls being not in the place
 	   visually shown) */
 }
+
+/* feed fetch error warning */
+
+.feedInfoError {
+        border:1px solid black;
+        margin:12px 24px;
+        padding:12px;
+        background:#ffa;
+        color:black;
+        margin: 0;
+}
