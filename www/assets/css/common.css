@@ -217,10 +217,18 @@ header .title {
 /* feed fetch error warning */
 
 .feedInfoError {
-        border:1px solid black;
-        margin:12px 24px;
-        padding:12px;
+        border:0.05rem solid black;
+        margin:0.8rem 1.6rem;
+        padding:0.8rem;
         background:#ffa;
         color:black;
         margin: 0;
+}
+
+.feedInfoError li {
+        list-style: none;
+}
+
+.feedInfoError ul {
+        padding-left: 0.8rem;
 }
