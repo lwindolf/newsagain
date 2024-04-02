@@ -70,7 +70,7 @@ global['fetch'] = jest.fn().mockImplementation(() =>
 test('FeedList.load', async () => {
     let i = await import('../www/assets/js/feedlist');
 
-    let fl = i.FeedList.setup();
+    let fl = new i.FeedList();
     expect(fl !== undefined).toBe(true);
     expect(fl.root !== undefined).toBe(true);
     expect(fl.root.children !== undefined).toBe(true);

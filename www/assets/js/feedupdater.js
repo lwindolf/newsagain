@@ -44,7 +44,7 @@ export class FeedUpdater {
 
                 return feed;
             })
-            .catch((e) => {
+            .catch(() => {
                 // FIXME: provide HTTP status too
                 return new Feed({ error: Feed.ERROR_NET });
             });
