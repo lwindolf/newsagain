@@ -20,31 +20,37 @@ export class Feed {
         metadata = {};
         items = [];
 
+        // error code constants
+        static ERROR_NONE     = 0;
+        static ERROR_AUTH     = 1 << 0;
+        static ERROR_NET      = 1 << 1;
+        static ERROR_DISCOVER = 1 << 2;
+        static ERROR_XML      = 1 << 3;
+
         constructor(defaults) {
             Object.keys(defaults).forEach((k) => { this[k] = defaults[k] });
         }
 
         update() {
             FeedUpdater.fetch(this.source).then((f) => {
-                this.title       = f.title;
-                this.source      = f.source;
-                this.homepage    = f.homepage;
-                this.description = f.description;
-                this.items       = f.items;
-                this.metadata    = f.metadata;
-                this.error       = undefined;
+                if(Feed.ERROR_NONE == f.error) {
+                    this.title       = f.title;
+                    this.source      = f.source;
+                    this.homepage    = f.homepage;
+                    this.description = f.description;
+                    this.items       = f.items;
+                    this.metadata    = f.metadata;
 
-                this.items.forEach((i) => {
-                    i.node = this;
-                })
+                    this.items.forEach((i) => {
+                        i.node = this;
+                    })
 
-                // feed provided favicon should always win
-                if(f.icon)
-                    this.icon = f.icon;
+                    // feed provided favicon should always win
+                    if(f.icon)
+                        this.icon = f.icon;
+                }
 
-                document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
-            }).catch((e) => {
-                this.error = `Feed fetch failed (${e})`;
+                this.error = f.error;
                 document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
             });
         }

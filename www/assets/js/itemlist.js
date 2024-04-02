@@ -30,7 +30,7 @@ export class ItemList {
     }
 
     // load all items from the given node id
-    static loadFeed(id) {
+    static #loadFeed(id) {
         let node = FeedList.getNodeById(id);
 
         // FIXME: handle folders
@@ -39,7 +39,6 @@ export class ItemList {
             return;
 
         render('#itemlistViewTitle', ItemList.#headerTemplate, { node: node, view: 'feedlist' });
-        document.getElementById('itemViewContent').innerHTML = '';
         document.getElementById('itemlistViewContent').innerHTML = node.items.map(i => `<div class='item' data-id='${i.id}' data-feed='${id}'></div>`).join(' ');
         node.items.forEach((i) => ItemList.#itemUpdated(i));
     }
@@ -98,6 +97,9 @@ export class ItemList {
         });
         document.addEventListener('itemReadToggle', (e) => {
             ItemList.#toggleItemRead(e.detail.feed, e.detail.id);
+        });
+        document.addEventListener('feedSelected', (e) => {
+            ItemList.#loadFeed(e.detail.id);
         });
 
         // handle mouse events

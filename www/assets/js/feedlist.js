@@ -5,7 +5,6 @@
 
 import { DB } from './db.js'
 import { Feed } from './feed.js';
-import { ItemList } from './itemlist.js';
 import { SimpleSubscriptionDialog } from './dialogs/simpleSubscription.js';
 import { template, render } from './helpers/render.js';
 import { forward } from './helpers/events.js';
@@ -27,7 +26,12 @@ export class FeedList {
         {{#if feed.icon}}
             <img class='icon' src='{{feed.icon}}'/>
         {{/if}}
-        <span class='title'>{{{feed.title}}}</span>
+        <span class='title'>
+            {{#if feed.error}}
+                [!]
+            {{/if}}
+            {{{feed.title}}}
+        </span>
         <span class='count' data-count='{{feed.unreadCount}}'>{{feed.unreadCount}}</span>
     `);
 
@@ -104,7 +108,6 @@ export class FeedList {
         [...document.querySelectorAll('.feed.selected')]
             .forEach((n) => n.classList.remove('selected'));
         document.querySelector(`.feed[data-id="${id}"]`).classList.add('selected');
-        ItemList.loadFeed(id);
     }
 
     static #getDefaultFeeds() {

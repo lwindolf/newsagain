@@ -1,6 +1,7 @@
 // vim: set ts=4 sw=4:
 
 import { FeedList } from './feedlist.js';
+import { FeedInfo } from './feedinfo.js';
 import { ItemList } from './itemlist.js';
 import { ItemView } from './itemview.js';
 import { Layout } from './layout.js';
@@ -16,6 +17,7 @@ export class App {
 
     constructor() {
         FeedList.setup();
+        FeedInfo.setup();
         ItemList.setup();
         ItemView.setup();
         Layout.setup();

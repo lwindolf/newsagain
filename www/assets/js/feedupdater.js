@@ -4,11 +4,14 @@
 
 import { parserAutoDiscover } from './parsers/autodiscover.js';
 import { Favicon } from './parsers/favicon.js';
+import { Feed } from './feed.js';
 
 // FIXME: drop this hard-coded proxy
 const proxy = 'https://corsproxy-1516.lars-windolf.workers.dev/corsproxy/?apiurl=';
 
 export class FeedUpdater {
+    // returns a feed properties or at least error code (e.g. "{ error: Feed.ERROR_XML }")
+    // result should be merged into the feed being updated
     static async fetch(url) {
         // Inject proxy on non-Phonegap environment
         let fetchURL = url;
@@ -22,7 +25,13 @@ export class FeedUpdater {
             })
             .then(async (str) => {
                 let parser = parserAutoDiscover(str);
+                if(!parser)
+                    return new Feed({ error: Feed.ERROR_DISCOVER });
+
                 let feed = parser.parse(str);
+                if(!feed)
+                    return new Feed({ error: Feed.ERROR_XML });
+
                 feed.source = url;
                 feed.last_updated = Date.now() / 1000;
 
@@ -34,6 +43,10 @@ export class FeedUpdater {
                     }
 
                 return feed;
+            })
+            .catch((e) => {
+                // FIXME: provide HTTP status too
+                return new Feed({ error: Feed.ERROR_NET });
             });
         return feed;
     }
