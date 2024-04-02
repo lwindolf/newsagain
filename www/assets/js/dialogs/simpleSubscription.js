@@ -20,6 +20,8 @@ class SimpleSubscriptionDialog extends Dialog {
         `,
         { /* no initial data */ },
         async (result) => {
+            if(-1 == result.url.indexOf('://'))
+                result.url = 'https://' + result.url;
             let links = await linkAutoDiscover(result.url);
 
             // FIXME: let user choose which feed to use
@@ -32,6 +34,7 @@ class SimpleSubscriptionDialog extends Dialog {
                 return true;
             }
 
+            // FIXME: use error infos like in feedinfo widget
             result['error'] = 'Feed auto discovery failed!'
             d.update(result);
             return false;
