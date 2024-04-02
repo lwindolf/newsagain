@@ -12,7 +12,31 @@ export class FeedInfo {
     static #errorTemplate = template(`
         {{#if feed.error}}
             <div class='feedInfoErrorBox'>
-            ERROR ({{feed.error}}) while feed fetch (<a href='{{feed.source}}'>{{feed.source}}</a>)!
+                <span>There was a problem when fetching this subscription!</span>
+                <ul>
+                    <li>
+                        {{#compare feed.error '==' 1}}⛔{{/compare}}
+                        {{#compare feed.error '>'  1}}✅{{/compare}}
+                        <span>1. Authentication</span>
+                    </li>
+                    <li>
+                        {{#compare feed.error '==' 2}}⛔{{/compare}}
+                        {{#compare feed.error '>'  2}}✅{{/compare}}
+                        {{#compare feed.error '<'  2}}⬜{{/compare}}
+                        <span>2. Download</span>
+                    </li>
+                    <li>
+                        {{#compare feed.error '==' 4}}⛔{{/compare}}
+                        {{#compare feed.error '>'  4}}✅{{/compare}}
+                        {{#compare feed.error '<'  4}}⬜{{/compare}}
+                        <span>3. Feed Discovery</span>
+                    </li>
+                    <li>
+                        {{#compare feed.error '==' 8}}⛔{{/compare}}
+                        {{#compare feed.error '<'  8}}⬜{{/compare}}
+                        <span>4. Parsing</span>
+                    </li>
+                </ul>    
             </div>
         {{/if}}
     `);
