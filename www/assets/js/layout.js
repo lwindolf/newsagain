@@ -92,7 +92,7 @@ export class Layout {
         }
     }
 
-    static setup() {
+    constructor() {
         window.onresize = debounce(function() {
             Layout.update();
         }, 100);

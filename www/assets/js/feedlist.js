@@ -122,7 +122,7 @@ export class FeedList {
     }
 
     // Load folders/feeds from DB
-    static async setup() {
+    static async #setup() {
         for(const f of (await DB.get('settings', 'feedlist', this.#getDefaultFeeds())).children) {
             this.root.children.push(new Feed(f));
         }
@@ -149,8 +149,10 @@ export class FeedList {
 
         // Run initial fetch
         this.update();
+    }
 
-        return this;
+    constructor() {
+        FeedList.#setup();
     }
 
     // Recursively update folder

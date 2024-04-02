@@ -9,20 +9,15 @@ import { HelpDialog } from './dialogs/help.js';
 import { keydown } from './helpers/events.js';
 
 export class App {
-    // for easier debugging
-    feedlist = FeedList;
-    itemlist = ItemList;
-    itemview = ItemView;
-    layout = Layout;
+    // member variables for easier console debugging
+    feedlist = new FeedList();
+    feedinfo = new FeedInfo();
+    itemlist = new ItemList();
+    itemview = new ItemView();
+    layout   = new Layout();
 
-    constructor() {
-        FeedList.setup();
-        FeedInfo.setup();
-        ItemList.setup();
-        ItemView.setup();
-        Layout.setup();
-    
-        // bind hotkeys to different GUI elements
+    constructor() { 
+        // global hotkeys
         keydown('body', /* F1 */               (e) => (e.keyCode === 112),             () => new HelpDialog());
         keydown('body', /* Ctrl-right arrow */ (e) => (e.keyCode === 39 && e.ctrlKey), () => ItemList.nextUnread());
         keydown('body', /* Ctrl-S */           (e) => (e.keyCode === 83 && e.ctrlKey), () => document.dispatchEvent(new CustomEvent("feedMarkAllRead", { detail: { id: FeedList.getSelectedId()}})));

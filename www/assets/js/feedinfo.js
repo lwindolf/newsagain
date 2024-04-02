@@ -26,17 +26,12 @@ export class FeedInfo {
         <div class='feedInfoError'></div>
     `);
 
-    // load content of a single item
-    static #render(id) {
-        let feed = FeedList.getNodeById(id);
-
-        render('#itemViewContent', FeedInfo.#contentTemplate, { feed });
-        render('.feedInfoError', FeedInfo.#errorTemplate, { feed })
-    }
-
-    static setup() {
+    constructor() {
         document.addEventListener('feedSelected', (e) => {
-            FeedInfo.#render(e.detail.id);
+            let feed = FeedList.getNodeById(e.detail.id);
+
+            render('#itemViewContent', FeedInfo.#contentTemplate, { feed });
+            render('.feedInfoError',   FeedInfo.#errorTemplate,   { feed });
         });
     }
 }

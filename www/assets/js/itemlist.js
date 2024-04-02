@@ -8,12 +8,22 @@ import { connect, forward } from './helpers/events.js';
 import { DateParser } from './parsers/date.js';
 
 export class ItemList {
+    // state
+    selected;       // selected item (or undefined)
+
     static #headerTemplate = template(`
         <span class='switchView' data-view='{{view}}'>&lt;</span>
         <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
         {{#if node.icon}}
             <img class='icon' src='{{node.icon}}'/>
         {{/if}}
+    `);
+
+    static #listTemplate = template(`
+        <div class='feedInfoError'></div>
+        {{#each node.items}}
+            <div class='item' data-id='{{id}}' data-feed='{{node.id}}'></div>
+        {{/each}}
     `);
 
     static #itemTemplate = template(`
@@ -38,8 +48,8 @@ export class ItemList {
         if(!document.getElementById('itemlist'))
             return;
 
-        render('#itemlistViewTitle', ItemList.#headerTemplate, { node: node, view: 'feedlist' });
-        document.getElementById('itemlistViewContent').innerHTML = node.items.map(i => `<div class='item' data-id='${i.id}' data-feed='${id}'></div>`).join(' ');
+        render('#itemlistViewTitle', ItemList.#headerTemplate, { node, view: 'feedlist' });
+        render('#itemlistViewContent', ItemList.#listTemplate, { node });
         node.items.forEach((i) => ItemList.#itemUpdated(i));
     }
 
@@ -88,7 +98,7 @@ export class ItemList {
         window.open(item.source, '_system', 'location=yes');
     }
 
-    static setup() {
+    constructor() {
         document.addEventListener('itemUpdated', (e) => {
             ItemList.#itemUpdated(e.detail);
         });

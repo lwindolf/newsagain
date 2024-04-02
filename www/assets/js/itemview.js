@@ -41,7 +41,7 @@ export class ItemView {
         document.getElementById('linkHover').style.display = visible?'block':'none';
     }
 
-    static setup() {
+    constructor() {
         document.addEventListener('itemSelected', (e) => {
             ItemView.#loadItem(e.detail.feed, e.detail.id);
         });
