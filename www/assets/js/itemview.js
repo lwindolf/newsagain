@@ -5,7 +5,7 @@
 import { DateParser } from './parsers/date.js';
 import { FeedList } from './feedlist.js';
 import { template, render } from './helpers/render.js';
-import { connect } from './helpers/events.js';
+import * as ev from './helpers/events.js';
 
 export class ItemView {
     static #headerTemplate = template(`
@@ -48,10 +48,10 @@ export class ItemView {
 
         // eslint-disable-next-line no-undef
         if(cordova.platformId === 'electron') {
-            connect('mouseover', 'a', (el) => {
+            ev.connect('mouseover', 'a', (el) => {
                 ItemView.#showLink(el.getAttribute('href'), true);
             });
-            connect('mouseout', 'a', (el) => {
+            ev.connect('mouseout', 'a', (el) => {
                 ItemView.#showLink(el.getAttribute('href'), false)
             });
         }

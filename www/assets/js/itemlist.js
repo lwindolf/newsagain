@@ -4,8 +4,8 @@
 
 import { FeedList } from './feedlist.js';
 import { template, render } from './helpers/render.js';
-import { connect, forward } from './helpers/events.js';
 import { DateParser } from './parsers/date.js';
+import * as ev from './helpers/events.js';
 
 export class ItemList {
     // state
@@ -59,12 +59,12 @@ export class ItemList {
 
         item.read = !item.read;
 
-        document.dispatchEvent(new CustomEvent('itemUpdated', { detail: item }));
-        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
+        ev.dispatch('itemUpdated', item);
+        ev.dispatch('nodeUpdated', node);
     }
 
     // select an item
-    static #selected(feedId, id) {
+    static select(feedId, id) {
         let node = FeedList.getNodeById(feedId);
         let item = node.getItemById(id);
 
@@ -75,19 +75,42 @@ export class ItemList {
         itemNode.scrollIntoView({ block: 'nearest' });
 
         ItemList.selected = item;
-        item.read = true
-        document.dispatchEvent(new CustomEvent('itemUpdated', { detail: item }));
-        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
+        if(!item.read) {
+            item.read = true
+            ev.dispatch('itemUpdated', item);
+            ev.dispatch('nodeUpdated', node);
+        }
+
+        ev.dispatch('itemSelected', { feed: node.id, id: item.id });
     }
 
     // select next unread
     static nextUnread() {
-        let item = ItemList.selected.node.getNextUnread(ItemList.selected.id);
+        let item, node, id;
+        
+        if(ItemList.selected) {
+            node = ItemList.selected.node
+            id = ItemList.selected.id;
+        } else {
+            // select first node if none is selected
+            node = FeedList.getNextUnreadNode(0);
+            id = 0;
+        }
+
+        // Try looking in same feed/folder
+        item = node.getNextUnread(id);
+
+        // Switch to next feed if needed
+        if(!item) {
+            node = FeedList.getNextUnreadNode(node.id);
+            item = node.getNextUnread(id);
+        }
 
         // FIXME: folder recursion
-        
-        if (item)
-            document.dispatchEvent(new CustomEvent('itemSelected', { detail: { feed: ItemList.selected.node.id, id: item.id }}));
+        if(item) {
+            FeedList.select(node.id);
+            ItemList.select(node.id, item.id);
+        }
     }
 
     static #openItemLink(feedId, id) {
@@ -101,19 +124,16 @@ export class ItemList {
         document.addEventListener('itemUpdated', (e) => {
             ItemList.#itemUpdated(e.detail);
         });
-        document.addEventListener('itemSelected', (e) => {
-            ItemList.#selected(e.detail.feed, e.detail.id)
-        });
-        document.addEventListener('itemReadToggle', (e) => {
-            ItemList.#toggleItemRead(e.detail.feed, e.detail.id);
-        });
         document.addEventListener('feedSelected', (e) => {
             ItemList.#loadFeed(e.detail.id);
         });
 
         // handle mouse events
-        forward('auxclick', '.item', 'itemReadToggle', (e) => e.button == 1);
-        connect('click', '.item', (el) => {
+        ev.connect('auxclick', '.item', (el) => {
+            ItemList.#toggleItemRead(el.dataset.feed, el.dataset.id);
+        }, (e) => e.button == 1);
+
+        ev.connect('click', '.item', (el) => {
             if (el.clickTimer) {
                 // double click
                 clearTimeout(el.clickTimer);
@@ -121,7 +141,7 @@ export class ItemList {
             }
             el.clickTimer = setTimeout(() => {
                 // single click
-                document.dispatchEvent(new CustomEvent('itemSelected', { detail: el.dataset }))
+                ItemList.select(el.dataset.feed, el.dataset.id)
             });
         });
 

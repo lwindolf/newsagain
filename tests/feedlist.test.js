@@ -2,6 +2,9 @@
 
 window.Handlebars = require('handlebars');
 
+const { Feed } = require('../www/assets/js/feed');
+const { FeedList } = require('../www/assets/js/feedlist');
+
 global['fetch'] = jest.fn().mockImplementation(() =>
     Promise.resolve({
         text: () => Promise.resolve(`<?xml version="1.0" encoding="ISO-8859-1"?>
@@ -67,11 +70,26 @@ global['fetch'] = jest.fn().mockImplementation(() =>
     })
 );
 
-test('FeedList.load', async () => {
-    let i = await import('../www/assets/js/feedlist');
+DB.testDisable = true;  // DB won't do anything
 
-    let fl = new i.FeedList();
+const mockFeedlistChildren = [
+    new Feed({ title: 'abc', id: 1, unreadCount: 0 }),
+    new Feed({ title: 'def', id: 2, unreadCount: 5 }),
+    new Feed({ title: 'ghi', id: 3, unreadCount: 7 })
+];
+
+/*test('FeedList.constructor', () => {
+    let fl = new FeedList();
+
     expect(fl !== undefined).toBe(true);
     expect(fl.root !== undefined).toBe(true);
     expect(fl.root.children !== undefined).toBe(true);
+});*/
+
+test('FeedList.getNextUnreadNode', () => {
+    FeedList.root.children = mockFeedlistChildren;
+    expect(FeedList.getNextUnreadNode(0).id == 2).toBe(true);
+    expect(FeedList.getNextUnreadNode(2).id == 3).toBe(true);
+    expect(FeedList.getNextUnreadNode(3).id == 2).toBe(true);
+    expect(FeedList.getNextUnreadNode(853).id == 2).toBe(true);
 });

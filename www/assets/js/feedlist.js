@@ -7,7 +7,7 @@ import { DB } from './db.js'
 import { Feed } from './feed.js';
 import { SimpleSubscriptionDialog } from './dialogs/simpleSubscription.js';
 import { template, render } from './helpers/render.js';
-import { forward } from './helpers/events.js';
+import * as ev from './helpers/events.js';
 
 export class FeedList {
     // hierarchical list of children
@@ -27,7 +27,7 @@ export class FeedList {
             <img class='icon' src='{{feed.icon}}'/>
         {{/if}}
         {{#if feed.error}}
-        ⛔
+        ⛔&nbsp;
         {{/if}}
         <span class='title'>
             {{{feed.title}}}
@@ -51,6 +51,23 @@ export class FeedList {
         return FeedList.#nodeById[id];
     }
 
+    // Return the next unread node after the given node id
+    static getNextUnreadNode(id) {
+        let node, idx = 0;
+
+        // search forward in feed list starting from id
+        // FIXME: support folder recursion
+        if(id) {
+            this.root.children.find((n) => { idx++; return (n.id === id); });   // find current feed index
+            node = this.root.children.slice(idx).find((n) => n.unreadCount > 0);          // find next unread item
+            if(node)
+                return node;
+        }
+
+        // if nothing found search from start of feed
+        return this.root.children.find((n) => n.unreadCount > 0);
+    }
+
     static #nodeUpdated(feed) {
         // FIXME: folder recursion
         feed.unreadCount = feed.items.filter((i) => {
@@ -62,30 +79,39 @@ export class FeedList {
     }
 
     // Recursively create folder layout
-    static #createFolder(folder) {
+    static render(folder) {
         // Needed for tests
         if(!document.getElementById('feedlist'))
             return;
 
+        // FIXME: signal?
         render('#feedlistViewContent', this.childFeedsTemplate, { children: folder.children });
         folder.children.forEach((f) => {
             // FIXME: support recursion
-            if(f.id > FeedList.maxId)
-                FeedList.maxId = f.id;
-            FeedList.#nodeById[f.id] = f;
             FeedList.#nodeUpdated(f);
         });
     }
 
     // Add a new node (e.g. on subscribing)
-    static add(f) {
+    static add(f, update = true) {
         this.root.children.push(f);
-        this.#createFolder(f);
-        f.update();
+
+        if(f.id > FeedList.maxId)
+            FeedList.maxId = f.id;
+
+        FeedList.#nodeById[f.id] = f;
+
+        // FIXME: belong into DB mapper code
+        for(const i of f.items) {
+            i.node = f;
+        }
+
+        if(update)
+            f.update();
     }
 
     // recursively mark all read on node and its children
-    static #markAllRead(id) {
+    static markAllRead(id) {
         let node = FeedList.getNodeById(id);
 
         // FIXME: support recursion
@@ -96,18 +122,19 @@ export class FeedList {
 
             i.read = true;
             if(node === FeedList.#selected)
-                document.dispatchEvent(new CustomEvent('itemUpdated', { detail: i }));
+                ev.dispatch('itemUpdated', i);
         })
-        document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: node }));
+        ev.dispatch('nodeUpdated', node);
     }
 
-    // select the given node id
-    static #select(id) {
+    static select(id) {
         FeedList.#selected = FeedList.getNodeById(id);
 
         [...document.querySelectorAll('.feed.selected')]
             .forEach((n) => n.classList.remove('selected'));
         document.querySelector(`.feed[data-id="${id}"]`).classList.add('selected');
+
+        ev.dispatch('feedSelected', { id });
     }
 
     static #getDefaultFeeds() {
@@ -122,37 +149,27 @@ export class FeedList {
     }
 
     // Load folders/feeds from DB
-    static async #setup() {
+    static async setup() {
         for(const f of (await DB.get('settings', 'feedlist', this.#getDefaultFeeds())).children) {
-            this.root.children.push(new Feed(f));
+            this.add(new Feed(f), false);
         }
-        this.#createFolder(this.root);
+        this.render(this.root);
 
-        document.addEventListener('nodeUpdated', (e) => {
+        this.nodeUpdateListener = document.addEventListener('nodeUpdated', (e) => {
             FeedList.#nodeUpdated(e.detail);
         });
-        document.addEventListener('feedSelected', (e) => {
-            FeedList.#select(e.detail.id);
-        });
-        document.addEventListener('feedMarkAllRead', (e) => {
-            FeedList.#markAllRead(e.detail.id);
-        });
-        document.addEventListener('click', (e) => {
-            if(e.target.closest('.addBtn')) {
-                new SimpleSubscriptionDialog();
-            }
-        });
 
-        // emit signals
-        forward('click', '.feed', 'feedSelected');
-        forward('auxclick', '.feed', 'feedMarkAllRead', (e) => e.button == 1);
+        // connect signals
+        ev.connect('click', '.addBtn', () => new SimpleSubscriptionDialog());
+        ev.connect('click', '.feed', (el) => FeedList.select(el.dataset.id));
+        ev.connect('auxclick', '.feed', (el) => FeedList.markAllRead(el.dataset.id), (e) => e.button == 1);
 
         // Run initial fetch
         this.update();
     }
 
     constructor() {
-        FeedList.#setup();
+        FeedList.setup();
     }
 
     // Recursively update folder

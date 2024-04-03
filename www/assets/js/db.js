@@ -3,13 +3,21 @@
 /* Persistent feedlist using IndexedDB */
 
 class DB {
-
+    // state
     static db;
     static values = {};    // value cache
+
+    // flags
+    static testDisable = false;     // if true no DB actions will be performed (for test code), FIXME: properly mock IndexDB
 
     static async #getDB() {
         if (this.db)
             return this.db;
+
+        if (this.testDisable) {
+            this.db = this;
+            return;
+        }
 
         await new Promise((resolve, reject) => {
             let s = this;
@@ -38,6 +46,9 @@ class DB {
     static async get(storeName, name, defaultValue = 'null') {
         var db = await DB.#getDB();
 
+        if (this.testDisable)
+            return DB.values[storeName + "_" + name]?DB.values[storeName + "_" + name]:defaultValue;
+
         await new Promise((resolve, reject) => {
             var store = db.transaction(storeName, "readonly").objectStore(storeName);
             var req = store.get(name);
@@ -64,6 +75,9 @@ class DB {
 
         DB.values[storeName + "_" + name] = value;
 
+        if (this.testDisable)
+            return;
+
         await new Promise((resolve, reject) => {
             var store = db.transaction(storeName, "readwrite").objectStore(storeName);
             try {
@@ -79,6 +93,9 @@ class DB {
         var db = await DB.#getDB();
 
         DB.values[storeName + "_" + name] = undefined;
+
+        if (this.testDisable)
+            return;
 
         await new Promise((resolve, reject) => {
             var store = db.transaction(storeName, "readwrite").objectStore(storeName);
