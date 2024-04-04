@@ -19,6 +19,7 @@ export class Feed {
         icon;
         metadata = {};
         items = [];
+        
 
         // error code constants
         static ERROR_NONE     = 0;
