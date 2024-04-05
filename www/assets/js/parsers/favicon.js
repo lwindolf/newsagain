@@ -33,36 +33,37 @@ class Favicon {
     ].sort((a, b) => (a.order - b.order));
 
     static async discover(url) {
-        // Parse HTML
-        let doc = await fetch(url)
-            .then((response) => response.text())
-            .then((str) => {
-                return new DOMParser().parseFromString(str, 'text/html');
-            });
+        let result;
 
-        if(!doc)
-            return undefined;
+        try {
+            // Parse HTML
+            let doc = await fetch(url)
+                .then((response) => response.text())
+                .then((str) => {
+                    return new DOMParser().parseFromString(str, 'text/html');
+                });
 
-        // DOCTYPE node is first child when parsing HTML5, we need to 
-        // find the <html> root node in this case
-        let root = doc.firstChild;
-        while(root && root.nodeName.toUpperCase() !== 'HTML') {
-            root = root.nextSibling;
-        }
+            if(doc) {
+                // DOCTYPE node is first child when parsing HTML5, we need to 
+                // find the <html> root node in this case
+                let root = doc.firstChild;
+                while(root && root.nodeName.toUpperCase() !== 'HTML') {
+                    root = root.nextSibling;
+                }
 
-        if(!root)
-            return undefined;
-
-        // Check all XPath search pattern
-        var result;
-        for(let i = 0; i < Favicon.searches.length; i++) {
-            result = XPath.lookup(root, Favicon.searches[i].xpath)
-            if(result)
-                break;
-        }
+                if(root) {
+                    // Check all XPath search pattern
+                    for(let i = 0; i < Favicon.searches.length; i++) {
+                        result = XPath.lookup(root, Favicon.searches[i].xpath)
+                        if(result)
+                            break;
+                    }
+                }
+            }
+        } catch { };
 
         // If nothing found see if there is a 'favicon.ico' on the homepage
-        if(undefined === result)
+        if(!result)
             result = await fetch(url + '/favicon.ico')
                 .then((response) => response.text())
                 .then(() => url + '/favicon.ico');
