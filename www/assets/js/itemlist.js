@@ -121,12 +121,8 @@ export class ItemList {
     }
 
     constructor() {
-        document.addEventListener('itemUpdated', (e) => {
-            ItemList.#itemUpdated(e.detail);
-        });
-        document.addEventListener('feedSelected', (e) => {
-            ItemList.#loadFeed(e.detail.id);
-        });
+        document.addEventListener('itemUpdated', (e) => ItemList.#itemUpdated(e.detail));
+        document.addEventListener('feedSelected', (e) => ItemList.#loadFeed(e.detail.id));
 
         // handle mouse events
         ev.connect('auxclick', '.item', (el) => {

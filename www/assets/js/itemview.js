@@ -42,18 +42,12 @@ export class ItemView {
     }
 
     constructor() {
-        document.addEventListener('itemSelected', (e) => {
-            ItemView.#loadItem(e.detail.feed, e.detail.id);
-        });
+        document.addEventListener('itemSelected', (e) => ItemView.#loadItem(e.detail.feed, e.detail.id));
 
         // eslint-disable-next-line no-undef
         if(cordova.platformId === 'electron') {
-            ev.connect('mouseover', 'a', (el) => {
-                ItemView.#showLink(el.getAttribute('href'), true);
-            });
-            ev.connect('mouseout', 'a', (el) => {
-                ItemView.#showLink(el.getAttribute('href'), false)
-            });
+            ev.connect('mouseover', 'a', (el) => ItemView.#showLink(el.getAttribute('href'), true));
+            ev.connect('mouseout',  'a', (el) => ItemView.#showLink(el.getAttribute('href'), false));
         }
     }
 }

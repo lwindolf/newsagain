@@ -31,28 +31,27 @@ export class Feed {
             Object.keys(defaults).forEach((k) => { this[k] = defaults[k] });
         }
 
-        update() {
-            FeedUpdater.fetch(this.source).then((f) => {
-                if(Feed.ERROR_NONE == f.error) {
-                    this.title       = f.title;
-                    this.source      = f.source;
-                    this.homepage    = f.homepage;
-                    this.description = f.description;
-                    this.items       = f.items;
-                    this.metadata    = f.metadata;
+        async update() {
+            const f = await FeedUpdater.fetch(this.source);
+            if(Feed.ERROR_NONE == f.error) {                 
+                this.title       = f.title;
+                this.source      = f.source;
+                this.homepage    = f.homepage;
+                this.description = f.description;
+                this.items       = f.items;
+                this.metadata    = f.metadata;
+                this.items.forEach((i) => {
+                    i.node = this;
+                })
 
-                    this.items.forEach((i) => {
-                        i.node = this;
-                    })
+                // feed provided favicon should always win
+                if(f.icon)
+                    this.icon = f.icon;
+            }
 
-                    // feed provided favicon should always win
-                    if(f.icon)
-                        this.icon = f.icon;
-                }
-
-                this.error = f.error;
-                document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
-            });
+            this.last_updated = f.last_updated;
+            this.error = f.error;
+            document.dispatchEvent(new CustomEvent('nodeUpdated', { detail: this }));
         }
 
         // Return the next unread item after the given id

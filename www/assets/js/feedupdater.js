@@ -34,6 +34,7 @@ export class FeedUpdater {
 
                 feed.source = url;
                 feed.last_updated = Date.now() / 1000;
+                feed.error = Feed.ERROR_NONE;
 
                 if(!feed.icon && feed.homepage)
                     try {
@@ -46,6 +47,7 @@ export class FeedUpdater {
             })
             .catch(() => {
                 // FIXME: provide HTTP status too
+                console.log("ERROR!")
                 return new Feed({ error: Feed.ERROR_NET });
             });
         return feed;
