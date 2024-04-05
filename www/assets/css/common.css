@@ -216,7 +216,7 @@ header .title {
 
 /* feed fetch error warning */
 
-.feedInfoError {
+.feedInfoErrorBox {
         border:0.05rem solid black;
         margin:0.8rem 1.6rem;
         padding:0.8rem;
@@ -225,10 +225,10 @@ header .title {
         margin: 0;
 }
 
-.feedInfoError li {
+.feedInfoErrorBox li {
         list-style: none;
 }
 
-.feedInfoError ul {
+.feedInfoErrorBox ul {
         padding-left: 0.8rem;
 }
