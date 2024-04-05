@@ -1,8 +1,8 @@
 // vim: set ts=4 sw=4:
 
-const { Feed } = require('../www/assets/js/feed');
-const { Item } = require('../www/assets/js/item');
-const { TestData } = require('./testdata.js')
+import { Feed } from '../www/assets/js/feed';
+import { Item } from '../www/assets/js/item';
+import { TestData } from './testdata.js';
 
 const mockFeed = new Feed({ items: [
     new Item({ id: 100, read: true }),

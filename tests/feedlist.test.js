@@ -2,6 +2,7 @@
 
 window.Handlebars = require('handlebars');
 
+// no "imports" because of Handlebars requirement above
 const { Feed } = require('../www/assets/js/feed');
 const { FeedList } = require('../www/assets/js/feedlist');
 const { TestData } = require('./testdata.js');
