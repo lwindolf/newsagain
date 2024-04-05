@@ -19,7 +19,7 @@ Electron/Android apps do not have this limitation.
     npm install
     npm test
     npm run build
-    npm run build --release
+    npm run build -- --release
 
 Note that aside from all the NPM dependencies if you want to compile for Android you need:
 
