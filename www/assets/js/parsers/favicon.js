@@ -60,7 +60,8 @@ class Favicon {
                     }
                 }
             }
-        } catch { };
+        // eslint-disable-next-line no-empty
+        } catch { }
 
         // If nothing found see if there is a 'favicon.ico' on the homepage
         if(!result)
