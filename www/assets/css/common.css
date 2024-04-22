@@ -232,3 +232,10 @@ header .title {
 .feedInfoErrorBox ul {
         padding-left: 0.8rem;
 }
+
+// dark mode image glaring 
+@media (prefers-color-scheme: dark) {
+  img {
+    filter: brightness(.8) contrast(1.2);
+  }
+}
