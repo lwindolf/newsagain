@@ -48,7 +48,7 @@ class AtomParser {
                 NamespaceParser.parseItem(node, ['dc', 'content', 'media'], feed, item);
 
                 XPath.foreach(node, 'ns:link', AtomParser.parseEntryLink, item);
-                console.log(feed)
+
                 feed.addItem(item);
         }
 

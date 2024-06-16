@@ -32,11 +32,20 @@ export class Item {
                 }
         }
 
-        addMedia(url, mime, length) {
-            let l = parseInt(length, 10);
-
-            if (Number.isNaN(l))
-                l = undefined;
+        /**
+         * Add a media enclosure to the item
+         * 
+         * @param {*} url       valid URL
+         * @param {*} mime      MIME type or 'audio' or 'video'
+         * @param {*} length    (optional) duration in [s]
+         */
+        addMedia(url, mime, length = NaN) {
+            let l = NaN;
+            
+            try {
+                l = parseInt(length, 10);
+            // eslint-disable-next-line no-empty
+            } catch { }
 
             if(!url || !mime)
                 return;
@@ -47,9 +56,9 @@ export class Item {
                 return;
 
             /* Never add enclosures for images already contained in the description */
-            if (-1 !== this.description.indexOf(url))
+            if (this.description && -1 !== this.description.indexOf(url))
                 return;
 
-            this.media.push({ url, mime, l });
+            this.media.push({ url, mime, length: l });
         }
 }

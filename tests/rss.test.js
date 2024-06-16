@@ -59,6 +59,8 @@ test('rss 2.0 parse', () => {
                  <description>As part of the state's first Earth-to-space call...</description>
                  <pubDate>Fri, 21 Jul 2023 09:04 EDT</pubDate>
                  <guid>http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station</guid>
+                 <enclosure url="https://example.com/mp3s/podcast1_part1.mp3" length="1500000" type="audio/mpeg" />
+                 <enclosure url="https://example.com/mp3s/podcast1_part2.mp3" length="1450000" type="audio/mpeg" />
               </item>
               <item>
                  <description>NASA has selected KBR Wyle Services, LLC, of Fulton, Maryland, to provide mission and flight crew operations support for the International Space Station and future human space exploration.</description>
@@ -77,4 +79,9 @@ test('rss 2.0 parse', () => {
         expect(feed.items[0].source).toBe('http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station');
         expect(feed.items[0].sourceId).toBe('http://www.nasa.gov/press-release/louisiana-students-to-hear-from-nasa-astronauts-aboard-space-station');
         expect(feed.items[0].time).toBe(1689944640)
+        expect(feed.items[0].media.length).toBe(2)
+        expect(feed.items[0].media[0].url).toBe('https://example.com/mp3s/podcast1_part1.mp3')
+        expect(feed.items[0].media[0].mime).toBe('audio/mpeg')
+        expect(feed.items[0].media[0].length).toBe(NaN)
+        expect(feed.items[0].media[1].url).toBe('https://example.com/mp3s/podcast1_part2.mp3')
 });

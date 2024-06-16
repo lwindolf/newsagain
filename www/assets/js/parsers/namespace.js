@@ -63,11 +63,11 @@ export class NamespaceParser {
                 (example quoted from specification)
             */
             XPath.foreach(node, '//media:content', (n) => {
-                    item.addMedia(
-                        n.lookup('@url'),
-                        n.lookup('@type') || n.lookup('@medium'),
-                        n.lookup('@duration')
-                    );    
+                item.addMedia(
+                    XPath.lookup(n, '@url'),
+                    XPath.lookup(n, '@type') || XPath.lookup(n, '@medium'),
+                    XPath.lookup(n, '@duration')
+                );
             });
         }
     }

@@ -26,13 +26,12 @@ class RSSParser {
             time: DateParser.parse(XPath.lookup(node, 'pubDate'))
         });
 
-        XPath.foreach(node, 'enclosure', (n) => {
+        XPath.foreach(node, 'enclosure', (n) => 
             item.addMedia(
                 XPath.lookup(n, '@url'),
-                XPath.lookup(n, '@type'),
-                XPath.lookup(n, '@length')
-            );
-        });
+                XPath.lookup(n, '@type')
+            )
+        );
 
         NamespaceParser.parseItem(node, ['dc', 'content', 'media'], feed, item);
 
