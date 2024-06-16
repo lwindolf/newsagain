@@ -17,6 +17,7 @@ export class Item {
         time;
         source;
         sourceId;
+        media = [];     // list of media content attached
         metadata = {};
 
         constructor(defaults) {
@@ -29,5 +30,9 @@ export class Item {
                     Item.maxId++;
                     this.id = Item.maxId;
                 }
+        }
+
+        addMedia(url, mime, length) {
+            this.media.push({ url, mime, length });
         }
 }

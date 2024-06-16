@@ -4,6 +4,7 @@
 // RSS 1.0 is parsed in rdf.js
 
 import { DateParser } from './date.js';
+import { NamespaceParser } from './namespace.js'
 import { XPath } from './xpath.js';
 import { Feed } from '../feed.js';
 import { Item } from '../item.js';
@@ -25,16 +26,12 @@ class RSSParser {
                         time        : DateParser.parse(XPath.lookup(node, 'pubDate'))
                 });
 
-                // Dublin Core support
-                if(!item.description)
-                        item.description = XPath.lookup(node, 'dc:description');
-                if(!item.time)
-                        item.time = DateParser.parse(XPath.lookup(node, 'dc:date'));
-
                 // Finally some guessing
                 if(!item.time)
                         item.time = Date.now();
                 // FIXME: set an id
+
+                NamespaceParser.parseItem(node, ["dc", "content", "media"], feed, item);
 
                 feed.items.push(item);
         }
