@@ -5,6 +5,7 @@
 // Specification https://www.ietf.org/rfc/rfc4287.txt
 
 import { DateParser } from './date.js';
+import { NamespaceParser } from './namespace.js'
 import { XPath } from './xpath.js';
 import { Feed } from '../feed.js';
 import { Item } from '../item.js';
@@ -44,11 +45,11 @@ class AtomParser {
                         time        : DateParser.parse(XPath.lookup(node, 'ns:updated'))
                 });
 
-                if(!item.time)
-                        item.time = DateParser.parse(XPath.lookup(node, 'dc:date'));
+                NamespaceParser.parseItem(node, ['dc', 'content', 'media'], feed, item);
 
                 XPath.foreach(node, 'ns:link', AtomParser.parseEntryLink, item);
-                feed.items.push(item);
+                console.log(feed)
+                feed.addItem(item);
         }
 
         static parse(str) {              

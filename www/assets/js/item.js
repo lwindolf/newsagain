@@ -33,6 +33,23 @@ export class Item {
         }
 
         addMedia(url, mime, length) {
-            this.media.push({ url, mime, length });
+            let l = parseInt(length, 10);
+
+            if (Number.isNaN(l))
+                l = undefined;
+
+            if(!url || !mime)
+                return;
+
+            /* gravatars are often supplied as media:content with medium='image'
+               so we do not treat such occurences as enclosures */
+            if (-1 !== url.indexOf('www.gravatar.com'))
+                return;
+
+            /* Never add enclosures for images already contained in the description */
+            if (-1 !== this.description.indexOf(url))
+                return;
+
+            this.media.push({ url, mime, l });
         }
 }

@@ -63,29 +63,11 @@ export class NamespaceParser {
                 (example quoted from specification)
             */
             XPath.foreach(node, '//media:content', (n) => {
-                try {
-                    const url = n.lookup('@url');
-                    const mime = n.lookup('@type') || n.lookup('@medium');
-                    let add = true;
-                    let length = parseInt(n.lookup('@duration'), 10);
-
-                    if (Number.isNaN(length))
-                        length = undefined;
-
-                    /* gravatars are often supplied as media:content with medium='image'
-                       so we do not treat such occurences as enclosures */
-                    if (-1 !== url.indexOf('www.gravatar.com'))
-                        add = false;
-
-                    /* Never add enclosures for images already contained in the description */
-                    if (-1 !== item.description.indexOf(url))
-                        add = false;
-
-                    if (add)
-                        item.addMedia(url, mime, length);
-                } catch (e) {
-                    console.log(`Failed to parse <media:content> (${e})!`);
-                }
+                    item.addMedia(
+                        n.lookup('@url'),
+                        n.lookup('@type') || n.lookup('@medium'),
+                        n.lookup('@duration')
+                    );    
             });
         }
     }
