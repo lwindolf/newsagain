@@ -5,7 +5,7 @@
 import { Feed } from '../feed.js';
 import { FeedList } from '../feedlist.js';
 import { Dialog } from '../helpers/dialog.js';
-import { linkAutoDiscover } from '../parsers/autodiscover.js';
+import { linkAutoDiscover, parserAutoDiscover } from '../parsers/autodiscover.js';
 
 class SimpleSubscriptionDialog extends Dialog {
     constructor() {
@@ -20,10 +20,29 @@ class SimpleSubscriptionDialog extends Dialog {
         `,
         { /* no initial data */ },
         async (result) => {
+            let links = [], str;
+
             if(-1 == result.url.indexOf('://'))
                 result.url = 'https://' + result.url;
-            let links = await linkAutoDiscover(result.url);
 
+            // Fetch content the URL points to
+            try {
+                str = await fetch(result.url).then((response) => response.text());
+            } catch (e) {
+                result['error'] = 'URL download failed!'
+                d.update(result);
+                return false;
+            }
+
+            // First check if the URL is a real feed
+            if(parserAutoDiscover(str)) {
+                // If this is the case just use the URL
+                links.push(result.url);
+            } else {   
+                // Alternatively we assume it is a HTML document and search for links
+                links = await linkAutoDiscover(result.url);
+            }
+console.log(links)
             // FIXME: let user choose which feed to use
             if(links.length > 0) {
                 FeedList.add(new Feed({

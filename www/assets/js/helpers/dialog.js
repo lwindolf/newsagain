@@ -57,8 +57,6 @@ class Dialog {
         this.#callback(inputData).then((done) => {
             if(done)
                 this.destroy();
-            else
-                console.log("no destroy");
         });
 
         e.preventDefault();

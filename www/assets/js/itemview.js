@@ -23,6 +23,12 @@ export class ItemView {
         <div class='date'></div>
     
         <p>{{{item.description}}}</p>
+
+        {{#each item.media}}
+            {{#contains 'audio' this.type }}
+                <audio controls preload='none' src='{{ this.url }}'></audio>
+            {{/end}}
+        {{/end}}
     `);
 
     // load content of a single item
