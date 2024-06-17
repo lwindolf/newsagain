@@ -21,8 +21,8 @@ function parserAutoDiscover(str) {
             try {
                 if (XPath.lookup(doc.firstChild, parsers[i].autoDiscover[j]))
                     return parsers[i];
-            } catch (e) {
-                console.log(e);
+            } catch(e) {
+                // ignore
             }
         }
     }
@@ -30,14 +30,14 @@ function parserAutoDiscover(str) {
 }
 
 // for a given HTML document link return all feed links found
-async function linkAutoDiscover(str) {
+function linkAutoDiscover(str, baseURL) {
     let doc;
     
     // Try to parse as HTML
     try {
         doc = new DOMParser().parseFromString(str, 'text/html');
-    } catch (e) {
-        // ignore
+    } catch {
+        console.info("Link discovery: could not parse HTML!");
     }
 
     if (!doc)
@@ -56,7 +56,7 @@ async function linkAutoDiscover(str) {
         (node) => {
             let href = XPath.lookup(node, '@href');
             if (!href.includes("://")) {
-                var u = new URL(url);
+                var u = new URL(baseURL);
                 if (href.startsWith('/'))
                     u.pathname = href;
                 else
@@ -66,6 +66,8 @@ async function linkAutoDiscover(str) {
                 results.push(href);
             }
         });
+
+    console.info("Link discovery found "+JSON.stringify(results));
     return results;
 }
 

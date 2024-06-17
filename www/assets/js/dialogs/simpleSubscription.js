@@ -40,9 +40,9 @@ class SimpleSubscriptionDialog extends Dialog {
                 links.push(result.url);
             } else {   
                 // Alternatively we assume it is a HTML document and search for links
-                links = await linkAutoDiscover(result.url);
+                links = linkAutoDiscover(str, result.url);
             }
-console.log(links)
+
             // FIXME: let user choose which feed to use
             if(links.length > 0) {
                 FeedList.add(new Feed({

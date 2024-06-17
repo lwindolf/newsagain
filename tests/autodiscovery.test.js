@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { linkAutoDiscover, parserAutoDiscover  } from "../www/assets/js/parsers/autodiscover";
+import { linkAutoDiscover, parserAutoDiscover } from "../www/assets/js/parsers/autodiscover";
 
 test("Atom 1.0 auto discover", () => {
   let p = parserAutoDiscover(`<?xml version="1.0" encoding="utf-8"?>
@@ -76,7 +76,7 @@ test("RSS 1.1 auto discover", () => {
 </items>
 </Channel>`);
 
-    expect(p.id).toBe('rss');
+  expect(p.id).toBe('rss');
 });
 
 test("RSS 2.0 auto discover", () => {
@@ -255,85 +255,88 @@ test("no feed auto discover", () => {
   expect(p).toBe(undefined);
 });
 
-test("Link auto discover: none", async () => {
-    global['fetch'] = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-        text: () => Promise.resolve(`<!DOCTYPE html>
-        <html lang="en-us">
-        <head>
-        </head>
-        <body>
-            <p>content</p>
-        </body>
-        </html>
-        `),
-    })
-);
-    let links = await linkAutoDiscover('https://example.com');
-    expect(links.length).toBe(0);
+test("Link auto discover: none", () => {
+  const str = `<!DOCTYPE html>
+<html lang="en-us">
+<head>
+</head>
+<body>
+    <p>content</p>
+</body>
+</html>`;
+
+  let links = linkAutoDiscover(str, 'https://example.com');
+  expect(links.length).toBe(0);
 })
 
-test("Link auto discover: Atom", async () => {
-    global['fetch'] = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-        text: () => Promise.resolve(`<!DOCTYPE html>
-        <html lang="en-us">
-        <head>
-            <link href="/feed/devops.xml" rel="alternate" title="LZone Blog" type="application/atom+xml" >
-        </head>
-        <body>
-            <p>content</p>
-        </body>
-        </html>
-        `),
-    })
-);
+test("Link auto discover: Atom", () => {
+  const str = `<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <link href="/feed/devops.xml" rel="alternate" title="LZone Blog" type="application/atom+xml" >
+</head>
+<body>
+    <p>content</p>
+</body>
+</html>`;
 
-    let links = await linkAutoDiscover('https://lzone.de');
-    expect(links.length).toBe(1);
-    expect(links[0]).toBe("https://lzone.de/feed/devops.xml")
+  let links = linkAutoDiscover(str, 'https://lzone.de');
+  expect(links.length).toBe(1);
+  expect(links[0]).toBe("https://lzone.de/feed/devops.xml")
 })
 
-test("Link auto discover: RSS", async () => {
-    global['fetch'] = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-        text: () => Promise.resolve(`<!DOCTYPE html>
-        <html lang="en-us">
-        <head>
-            <link href="https://example.com/feed/devops.rss" rel="alternate" title="LZone Blog" type="application/rss+xml" >
-        </head>
-        <body>
-            <p>content</p>
-        </body>
-        </html>
-        `),
-    })
-);
+test("Link auto discover: RSS", () => {
+  const str = `<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <link href="https://example.com/feed/devops.rss" rel="alternate" title="LZone Blog" type="application/rss+xml" >
+</head>
+<body>
+    <p>content</p>
+</body>
+</html>`;
 
-    let links = await linkAutoDiscover('https://lzone.de');
-    expect(links.length).toBe(1);
-    expect(links[0]).toBe("https://example.com/feed/devops.rss")
+  let links = linkAutoDiscover(str, 'https://lzone.de');
+  expect(links.length).toBe(1);
+  expect(links[0]).toBe("https://example.com/feed/devops.rss")
 })
 
-test("Link auto discover: multiple links", async () => {
-    global['fetch'] = jest.fn().mockImplementation(() =>
-    Promise.resolve({
-        text: () => Promise.resolve(`<!DOCTYPE html>
-        <html lang="en-us">
-        <head>
-            <link href="feed/devops.rss" rel="alternate" title="LZone Blog" type="application/rss+xml" >
-            <link href="/feed/devops.atom" rel="alternate" title="LZone Blog" type="application/atom+xml" >
-        </head>
-        <body>
-            <p>content</p>
-        </body>
-        </html>
-        `),
-    })
-);
+test("Link auto discover: multiple links", () => {
+  const str =`<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <link href="feed/devops.rss" rel="alternate" title="LZone Blog" type="application/rss+xml" >
+    <link href="/feed/devops.atom" rel="alternate" title="LZone Blog" type="application/atom+xml" >
+</head>
+<body>
+    <p>content</p>
+</body>
+</html>`;
 
-    let links = await linkAutoDiscover('https://lzone.de/blog');
-    expect(links.length).toBe(2);
-    expect(links[0]).toBe("https://lzone.de/blog/feed/devops.rss")
-    expect(links[1]).toBe("https://lzone.de/feed/devops.atom")
+  let links = linkAutoDiscover(str, 'https://lzone.de/blog');
+  expect(links.length).toBe(2);
+  expect(links[0]).toBe("https://lzone.de/blog/feed/devops.rss")
+  expect(links[1]).toBe("https://lzone.de/feed/devops.atom")
+})
+
+test("Link auto discover: slashdot", () => {
+  const str = `<!-- html-header type=current begin -->
+	
+    <!DOCTYPE html>
+
+
+    <html lang="en">
+<head>
+<!-- Render IE9 -->
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+<link rel="top"       title="News for nerds, stuff that matters" href="//slashdot.org/" >
+<link rel="search"    title="Search Slashdot" href="//slashdot.org/search.pl">
+<link rel="alternate" title="Slashdot RSS" href="https://rss.slashdot.org/Slashdot/slashdotMain" type="application/rss+xml">
+</head>
+</html>`;
+
+  let links = linkAutoDiscover(str, 'https://slashdot.org');
+  expect(links.length).toBe(1);
+  expect(links[0]).toBe("https://rss.slashdot.org/Slashdot/slashdotMain")
 })

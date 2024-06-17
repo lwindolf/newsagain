@@ -12,6 +12,8 @@
 import { template } from '../helpers/render.js';
 
 class Dialog {
+    #modal;
+    #modalContent;
     #callback;
     #template;
 
@@ -22,61 +24,58 @@ class Dialog {
 
     // Build a modal dialog from a Handlebars template
     constructor(templateStr, data, callback) {
+        this.#modal = document.getElementById('modal');
+        this.#modalContent = document.getElementById('modalContent');
         this.#template = template(templateStr);
         this.#callback = callback;
 
-        document.getElementById('modal').style.display = 'block';
-        document.getElementById('modalContent').innerHTML = '<form>'+this.#template(data)+'</form>';
-        document.addEventListener('click', this.#onclickFunc = (e) => {
-            this.#onclick(e);
-        });
-        document.addEventListener('submit', this.#onsubmitFunc = (e) => {
-            this.#onsubmit(e);
-        });
-        document.addEventListener('keydown', this.#onkeydownFunc = (e) => {
-            if(e.code === "Escape")
+        this.#modal.style.display = 'block';
+        this.#modalContent.innerHTML = this.#template(data);
+
+        this.#modal.addEventListener('click', this.#onclickFunc = (e) => {
+            if(e.target.id === 'modal') {
                 this.destroy();
+                e.preventDefault();
+            }
+        });
+        this.#modal.addEventListener('submit', this.#onsubmitFunc = (e) => {
+            this.#onsubmit();
+            e.preventDefault();
+        });
+        this.#modal.addEventListener('keydown', this.#onkeydownFunc = (e) => {
+            if(e.code === "Escape") {
+                this.destroy();
+                e.preventDefault();
+            }
         });
     }
 
-    // handle close and submit clicks
-    #onclick(e) {
-        if(e.target.closest('.close') || e.target.id === 'modal') {
-            this.destroy();
-            e.preventDefault();
-            return;
-        }
-    }
-
-    #onsubmit(e) {
+    #onsubmit() {
         var inputData = {};
 
-        [...document.querySelectorAll('#modalContent input, #modalContent select, #modalContent textarea')]
+        [...this.#modalContent.querySelectorAll('input, select, textarea')]
             .forEach((e) => (inputData[e.name] = e.value));
 
         this.#callback(inputData).then((done) => {
             if(done)
                 this.destroy();
         });
-
-        e.preventDefault();
-        return;
     }
 
     // Update the dialog with new data, along with a conditional 
     // template this allows changing the dialog and supplying new 
     // data & fields.
     update(data) {
-        document.getElementById('modalContent').innerHTML = this.#template(data);
+        this.#modalContent.innerHTML = this.#template(data);
     }
 
     // "destructor"
     destroy() {
-        document.getElementById('modal').style.display = 'none';
-        document.getElementById('modalContent').innerHTML = '';
-        document.removeEventListener('click', this.#onclickFunc);
-        document.removeEventListener('submit', this.#onsubmitFunc);
-        document.removeEventListener('keydown', this.#onkeydownFunc);
+        this.#modal.style.display = 'none';
+        this.#modalContent.innerHTML = '';
+        this.#modal.removeEventListener('click', this.#onclickFunc);
+        this.#modal.removeEventListener('submit', this.#onsubmitFunc);
+        this.#modal.removeEventListener('keydown', this.#onkeydownFunc);
     }
 }
 
