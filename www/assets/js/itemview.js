@@ -27,8 +27,8 @@ export class ItemView {
         {{#each item.media}}
             {{#contains 'audio' this.type }}
                 <audio controls preload='none' src='{{ this.url }}'></audio>
-            {{/end}}
-        {{/end}}
+            {{/contains}}
+        {{/each}}
     `);
 
     // load content of a single item

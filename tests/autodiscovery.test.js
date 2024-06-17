@@ -326,14 +326,9 @@ test("Link auto discover: slashdot", () => {
 
 
     <html lang="en">
-<head>
-<!-- Render IE9 -->
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-
-<link rel="top"       title="News for nerds, stuff that matters" href="//slashdot.org/" >
-<link rel="search"    title="Search Slashdot" href="//slashdot.org/search.pl">
+<body>
 <link rel="alternate" title="Slashdot RSS" href="https://rss.slashdot.org/Slashdot/slashdotMain" type="application/rss+xml">
-</head>
+</body>
 </html>`;
 
   let links = linkAutoDiscover(str, 'https://slashdot.org');

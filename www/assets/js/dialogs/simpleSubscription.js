@@ -25,6 +25,8 @@ class SimpleSubscriptionDialog extends Dialog {
             if(-1 == result.url.indexOf('://'))
                 result.url = 'https://' + result.url;
 
+            console.info(`Trying to subscribe to ${result.url}`);
+
             // Fetch content the URL points to
             try {
                 str = await fetch(result.url).then((response) => response.text());

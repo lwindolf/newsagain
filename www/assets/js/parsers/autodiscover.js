@@ -16,14 +16,18 @@ function parserAutoDiscover(str) {
     const parser = new DOMParser();
     const doc = parser.parseFromString(str, 'application/xml');
 
+    console.info(`auto discover`)
     for (let i = 0; i < parsers.length; i++) {
         for (let j = 0; j < parsers[i].autoDiscover.length; j++) {
             try {
-                if (XPath.lookup(doc.firstChild, parsers[i].autoDiscover[j]))
+                if (XPath.lookup(doc.firstChild, parsers[i].autoDiscover[j])) {
+                    console.info(`... discovered to be ${parsers[i].id}!`);
                     return parsers[i];
+                }
             } catch(e) {
                 // ignore
             }
+            console.info(`... is not ${parsers[i].id}`);
         }
     }
     return undefined;
@@ -52,7 +56,7 @@ function linkAutoDiscover(str, baseURL) {
 
     let results = [];
     XPath.foreach(root,
-        "/html/head/link[@rel='alternate'][@type='application/atom+xml' or @type='application/rss+xml' or @type='application/rdf+xml' or @type='text/xml']",
+        "//link[@rel='alternate'][@type='application/atom+xml' or @type='application/rss+xml' or @type='application/rdf+xml' or @type='text/xml']",
         (node) => {
             let href = XPath.lookup(node, '@href');
             if (!href.includes("://")) {

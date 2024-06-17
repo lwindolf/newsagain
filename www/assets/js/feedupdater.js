@@ -6,19 +6,12 @@ import { parserAutoDiscover } from './parsers/autodiscover.js';
 import { Favicon } from './parsers/favicon.js';
 import { Feed } from './feed.js';
 
-// FIXME: drop this hard-coded proxy
-const proxy = 'https://corsproxy-1516.lars-windolf.workers.dev/corsproxy/?apiurl=';
-
 export class FeedUpdater {
     // returns a feed properties or at least error code (e.g. "{ error: Feed.ERROR_XML }")
     // result should be merged into the feed being updated
     static async fetch(url) {
-        // Inject proxy on non-Phonegap environment
-        let fetchURL = url;
-        if(document.location.protocol !== 'file:')
-            fetchURL = proxy + url;
-
-        var feed = await fetch(fetchURL)
+        console.info(`Updating ${url}`);
+        var feed = await fetch(url)
             .then((response) => {
                 // FIXME: proper network state handling
                 return response.text()
