@@ -17,7 +17,7 @@ export class FeedUpdater {
                 return response.text()
             })
             .then(async (str) => {
-                let parser = parserAutoDiscover(str);
+                let parser = parserAutoDiscover(str, url);
                 if(!parser)
                     return new Feed({ error: Feed.ERROR_DISCOVER });
 
@@ -38,7 +38,9 @@ export class FeedUpdater {
 
                 return feed;
             })
-            .catch(() => {
+            .catch((e) => {
+                console.log(e);
+                
                 // FIXME: provide HTTP status too
                 return new Feed({ error: Feed.ERROR_NET });
             });

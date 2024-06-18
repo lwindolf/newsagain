@@ -16,14 +16,14 @@ class RSSParser {
         '/Channel/items'
     ];
 
-    static parseItem(node, feed) {
+    static parseItem(node, ctxt) {
         let item = new Item({
-            title: XPath.lookup(node, 'title'),
-            description: XPath.lookup(node, 'description'),
-            source: XPath.lookup(node, 'link'),
+            title       : XPath.lookup(node, 'title'),
+            description : XPath.lookup(node, 'description'),
+            source      : XPath.lookup(node, 'link'),
             // RSS 2.0 only
-            sourceId: XPath.lookup(node, 'guid'),
-            time: DateParser.parse(XPath.lookup(node, 'pubDate'))
+            sourceId    : XPath.lookup(node, 'guid'),
+            time        : DateParser.parse(XPath.lookup(node, 'pubDate'))
         });
 
         XPath.foreach(node, 'enclosure', (n) => 
@@ -33,9 +33,9 @@ class RSSParser {
             )
         );
 
-        NamespaceParser.parseItem(node, ['dc', 'content', 'media'], feed, item);
+        NamespaceParser.parseItem(ctxt.root, node, item);
 
-        feed.addItem(item);
+        ctxt.feed.addItem(item);
     }
 
     static parse(str) {
@@ -52,7 +52,7 @@ class RSSParser {
             feed.description = XPath.lookup(root, '/Channel/description');
             feed.homepage    = XPath.lookup(root, '/Channel/link');
 
-            XPath.foreach(root, '/Channel/items/item', this.parseItem, feed);
+            XPath.foreach(root, '/Channel/items/item', this.parseItem, { root, feed });
         }
 
         // RSS 2.0
@@ -61,7 +61,7 @@ class RSSParser {
             feed.description = XPath.lookup(root, '/rss/channel/description');
             feed.homepage    = XPath.lookup(root, '/rss/channel/link');
 
-            XPath.foreach(root, '/rss/channel/item', this.parseItem, feed);
+            XPath.foreach(root, '/rss/channel/item', this.parseItem, { root, feed });
         }
 
         return feed;

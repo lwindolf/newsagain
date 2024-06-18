@@ -9,12 +9,21 @@ export class NamespaceParser {
     /**
      * Parse all RSS namespace childs of a given DOM node
      * 
+     * @param {*} root        the DOM root
      * @param {*} node        the item DOM node
-     * @param {*} nsList      an array of namespace identifiers e.g. ["media", "dc"]
-     * @param {*} feed        the feed
      * @param {*} item        the item
      */
-    static parseItem(node, nsList, feed, item) {
+    static parseItem(root, node, item) {
+        // Make list of all namespaces defined in root node, we must only
+        // match for present namespaces
+        const nsList = [];
+        for (let i = 0; i < root.attributes.length; i++) {
+            const attr = root.attributes[i];
+            if (attr.name.startsWith('xmlns:')) {
+                nsList.push(attr.name.substring(6));
+            }
+        }
+
         // Dublin Core support
         if (nsList.includes('dc')) {
             if (!item.description)

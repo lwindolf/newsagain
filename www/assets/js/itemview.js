@@ -25,8 +25,11 @@ export class ItemView {
         <p>{{{item.description}}}</p>
 
         {{#each item.media}}
-            {{#contains 'audio' this.type }}
-                <audio controls preload='none' src='{{ this.url }}'></audio>
+            {{#contains 'audio' mime }}
+                <audio controls preload='none' src='{{ url }}'></audio>
+            {{/contains}}
+            {{#contains 'video' mime }}
+                <video controls preload='none' src='{{ url }}'></video>
             {{/contains}}
         {{/each}}
     `);

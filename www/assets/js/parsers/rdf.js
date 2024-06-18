@@ -13,16 +13,16 @@ class RDFParser {
 		'/rdf:RDF/ns:channel'
 	];
 
-	static parseItem(node, feed) {
+	static parseItem(node, ctxt) {
 		let item = new Item({
-			title: XPath.lookup(node, 'ns:title'),
-			description: XPath.lookup(node, 'ns:description'),
-			source: XPath.lookup(node, 'ns:link'),
+			title       : XPath.lookup(node, 'ns:title'),
+			description : XPath.lookup(node, 'ns:description'),
+			source      : XPath.lookup(node, 'ns:link'),
 		});
 
-		NamespaceParser.parseItem(node, ['dc', 'content', 'media'], feed, item);
+		NamespaceParser.parseItem(ctxt.root, node, item);
 
-		feed.addItem(item);
+		ctxt.feed.addItem(item);
 	}
 
 	static parse(str) {
@@ -35,11 +35,11 @@ class RDFParser {
 
 		// RSS 1.0
 		if (doc.firstChild.nodeName === 'rdf:RDF') {
-			feed.title = XPath.lookup(root, '/rdf:RDF/ns:channel/ns:title');
+			feed.title       = XPath.lookup(root, '/rdf:RDF/ns:channel/ns:title');
 			feed.description = XPath.lookup(root, '/rdf:RDF/ns:channel/ns:description');
-			feed.homepage = XPath.lookup(root, '/rdf:RDF/ns:channel/ns:link');
+			feed.homepage    = XPath.lookup(root, '/rdf:RDF/ns:channel/ns:link');
 
-			XPath.foreach(root, '/rdf:RDF/ns:item', this.parseItem, feed);
+			XPath.foreach(root, '/rdf:RDF/ns:item', this.parseItem, { root, feed });
 		}
 
 		return feed;

@@ -11,23 +11,23 @@ import { RSSParser } from './rss.js';
 import { RDFParser } from './rdf.js';
 
 // Return a parser class matching the given document string or undefined
-function parserAutoDiscover(str) {
+function parserAutoDiscover(str, url = "") {
     let parsers = [AtomParser, RSSParser, RDFParser];
     const parser = new DOMParser();
     const doc = parser.parseFromString(str, 'application/xml');
 
-    console.info(`auto discover`)
+    console.info(`auto discover ${url}`)
     for (let i = 0; i < parsers.length; i++) {
         for (let j = 0; j < parsers[i].autoDiscover.length; j++) {
             try {
                 if (XPath.lookup(doc.firstChild, parsers[i].autoDiscover[j])) {
-                    console.info(`... discovered to be ${parsers[i].id}!`);
+                    console.info(`... discovered to be ${parsers[i].id} (${url}!`);
                     return parsers[i];
                 }
             } catch(e) {
                 // ignore
             }
-            console.info(`... is not ${parsers[i].id}`);
+            console.info(`... is not ${parsers[i].id} (${url})`);
         }
     }
     return undefined;

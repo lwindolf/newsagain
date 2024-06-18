@@ -37,7 +37,7 @@ class SimpleSubscriptionDialog extends Dialog {
             }
 
             // First check if the URL is a real feed
-            if(parserAutoDiscover(str)) {
+            if(parserAutoDiscover(str, result.url)) {
                 // If this is the case just use the URL
                 links.push(result.url);
             } else {   

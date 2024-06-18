@@ -37,7 +37,7 @@ class AtomParser {
                 }
         }
 
-        static parseEntry(node, feed) {
+        static parseEntry(node, ctxt) {
                 let item = new Item({
                         title       : XPath.lookup(node, 'ns:title'),
                         description : XPath.lookup(node, 'ns:summary'),
@@ -45,11 +45,11 @@ class AtomParser {
                         time        : DateParser.parse(XPath.lookup(node, 'ns:updated'))
                 });
 
-                NamespaceParser.parseItem(node, ['dc', 'content', 'media'], feed, item);
+                NamespaceParser.parseItem(ctxt.root, node, item);
 
                 XPath.foreach(node, 'ns:link', AtomParser.parseEntryLink, item);
 
-                feed.addItem(item);
+                ctxt.feed.addItem(item);
         }
 
         static parse(str) {              
@@ -65,7 +65,7 @@ class AtomParser {
                                       XPath.lookup(root, "/ns:feed/ns:link/@href")
                 });
 
-                XPath.foreach(root, '/ns:feed/ns:entry', this.parseEntry, feed);
+                XPath.foreach(root, '/ns:feed/ns:entry', this.parseEntry, { root, feed });
 
                 return feed;
         }

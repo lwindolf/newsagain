@@ -214,6 +214,12 @@ header .title {
 	   visually shown) */
 }
 
+#itemViewContent video {
+        max-width: 100%;
+        height: auto;
+        display: block;
+}
+
 /* feed fetch error warning */
 
 .feedInfoErrorBox {
