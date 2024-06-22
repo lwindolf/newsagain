@@ -56,7 +56,7 @@ a 🛑 means the feature won't be ported.
 
 - [x] Atom 1.0 / RSS 1.0, 1.1 and 2.0
 - [x] Dublin Core RSS namespace support
-- [ ] itunes namespace support
+- [x] media namespace support
 - [x] Favicon discovery
 - [x] Feed auto discovery 
 - 🛑 RSS 0.9x support
@@ -97,7 +97,7 @@ a 🛑 means the feature won't be ported.
 - [ ] Search folders
 - [x] Item list
 - [x] Item view
-- [x] Desktop mouse selection
+- [x] Desktop mouse selectionchuba
 - [x] Middle click behaviour
 - [x] Launching external browser
 - [ ] Launching internal browser
@@ -108,11 +108,12 @@ a 🛑 means the feature won't be ported.
 ### UI Layouts
 
 - [x] 3 pane view (wide)
-- [ ] 3 pane view (email-like)
+- [x] 1 pane view (mobile)
 - [x] Automatic switching
 - [ ] Reader Mode
 - [ ] Dark Mode
 - [ ] Custom Theme overrides
+- 🛑 3 pane view (email like)
 
 ### UI Tools
 
