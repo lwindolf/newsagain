@@ -2,6 +2,8 @@
 
 # NewsAgain
 
+![NewsAgain Icon](icons/web/icon-192.png)
+
 WIP prototype for a backend-less PWA feed reader replacing [Liferea](https://lzone.de/liferea)
 
 Can be used as an
