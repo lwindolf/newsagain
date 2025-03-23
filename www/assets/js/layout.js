@@ -12,6 +12,7 @@
 import Split from './lib/split.es.js';
 import { ItemList } from './itemlist.js';
 import { debounce } from './helpers/debounce.js';
+import { HeaderView } from './header.js';
 
 export class Layout {
     // state
@@ -65,6 +66,8 @@ export class Layout {
             .forEach(e => (e.style.display = 'none'));
 
         document.getElementById(name).style.display = 'block';
+
+        HeaderView.update(name);
     }
 
     // switch to previous view (mobile only)

@@ -48,7 +48,7 @@ export class FeedList {
 
     // Return node by id
     static getNodeById(id) {
-        return FeedList.#nodeById[id];
+        return id?FeedList.#nodeById[id]:undefined;
     }
 
     // Return the next unread node after the given node id
