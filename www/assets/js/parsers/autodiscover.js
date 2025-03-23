@@ -47,31 +47,57 @@ function linkAutoDiscover(str, baseURL) {
     if (!doc)
         return [];
 
-    // DOCTYPE node is first child when parsing HTML5, we need to 
-    // find the <html> root node in this case
-    let root = doc.firstChild;
-    while (root && root.nodeName !== 'HTML') {
-        root = root.nextSibling;
+    let results = [];
+
+    // Try DOM based extraction (this fails on unclosed <link> tags)
+    doc.head.querySelectorAll('link[rel="alternate"]').forEach((n) => {
+        const type = n.getAttribute('type');
+        if (!type)
+                return
+        if ((type === 'application/atom+xml') ||
+            (type === 'application/rss+xml') ||
+            (type === 'application/rdf+xml') ||
+            (type === 'text/xml'))
+            results.push(n.getAttribute('href'));
+    });
+
+    // Fuzzy extract link tags from HTML string
+    if(results.length === 0) {
+        const linkPattern = /<link[^>]*>/g;
+        const hrefPattern = /href="([^"]*)"/;
+        const relPattern = /rel=["']alternate["']/;
+        const typePattern = /type=["']([^"']+)["']/;
+
+        let match;
+        while ((match = linkPattern.exec(str)) !== null) {
+                const relMatch = relPattern.exec(match[0]);
+                const hrefMatch = hrefPattern.exec(match[0]);
+                const typeMatch = typePattern.exec(match[0]);
+                const type = typeMatch ? typeMatch[1] : null;
+                const url = hrefMatch ? hrefMatch[1] : null;
+
+                if (url && type && relMatch)
+                        if ((type === 'application/atom+xml') ||
+                            (type === 'application/rss+xml') ||
+                            (type === 'application/rdf+xml') ||
+                            (type === 'text/xml'))
+                                results.push(url);
+        }
     }
 
-    let results = [];
-    XPath.foreach(root,
-        "//link[@rel='alternate'][@type='application/atom+xml' or @type='application/rss+xml' or @type='application/rdf+xml' or @type='text/xml']",
-        (node) => {
-            let href = XPath.lookup(node, '@href');
-            if (!href.includes("://")) {
-                var u = new URL(baseURL);
-                if (href.startsWith('/'))
-                    u.pathname = href;
-                else
-                    u.pathname += "/" + href;
-                results.push(u.href);
-            } else {
-                results.push(href);
-            }
-        });
+    results = results.map((href) => {
+        if (!href.includes("://")) {
+            var u = new URL(baseURL);
+            if (href.startsWith('/'))
+                u.pathname = href;
+            else
+                u.pathname += "/" + href;
+            return u.href;
+        } else {
+            return href;
+        }
+    });
 
-    console.info("Link discovery found "+JSON.stringify(results));
     return results;
 }
 
