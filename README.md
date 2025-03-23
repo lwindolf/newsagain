@@ -80,6 +80,7 @@ a 🛑 means the feature won't be ported.
 - [ ] HTTP 410
 - [ ] Basic Auth
 - [ ] Secret Management
+- [x] CORS Proxy Support (via CloudFlare)
 - 🛑 Proxy Support
 
 ### Online Source Support
