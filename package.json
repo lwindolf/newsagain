@@ -1,12 +1,12 @@
 {
   "name": "de.lzone.newsagain",
   "displayName": "NewsAgain",
-  "version": "0.1.0",
-  "description": "Multi-platform news aggregator.",
+  "version": "0.1.1",
+  "description": "News aggregator PWA.",
   "main": "index.js",
   "scripts": {
     "test": "eslint --ignore-pattern www/assets/js/lib/* www/assets/js && jest --coverage",
-    "start": "cordova run",
+    "start": "cd www && npx serve",
     "build": "./build.sh"
   },
   "jest": {
@@ -17,19 +17,8 @@
     "testEnvironment": "jest-environment-jsdom"
   },
   "dependencies": {
-    "cordova-android": "12.0.1",
-    "cordova-browser": "7.0.0",
-    "cordova-electron": "^4.0.0",
     "handlebars": "^4.7.8",
     "split.js": "^1.6.5"
-  },
-  "cordova": {
-    "platforms": [
-      "browser",
-      "electron",
-      "android"
-    ],
-    "plugins": {}
   },
   "devDependencies": {
     "@babel/preset-env": "^7.22.20",

@@ -18,11 +18,7 @@ export class App {
     layout   = new Layout();
 
     constructor() { 
-        // if we do not run in a real cordova sandbox enable CORS proxy
-        if (typeof cordova === 'undefined' || cordova.platformId === 'browser') {
-            console.log("Enabling CORS proxy");
-            setCORSProxyEnabled(true);
-        }
+        setCORSProxyEnabled(true);
 
         // global hotkeys
         keydown('body', /* F1 */               (e) => (e.keyCode === 112),             () => new HelpDialog());

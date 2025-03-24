@@ -35,6 +35,10 @@ By for example limiting the maximum number of subscriptions supported to e.g. 20
 5 daily updates $5 can serve 10Mio / 200 / 5 / 30 = at least 350 conccurent users which would be a 
 reasonable price. The challenge of course lies with preventing abuse of the proxy.
 
+Or use the 
+-  anonymous proxy https://corsproxy.io/
+
+
 ### 2. Maintaining CORS injection browser extension
 
 - probably could refer to existing Chrome/Firefox extensions
@@ -63,3 +67,9 @@ Feed readers realized with Electron
 1. Electron app for desktops
 2. Android app in fdroid for mobile
 3. (maybe) PWA hosted on lzone.de with proxy support
+
+Revised decision:
+
+1. Use CORS proxy (Cloudflare and maybe others) per default
+2. Properly inform users about the security pros and cons
+3. Deploy as a simple cross platform PWA without Cordova

@@ -4,6 +4,7 @@
 
 import { DateParser } from './parsers/date.js';
 import { FeedList } from './feedlist.js';
+import { Layout } from './layout.js';
 import { template, render } from './helpers/render.js';
 import * as ev from './helpers/events.js';
 
@@ -54,7 +55,7 @@ export class ItemView {
         document.addEventListener('itemSelected', (e) => ItemView.#loadItem(e.detail.feed, e.detail.id));
 
         // eslint-disable-next-line no-undef
-        if (typeof cordova !== 'undefined' && cordova?.platformId === 'electron') {
+        if (!Layout.isMobile()) {
             ev.connect('mouseover', 'a', (el) => ItemView.#showLink(el.getAttribute('href'), true));
             ev.connect('mouseout',  'a', (el) => ItemView.#showLink(el.getAttribute('href'), false));
         }

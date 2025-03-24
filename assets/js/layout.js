@@ -20,13 +20,15 @@ export class Layout {
     static #split;
     static #view;
     static #touchStart;
+    static #isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    static isMobile = () => Layout.#isMobile;
 
     static update() {
-        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
         let theme = document.getElementById('theme');
         let before = Layout.#isSmall;
 
-        Layout.#isSmall = (isMobile || window.innerWidth < 800);
+        Layout.#isSmall = (Layout.#isMobile || window.innerWidth < 800);
         if(before === Layout.#isSmall)
             return;
 

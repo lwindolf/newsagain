@@ -6,51 +6,20 @@
 
 WIP prototype for a backend-less PWA feed reader replacing [Liferea](https://lzone.de/liferea)
 
-Can be used as an
+Please note that running a PWA feed reader requires using a CORS proxy which has some
+security implications.
 
-- Electron app
-- Android app
+## Start using it
 
-While NewsAgain is technically a PWA as a feed reader it cannot be run in
-a normal browser as most websites do deliver feeds without permissive CORS
-headers causing a PWA to be unable to download them due to security errors.
-Electron/Android apps do not have this limitation.
+Just open [https://lwindolf.github.io/newsagain](https://lwindolf.github.io/newsagain)
 
-## Compile
+Alternatively host it yourself by uploading the `www` folder on your own webserver.
 
-    npm install
+## Building
+
     npm test
-    npm run build
-    npm run build -- --release
-
-Note that aside from all the NPM dependencies if you want to compile for Android you need:
-
-- Android SDK with runtime v33.0.2 installed
-- env variable set for Android SDK e.g. `export ANDROID_HOME=~/Android/Sdk`
-- gradle 4.4.x
-
-## How to run
-
-Run as a plain PWA (using Cloudflare CORS proxy)
-
-    npx serve          # and access http://localhost:3000/web.html
-
-Run Electron app
-
-    npm start electron             # Run Electron app
-    npm start electron --nobuild   # Run without rebuild (much faster)
-
-Run Android app on mobile in developer mode
-
-    npm start android --device
-
-Run Android app in virtual device in Android Studio
-
-    cordova emulate android
-
-Simple Cordova browser debug environment
-
-    npm start browser
+    npm run build       # To install dependencies
+    npx serve
 
 ## Feature-Completeness
 
