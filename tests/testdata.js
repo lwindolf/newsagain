@@ -1,5 +1,5 @@
-import { DB } from '../assets/js/db';
-import { Feed } from '../assets/js/feed';
+import { DB } from '../www/assets/js/db';
+import { Feed } from '../www/assets/js/feed';
 
 DB.testDisable = true;  // DB won't do anything
 

@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { RDFParser } from '../assets/js/parsers/rdf';
+import { RDFParser } from '../www/assets/js/parsers/rdf';
 
 test('Dublin Core', () => {
         // XML example from spec https://web.resource.org/rss/1.0/modules/dc/

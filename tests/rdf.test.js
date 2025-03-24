@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { RDFParser } from '../assets/js/parsers/rdf';
+import { RDFParser } from '../www/assets/js/parsers/rdf';
 
 test('rss 1.0 parse', () => {
         let feed = RDFParser.parse(`<?xml version="1.0"?>

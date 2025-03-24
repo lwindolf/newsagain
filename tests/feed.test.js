@@ -1,7 +1,7 @@
 // vim: set ts=4 sw=4:
 
-import { Feed } from '../assets/js/feed';
-import { Item } from '../assets/js/item';
+import { Feed } from '../www/assets/js/feed';
+import { Item } from '../www/assets/js/item';
 import { TestData } from './testdata.js';
 
 const mockFeed = new Feed({ items: [

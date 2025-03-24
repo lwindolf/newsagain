@@ -3,11 +3,11 @@
 window.Handlebars = require('handlebars');
 
 // no "imports" because of Handlebars requirement above
-const { Feed } = require('../assets/js/feed');
-const { Item } = require('../assets/js/item');
-const { FeedList } = require('../assets/js/feedlist');
-const { ItemList } = require('../assets/js/itemlist');
-const { DB } = require('../assets/js/db');
+const { Feed } = require('../www/assets/js/feed');
+const { Item } = require('../www/assets/js/item');
+const { FeedList } = require('../www/assets/js/feedlist');
+const { ItemList } = require('../www/assets/js/itemlist');
+const { DB } = require('../www/assets/js/db');
 
 const mockFeeds = [
     new Feed({ title: 'abc', id: 1, unreadCount: 0, items: []}),

@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { Favicon } from "../assets/js/parsers/favicon";
+import { Favicon } from "../www/assets/js/parsers/favicon";
 
 let responses = {
     "https://arstechnica.com/test1": `<!DOCTYPE html>
@@ -9,9 +9,9 @@ let responses = {
     <head>
         <title>Ars Technica</title>
         <link rel="shortcut icon" href="https://cdn.arstechnica.net/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/ars-ios-icon-d9a45f558c.png" />
-        <link rel="mask-icon" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/ars-macos-safari-8997f76b21.svg" color="#ff4e00">
-        <link rel="icon" sizes="192x192" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/material-ars-db41652381.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/ars-ios-icon-d9a45f558c.png" />
+        <link rel="mask-icon" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/ars-macos-safari-8997f76b21.svg" color="#ff4e00">
+        <link rel="icon" sizes="192x192" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/material-ars-db41652381.png" />
     </head>
     <body>
         <p>content</p>
@@ -25,9 +25,9 @@ let responses = {
     <head>
         <title>Ars Technica</title>
         <link rel="shortcut icon" href="https://cdn.arstechnica.net/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/ars-ios-icon-d9a45f558c.png" />
-        <link rel="mask-icon" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/ars-macos-safari-8997f76b21.svg" color="#ff4e00">
-        <link rel="icon" sizes="192x192" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/material-ars-db41652381.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/ars-ios-icon-d9a45f558c.png" />
+        <link rel="mask-icon" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/ars-macos-safari-8997f76b21.svg" color="#ff4e00">
+        <link rel="icon" sizes="192x192" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/material-ars-db41652381.png" />
     </head>
     <body>
         <p>content</p>
@@ -40,9 +40,9 @@ let responses = {
     <head>
         <title>Ars Technica</title>
         <link rel="shortcut icon" href="https://cdn.arstechnica.net/favicon.ico" />
-        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/ars-ios-icon-d9a45f558c.png" />
-        <link rel="mask-icon" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/ars-macos-safari-8997f76b21.svg" color="#ff4e00">
-        <link rel="icon" sizes="192x192" href="https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/material-ars-db41652381.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/ars-ios-icon-d9a45f558c.png" />
+        <link rel="mask-icon" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/ars-macos-safari-8997f76b21.svg" color="#ff4e00">
+        <link rel="icon" sizes="192x192" href="https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/material-ars-db41652381.png" />
     </head>
     <body>
         <p>content</p>
@@ -71,19 +71,19 @@ global['fetch'] = jest.fn().mockImplementation((r) =>
 test("Large Icon in HTML5", async () => {
     let icon = await Favicon.discover("https://arstechnica.com/test1");
     
-    expect(icon).toBe('https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/material-ars-db41652381.png');
+    expect(icon).toBe('https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/material-ars-db41652381.png');
 });
 
 test("Large Icon in XHTML", async () => {
     let icon = await Favicon.discover("https://arstechnica.com/test2");
     
-    expect(icon).toBe('https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/material-ars-db41652381.png');
+    expect(icon).toBe('https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/material-ars-db41652381.png');
 });
 
 test("Large Icon no DOCTYPE", async () => {
     let icon = await Favicon.discover("https://arstechnica.com/test3");
     
-    expect(icon).toBe('https://cdn.arstechnica.net/wp-content/themes/ars/assets/img/material-ars-db41652381.png');
+    expect(icon).toBe('https://cdn.arstechnica.net/wp-content/themes/ars/www/assets/img/material-ars-db41652381.png');
 });
 
 test("Default to favicon.ico", async () => {
