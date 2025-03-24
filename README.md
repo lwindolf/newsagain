@@ -19,7 +19,7 @@ Alternatively host it yourself by uploading the `www` folder on your own webserv
 
     npm install
     npm test
-    npm run build       # To install NPM dependencies into assets/js
+    npm run build       # To install NPM dependencies into assets/js/lib
     npx serve
 
 ## Feature-Completeness
