@@ -6,6 +6,7 @@ import { Feed } from '../feed.js';
 import { FeedList } from '../feedlist.js';
 import { Dialog } from '../helpers/dialog.js';
 import { linkAutoDiscover, parserAutoDiscover } from '../parsers/autodiscover.js';
+import { pfetch } from '../net.js';
 
 class SimpleSubscriptionDialog extends Dialog {
     constructor() {
@@ -29,7 +30,7 @@ class SimpleSubscriptionDialog extends Dialog {
 
             // Fetch content the URL points to
             try {
-                str = await fetch(result.url).then((response) => response.text());
+                str = await pfetch(result.url).then((response) => response.text());
             } catch (e) {
                 result['error'] = 'URL download failed!'
                 d.update(result);

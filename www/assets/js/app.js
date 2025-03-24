@@ -7,6 +7,7 @@ import { ItemView } from './itemview.js';
 import { Layout } from './layout.js';
 import { HelpDialog } from './dialogs/help.js';
 import { keydown } from './helpers/events.js';
+import { setCORSProxyEnabled } from './net.js';
 
 export class App {
     // member variables for easier console debugging
@@ -17,6 +18,12 @@ export class App {
     layout   = new Layout();
 
     constructor() { 
+        // if we do not run in a real cordova sandbox enable CORS proxy
+        if (typeof cordova === 'undefined' || cordova.platformId === 'browser') {
+            console.log("Enabling CORS proxy");
+            setCORSProxyEnabled(true);
+        }
+
         // global hotkeys
         keydown('body', /* F1 */               (e) => (e.keyCode === 112),             () => new HelpDialog());
         keydown('body', /* Ctrl-right arrow */ (e) => (e.keyCode === 39 && e.ctrlKey), () => ItemList.nextUnread());

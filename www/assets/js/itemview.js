@@ -54,7 +54,7 @@ export class ItemView {
         document.addEventListener('itemSelected', (e) => ItemView.#loadItem(e.detail.feed, e.detail.id));
 
         // eslint-disable-next-line no-undef
-        if(cordova.platformId === 'electron') {
+        if (typeof cordova !== 'undefined' && cordova?.platformId === 'electron') {
             ev.connect('mouseover', 'a', (el) => ItemView.#showLink(el.getAttribute('href'), true));
             ev.connect('mouseout',  'a', (el) => ItemView.#showLink(el.getAttribute('href'), false));
         }

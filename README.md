@@ -31,6 +31,10 @@ Note that aside from all the NPM dependencies if you want to compile for Android
 
 ## How to run
 
+Run as a plain PWA (using Cloudflare CORS proxy)
+
+    npx serve          # and access http://localhost:3000/web.html
+
 Run Electron app
 
     npm start electron             # Run Electron app

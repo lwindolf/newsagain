@@ -21,13 +21,11 @@ function parserAutoDiscover(str, url = "") {
         for (let j = 0; j < parsers[i].autoDiscover.length; j++) {
             try {
                 if (XPath.lookup(doc.firstChild, parsers[i].autoDiscover[j])) {
-                    console.info(`... discovered to be ${parsers[i].id} (${url}!`);
                     return parsers[i];
                 }
             } catch(e) {
                 // ignore
             }
-            console.info(`... is not ${parsers[i].id} (${url})`);
         }
     }
     return undefined;
