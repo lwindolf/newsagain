@@ -1,6 +1,6 @@
 // vim: set ts=4 sw=4:
 
-import { Favicon } from "../www/assets/js/parsers/favicon";
+import { Favicon } from "../assets/js/parsers/favicon";
 
 let responses = {
     "https://arstechnica.com/test1": `<!DOCTYPE html>

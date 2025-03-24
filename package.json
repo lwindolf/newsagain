@@ -5,8 +5,8 @@
   "description": "News aggregator PWA.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint --ignore-pattern www/assets/js/lib/* www/assets/js && jest --coverage",
-    "start": "cd www && npx serve",
+    "test": "eslint --ignore-pattern assets/js/lib/* assets/js && jest --coverage",
+    "start": "npx serve",
     "build": "./build.sh"
   },
   "jest": {

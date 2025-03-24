@@ -1,7 +1,7 @@
 // vim: set ts=4 sw=4:
 
-import { Feed } from '../www/assets/js/feed'
-import { FeedUpdater } from '../www/assets/js/feedupdater';
+import { Feed } from '../assets/js/feed'
+import { FeedUpdater } from '../assets/js/feedupdater';
 import { TestData } from './testdata.js';
 
 test('FeedUpdater.fetch', async () => {

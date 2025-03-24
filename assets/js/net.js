@@ -16,6 +16,6 @@ async function pfetch(url, options = {}) {
 
     // FIXME: allow user to configure proxy
     return await fetch('https://corsproxy.io/?url='+encodeURI(url), options);
-};
+}
 
 export { pfetch, setCORSProxyEnabled };
