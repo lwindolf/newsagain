@@ -2,16 +2,8 @@
 
 // Simple fetch wrapper to allow for automatic CORS proxy
 
-let CORS = false;
-
-// Enable CORS
-function setCORSProxyEnabled(enabled) {
-    CORS = enabled;
-}
-
 // Fetch and URL normally or via CORS proxy
-async function pfetch(url, options = {}) {
-    console.log(`CORS proxy: ${CORS}`);
+async function pfetch(url, options = {}, CORS = true) {
     if (!CORS)
         return await fetch(url, options);
 
@@ -19,4 +11,4 @@ async function pfetch(url, options = {}) {
     return await fetch('https://corsproxy.io/?url='+encodeURI(url), options);
 }
 
-export { pfetch, setCORSProxyEnabled };
+export { pfetch };
