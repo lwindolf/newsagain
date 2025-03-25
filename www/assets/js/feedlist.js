@@ -42,14 +42,10 @@ export class FeedList {
     `);
 
     // Return selected node id
-    static getSelectedId() {
-        return FeedList.#selected.id;
-    }
+    static getSelectedId = () => FeedList.#selected.id;
 
     // Return node by id
-    static getNodeById(id) {
-        return id?FeedList.#nodeById[id]:undefined;
-    }
+    static getNodeById = (id) =>id?FeedList.#nodeById[id]:undefined;
 
     // Return the next unread node after the given node id
     static getNextUnreadNode(id) {
@@ -194,7 +190,5 @@ export class FeedList {
         });
     }
 
-    static update() {
-        this.#updateFolder(this.root);
-    }
+    static update = () => this.#updateFolder(this.root);
 }

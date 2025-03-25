@@ -16,7 +16,7 @@ export class HeaderView {
                 <span class='switchView' data-view='feedlist'>&lt;</span>
                 <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
                 {{#if node.icon}}
-                <img class='icon' src='{{node.icon}}'/>
+                        <img class='icon' src='{{node.icon}}'/>
                 {{/if}}
         {{/compare}}
 
@@ -24,7 +24,7 @@ export class HeaderView {
                 <span class='switchView' data-view='item'>&lt;</span>
                 <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
                 {{#if node.icon}}
-                <img class='icon' src='{{node.icon}}'/>
+                        <img class='icon' src='{{node.icon}}'/>
                 {{/if}}
         {{/compare}}
     `);
