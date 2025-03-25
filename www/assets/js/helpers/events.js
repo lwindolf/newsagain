@@ -37,7 +37,7 @@ function connect(eventName, selector, callback, condition = undefined) {
 function keydown(selector, condition, callback) {
     document.querySelector(selector).addEventListener('keydown', (event) => {
         if(condition(event))
-            callback();
+            callback(event);
     });
 }
 

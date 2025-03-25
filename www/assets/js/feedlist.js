@@ -155,9 +155,7 @@ export class FeedList {
         }
         this.render(this.root);
 
-        this.nodeUpdateListener = document.addEventListener('nodeUpdated', (e) => {
-            FeedList.#nodeUpdated(e.detail);
-        });
+        document.addEventListener('nodeUpdated', (e) => FeedList.#nodeUpdated(e.detail));
 
         // connect signals
         ev.connect('click', '.addBtn', () => new SimpleSubscriptionDialog());

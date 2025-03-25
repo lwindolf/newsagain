@@ -42,6 +42,10 @@ header .icon {
         margin-right: 0.5rem;
 }
 
+.feed:hover, .item:hover {
+        background: #eee;
+}
+
 #modalContent input[type="text"] {
         background: #eee;
         color: #444;

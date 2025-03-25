@@ -121,25 +121,22 @@ export class ItemList {
     }
 
     constructor() {
-        document.addEventListener('itemUpdated', (e) => ItemList.#itemUpdated(e.detail));
+        document.addEventListener('itemUpdated',  (e) => ItemList.#itemUpdated(e.detail));
         document.addEventListener('feedSelected', (e) => ItemList.#loadFeed(e.detail.id));
 
         // handle mouse events
-        ev.connect('auxclick', '.item', (el) => {
-            ItemList.#toggleItemRead(el.dataset.feed, el.dataset.id);
-        }, (e) => e.button == 1);
+        ev.connect('auxclick', '.item', (el) => ItemList.#toggleItemRead(el.dataset.feed, el.dataset.id), (e) => e.button == 1);
+        ev.connect('click',    '.item', (el) => ItemList.select(el.dataset.feed, el.dataset.id));
+        ev.connect('dblclick', '.item', (el) => ItemList.#openItemLink(el.dataset.feed, el.dataset.id));
 
-        ev.connect('click', '.item', (el) => {
-            if (el.clickTimer) {
-                // double click
-                clearTimeout(el.clickTimer);
-                ItemList.#openItemLink(el.dataset.feed, el.dataset.id);
-            }
-            el.clickTimer = setTimeout(() => {
-                // single click
-                ItemList.select(el.dataset.feed, el.dataset.id)
-            });
+        // handle cursor keys
+        ev.keydown('#itemlist', (e) => e.key === 'ArrowDown', (e) => {
+            document.querySelector('.item.selected').nextElementSibling?.click();
+            e.preventDefault();
         });
-
+        ev.keydown('#itemlist', (e) => e.key === 'ArrowUp', (e) => {
+            document.querySelector('.item.selected').previousElementSibling?.click();
+            e.preventDefault();
+        });
     }
 }
