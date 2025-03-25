@@ -21,7 +21,7 @@ export class HeaderView {
         {{/compare}}
 
         {{#compare view '==' 'item' }}
-                <span class='switchView' data-view='item'>&lt;</span>
+                <span class='switchView' data-view='itemlist'>&lt;</span>
                 <a class='title' target='_system' href='{{node.homepage}}'>{{node.title}}</a>
                 {{#if node.icon}}
                         <img class='icon' src='{{node.icon}}'/>

@@ -34,18 +34,19 @@ export class Layout {
 
         if(Layout.#isSmall) {
             theme.setAttribute('href', 'assets/css/mobile.css');
-            Layout.#isSmall = true
             Layout.view('feedlist');
 
-            if(Layout.#split)
+            if(Layout.#split) {
                 Layout.#split.destroy();
+                Layout.#split = null;
+            }
         } else {
             theme.setAttribute('href', 'assets/css/desktop.css');
-            Layout.#isSmall = false;
 
-            // show all views (desktop)
+            // show all views (desktop) and hide header
             [...document.querySelectorAll('.view')]
                 .forEach(e => (e.style.display = 'block'));
+            document.getElementById('header').style.display = 'none';
 
             // setup split panes
             Layout.#split = Split(['#feedlist', '#itemlist', '#item'], {
@@ -101,13 +102,6 @@ export class Layout {
         window.onresize = debounce(function() {
             Layout.update();
         }, 100);
-
-        // disable Electron menubar hotkeys
-        window.addEventListener('keydown', function(e) {
-            if ((e.code === 'AltRight') || (e.code === 'AltLeft')) {
-                e.preventDefault();
-            }
-        });
 
         document.addEventListener('itemSelected', () => Layout.view('item'));
         document.addEventListener('feedSelected', () => Layout.view('itemlist'));
