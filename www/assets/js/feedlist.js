@@ -157,10 +157,20 @@ export class FeedList {
 
         document.addEventListener('nodeUpdated', (e) => FeedList.#nodeUpdated(e.detail));
 
-        // connect signals
-        ev.connect('click', '.addBtn', () => new SimpleSubscriptionDialog());
-        ev.connect('click', '.feed', (el) => FeedList.select(el.dataset.id));
+        // handle mouse events
+        ev.connect('click',  '.addBtn', () => new SimpleSubscriptionDialog());
+        ev.connect('click',    '.feed', (el) => FeedList.select(el.dataset.id));
         ev.connect('auxclick', '.feed', (el) => FeedList.markAllRead(el.dataset.id), (e) => e.button == 1);
+
+        // handle cursor keys
+        ev.keydown('#feedlist', (e) => e.key === 'ArrowDown', (e) => {
+            document.querySelector('.feed.selected').nextElementSibling?.click();
+            e.preventDefault();
+        });
+        ev.keydown('#feedlist', (e) => e.key === 'ArrowUp', (e) => {
+            document.querySelector('.feed.selected').previousElementSibling?.click();
+            e.preventDefault();
+        });
 
         // Run initial fetch
         this.update();

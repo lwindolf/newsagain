@@ -23,6 +23,8 @@ export class App {
         // global hotkeys
         keydown('body', /* F1 */               (e) => (e.keyCode === 112),             () => new HelpDialog());
         keydown('body', /* Ctrl-right arrow */ (e) => (e.keyCode === 39 && e.ctrlKey), () => ItemList.nextUnread());
+
+        // FIXME: Ctrl hotkeys do not work with PWAs
         keydown('body', /* Ctrl-S */           (e) => (e.keyCode === 83 && e.ctrlKey), () => document.dispatchEvent(new CustomEvent("feedMarkAllRead", { detail: { id: FeedList.getSelectedId()}})));
         keydown('body', /* Ctrl-U */           (e) => (e.keyCode === 85 && e.ctrlKey), () => FeedList.update());
 
