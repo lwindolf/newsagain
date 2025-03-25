@@ -11,6 +11,7 @@ function setCORSProxyEnabled(enabled) {
 
 // Fetch and URL normally or via CORS proxy
 async function pfetch(url, options = {}) {
+    console.log(`CORS proxy: ${CORS}`);
     if (!CORS)
         return await fetch(url, options);
 
