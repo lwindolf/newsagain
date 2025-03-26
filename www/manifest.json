@@ -8,8 +8,8 @@
                 { "src": "assets/icons/icon-192-maskable.png", "type": "image/png", "sizes": "192x192", "purpose": "maskable" },
                 { "src": "assets/icons/icon-512-maskable.png", "type": "image/png", "sizes": "512x512", "purpose": "maskable" }
         ],
-        "theme_color": "#E91E63",
-        "background_color": "#E91E63",
+        "theme_color": "#900e3a",
+        "background_color": "#900e3a",
         "display": "standalone",
         "protocol_handlers": [
                 {

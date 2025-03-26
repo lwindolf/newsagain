@@ -1,29 +1,137 @@
-html, body {
+:root {
+        --text-color: rgb(51, 51, 51);
+        --text-color-light: rgb(120, 120, 120);
+        --primary: #900e3a;
+        --primary-text: #fff;
+        --link: #E91E63;
+        --body-bg: #fff;
+        --box-bg: rgba(135, 135, 135, 0.085);
+        --box-radius: 0.35rem;
+        --box-padding: 0.75rem 1.5rem;
+        --box-margin: 0.75rem 0;
+        --box-text-color: #111;
+
+        --error-bg: #ffa;
+
+        --body-font-family: "Red Hat Text", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        --body-font-scale: 0.95;
+        --body-font-size: calc(var(--body-font-scale) * clamp(16px, 1vw, 18px));
+        --body-font-weight: normal;
+
+        --preferred-content-width: 90ch;
+        /* The preferred width for the readable content */
+}
+
+@media (prefers-color-scheme: dark) {
+        :root {
+                --text-color: #f6f6f6;
+                --text-color-light: #777;
+                --body-bg: #121212;
+                --box-bg: rgba(135, 135, 135, 0.1);
+                --box-text-color: #fff;
+                color-scheme: dark;
+        }
+}
+
+::-moz-selection {
+        color: white;
+        background: var(--primary);
+}
+
+::selection {
+        color: white;
+        background: var(--primary);
+}
+
+html,
+body {
         margin: 0;
         padding: 0;
         overflow: hidden;
         height: 100vh;
-        font-family: Arial;
-        color: #222;
-        background: white;
 }
 
-h1 a, a.title {
-        color: #222;
+body {
+        font: 16px/1.5 var(--body-font-family);
+        font-weight: var(--body-font-weight);
+        font-size: var(--body-font-size);
+        padding: 0;
+        padding-top: 1rem;
+
+        -webkit-font-feature-settings: "kern", "liga";
+        -moz-font-feature-settings: "kern", "liga";
+        font-feature-settings: "kern", "liga";
+        color: var(--text-color);
+        background: var(--body-bg);
+}
+
+blockquote {
+        border-left: 3px solid var(--primary);
+        background: var(--box-bg);
+        padding: var(--box-padding);
+        margin: var(--box-margin);
+        border-radius: var(--box-radius);
+        font-style: italic;
+        clear: both;
+}
+
+pre {
+        background: var(--box-bg);
+        padding: var(--box-padding);
+        border-radius: var(--box-radius);
+        overflow: auto;
+}
+
+code {
+        background: var(--box-bg);
+        padding: 0 0.35em;
+        border-radius: 0.35rem;
+        word-break: break-word;
+}
+
+a>code {
+        color: var(--link);
+}
+
+pre pre,
+pre code {
+        padding: 0;
+        margin: 0;
+        font-size: 1em;
+        background: none;
+        color: inherit;
+}
+
+strong,
+b {
+        font-weight: 600;
+}
+
+a {
+        color: var(--link);
+}
+
+h1 a,
+a.title {
+        color: var(--text-color);
         text-decoration: none;
 }
-h1 a:hover, a.title:hover {
+
+h1 a:hover,
+a.title:hover {
         text-decoration: underline;
 }
 
-#item, #itemlist, #feedlist {
+#item,
+#itemlist,
+#feedlist {
         height: 100vh;
         overflow-y: auto;
 }
 
 header {
-        background: #eee;
-        border-bottom: 1px solid #ddd;
+        background: var(--box-bg);
+        border-bottom: 1px solid var(--text-color-light);
         position: sticky;
         top: 0;
         z-index: 999;
@@ -50,14 +158,20 @@ header .title {
 
 #itemViewContent {
         padding: 0 0.8rem;
+
+        max-width: 800px;
+        margin: 0 auto;
+
+        line-height: 1.8;
 }
 
-.feed, .item {
+.feed,
+.item {
         cursor: pointer;
         overflow: hidden;
-        -webkit-user-select: none;  
-        -moz-user-select: none;    
-        -ms-user-select: none;      
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
         user-select: none;
 }
 
@@ -72,18 +186,20 @@ header .title {
         overflow: hidden;
         min-width: 0;
 }
+
 .feed .count {
         background: #aaa;
         padding: 0.2rem 0.4rem;
         color: white;
 }
+
 .feed .count[data-count="0"] {
         display: none;
 }
 
 .item {
         padding: 1rem;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid var(--text-color-light);
 }
 
 .item .title[data-read="false"] {
@@ -93,11 +209,13 @@ header .title {
 ::-webkit-scrollbar {
         width: 0.3rem;
 }
+
 ::-webkit-scrollbar-track {
         background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-        background-color: rgba(155, 155, 155, 0.5);
+        background-color: var(--text-color-light);
         border-radius: 0.5rem;
         border: transparent;
 }
@@ -105,8 +223,8 @@ header .title {
 /* split.js */
 
 .gutter {
-        background-color: #eee;
-    
+        background-color: var(--box-bg);
+
         background-repeat: no-repeat;
         background-position: 50%;
 }
@@ -114,11 +232,11 @@ header .title {
 .gutter:hover {
         cursor: col-resize;
 }
-    
+
 .gutter.gutter-vertical {
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
 }
-    
+
 .gutter.gutter-horizontal {
         background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
 }
@@ -126,17 +244,26 @@ header .title {
 /* modal dialog */
 
 #modal {
-        display: none; /* Hidden by default */
-        position: fixed; /* Stay in place */
-        z-index: 1000; /* Sit on top */
-        padding-top: 100px; /* Location of the box */
+        display: none;
+        /* Hidden by default */
+        position: fixed;
+        /* Stay in place */
+        z-index: 1000;
+        /* Sit on top */
+        padding-top: 100px;
+        /* Location of the box */
         left: 0;
         top: 0;
-        width: 100%; /* Full width */
-        height: 100%; /* Full height */
-        overflow: auto; /* Enable scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        width: 100%;
+        /* Full width */
+        height: 100%;
+        /* Full height */
+        overflow: auto;
+        /* Enable scroll if needed */
+        background-color: rgb(0, 0, 0);
+        /* Fallback color */
+        background-color: rgba(0, 0, 0, 0.4);
+        /* Black w/ opacity */
 }
 
 #modalContent {
@@ -172,6 +299,7 @@ header .title {
 #modal table {
         border-collapse: collapse;
 }
+
 #modal table td {
         border: 1px solid #ccc;
         padding: 1rem;
@@ -195,16 +323,16 @@ header .title {
 #itemViewContent section,
 #itemViewContent svg,
 #itemViewContent img {
-	max-width: 100%;
-	height: auto !important;
+        max-width: 100%;
+        height: auto !important;
 }
 
 #itemViewContent figure,
 #itemViewContent iframe {
-	max-width: 100%;
-	box-sizing: border-box;
+        max-width: 100%;
+        box-sizing: border-box;
 
-	/* Note: object-fit would be best practice here, but it fails
+        /* Note: object-fit would be best practice here, but it fails
 	   on embedded Youtube videos (pushing the embed iframe far
 	   to the right with the controls being not in the place
 	   visually shown) */
@@ -219,11 +347,11 @@ header .title {
 /* feed fetch error warning */
 
 .feedInfoErrorBox {
-        border:0.05rem solid black;
-        margin:0.8rem 1.6rem;
-        padding:0.8rem;
-        background:#ffa;
-        color:black;
+        border: 0.05rem solid black;
+        margin: 0.8rem 1.6rem;
+        padding: 0.8rem;
+        background: #ffa;
+        color: black;
         margin: 0;
 }
 
@@ -235,9 +363,9 @@ header .title {
         padding-left: 0.8rem;
 }
 
-// dark mode image glaring 
+/* dark mode image glaring */
 @media (prefers-color-scheme: dark) {
-  img {
-    filter: brightness(.8) contrast(1.2);
-  }
+        img {
+                filter: brightness(.8) contrast(1.2);
+        }
 }

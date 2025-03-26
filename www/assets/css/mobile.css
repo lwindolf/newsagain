@@ -21,18 +21,15 @@ header .addBtn {
         cursor: pointer;
 }
 
-header .addBtn:hover {
-        background: #ccc;
-}
-
 header .switchView {
         margin-left: 0.8rem;
         padding: 0 0.4rem;
         cursor: pointer;
 }
 
+header .addBtn:hover,
 header .switchView:hover {
-        background: #ccc;
+        background: var(--box-bg);
 }
 
 header .icon {
@@ -48,7 +45,7 @@ header .title {
 
 .feed {
         font-size: 150%;
-        border-bottom: 1px solid #ddd;
+        border-bottom: 1px solid var(--box-bg);
         padding: 0.8rem;
 }
 
@@ -60,7 +57,7 @@ header .title {
 }
 
 .feed:hover, .item:hover {
-        background: #eee;
+        background: var(--primary);
 }
 
 #modalContent input[type="text"] {

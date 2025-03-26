@@ -34,12 +34,8 @@
         padding: 0.5rem 0.8rem;
 }
 
-#itemlist {
-        outline: 1px solid #ddd;
-}
-
 #feedlist {
-        background: #fafafa;
+        background: var(--box-bg);
 }
 
 #feedlist > .title {
@@ -48,7 +44,8 @@
 }
 
 .selected {
-        background: #eee;
+        background: var(--primary);
+        color: var(--primary-text);
 }
 
 .feed {
