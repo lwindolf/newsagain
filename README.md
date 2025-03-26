@@ -88,7 +88,7 @@ a 🛑 means the feature won't be ported.
 - [x] 1 pane view (mobile)
 - [x] Automatic switching
 - [ ] Reader Mode
-- [ ] Dark Mode
+- [x] Dark Mode
 - [ ] Custom Theme overrides
 - 🛑 3 pane view (email like)
 
