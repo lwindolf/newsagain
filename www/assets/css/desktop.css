@@ -11,7 +11,7 @@
 #itemlist,
 #feedlist,
 #item {
-        border: 1px solid white;
+        border: 1px solid var(--body-bg);
 }
 
 #itemlist:focus,
@@ -44,6 +44,10 @@
 }
 
 .selected {
+        background: var(--box-bg);
+}
+
+div:focus .selected {
         background: var(--primary);
         color: var(--primary-text);
 }

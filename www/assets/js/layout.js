@@ -52,7 +52,7 @@ export class Layout {
             Layout.#split = Split(['#feedlist', '#itemlist', '#item'], {
                 sizes: [20, 30, 50],
                 minSize: [10, 10, 10],
-                gutterSize: 6,
+                gutterSize: 3,
                 expandToMin: true
             });
         }

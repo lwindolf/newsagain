@@ -73,6 +73,8 @@ export class ItemList {
         let itemNode = document.querySelector(`.item[data-id="${id}"]`);
         itemNode.classList.add('selected');
         itemNode.scrollIntoView({ block: 'nearest' });
+        
+        document.getElementById('itemlist').focus();
 
         ItemList.selected = item;
         if(!item.read) {

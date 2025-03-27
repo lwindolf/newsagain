@@ -199,11 +199,21 @@ header .title {
 
 .item {
         padding: 1rem;
-        border-bottom: 1px solid var(--text-color-light);
+        border-bottom: 1px solid var(--box-bg);
 }
 
 .item .title[data-read="false"] {
         font-weight: bold;
+}
+
+@media (prefers-color-scheme: dark) {
+.item {
+        border-bottom: 1px solid hsl(from var(--text-color) h s calc(l - 80));
+}
+
+.item .title[data-read="true"] {
+        color: hsl(from var(--text-color) h s calc(l - 25));
+}
 }
 
 ::-webkit-scrollbar {
@@ -231,14 +241,6 @@ header .title {
 
 .gutter:hover {
         cursor: col-resize;
-}
-
-.gutter.gutter-vertical {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAFAQMAAABo7865AAAABlBMVEVHcEzMzMzyAv2sAAAAAXRSTlMAQObYZgAAABBJREFUeF5jOAMEEAIEEFwAn3kMwcB6I2AAAAAASUVORK5CYII=');
-}
-
-.gutter.gutter-horizontal {
-        background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUAAAAeCAYAAADkftS9AAAAIklEQVQoU2M4c+bMfxAGAgYYmwGrIIiDjrELjpo5aiZeMwF+yNnOs5KSvgAAAABJRU5ErkJggg==');
 }
 
 /* modal dialog */
