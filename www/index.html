@@ -2,17 +2,14 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <!--
-            This HTML page is to use NewsAgain as a plain PWA (without Cordova)
-        -->
-        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
-        <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
-        <link id="theme" rel="stylesheet" type="text/css" href="assets/css/mobile.css" />
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="initial-scale=1, width=device-width, viewport-fit=cover">
         <meta name="color-scheme" content="light dark">
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'unsafe-inline' 'unsafe-eval' *; img-src *; media-src *; object-src 'none'"/>
 
+        <link rel="stylesheet" type="text/css" href="assets/css/common.css" />
+        <link rel="stylesheet" type="text/css" href="assets/css/mobile.css" id="theme" />
         <link rel="icon" href="assets/icons/favicon.ico" sizes="any">
         <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
         <link rel="manifest" href="manifest.json">
