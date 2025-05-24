@@ -1,10 +1,16 @@
 [![CI](https://github.com/lwindolf/newsagain/actions/workflows/test.yml/badge.svg)](https://github.com/lwindolf/newsagain/actions/workflows/test.yml)
 
-# NewsAgain
+# NewsAgain - discontinued!
 
 ![NewsAgain Icon](icons/web/icon-192.png)
 
 WIP prototype for a backend-less PWA feed reader replacing [Liferea](https://lzone.de/liferea)
+
+<b>Note: while the NewsAgain prototype was somewhat working the overall goal changed while working on it.
+Instead of "just" building a RSS aggregator the goal was widened to a more generic content aggregator
+which is now being build in the https://github.com/lwindolf/lzone.de repo.
+
+Most of the NewsAgain code did land there and is the basis for an embedded feed reader.</b>
 
 Please note that running a PWA feed reader requires using a CORS proxy which has some
 security implications.
